@@ -152,19 +152,19 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
         >
           <div className="p-6 sm:p-8 rounded-3xl bg-white/90 backdrop-blur-xs border border-[#FAF4E5] shadow-xs hover:border-amber-300/80 hover:shadow-md transition-all duration-300 flex flex-col items-center justify-center text-center md:min-h-[160px]">
             <span className="text-[18px] font-extrabold text-[#AA8010] mb-2 leading-none font-sans">소득 기준 최소화</span>
-            <p className="text-[22px] sm:text-[24px] font-black text-slate-800 leading-snug">
+            <p className="text-[18px] sm:text-[20px] md:text-[22px] font-black text-slate-800 leading-snug break-keep">
               어떤 직종이든<br className="block" /> 소득이 있다면 가능!
             </p>
           </div>
           <div className="p-6 sm:p-8 rounded-3xl bg-white/90 backdrop-blur-xs border border-[#FAF4E5] shadow-xs hover:border-amber-300/80 hover:shadow-md transition-all duration-300 flex flex-col items-center justify-center text-center md:min-h-[160px]">
             <span className="text-[18px] font-extrabold text-[#AA8010] mb-2 leading-none font-sans">최소 채무 허들</span>
-            <p className="text-[22px] sm:text-[24px] font-black text-slate-800 leading-snug">
+            <p className="text-[18px] sm:text-[20px] md:text-[22px] font-black text-slate-800 leading-snug break-keep">
               총 빚 합산금액이<br className="block" /> 천만 원 이상이면 가능!
             </p>
           </div>
           <div className="p-6 sm:p-8 rounded-3xl bg-white/90 backdrop-blur-xs border border-[#FAF4E5] shadow-xs hover:border-amber-300/80 hover:shadow-md transition-all duration-300 flex flex-col items-center justify-center text-center md:min-h-[160px]">
             <span className="text-[18px] font-extrabold text-[#AA8010] mb-2 leading-none font-sans">순자산 보유 범위</span>
-            <p className="text-[22px] sm:text-[24px] font-black text-slate-800 leading-snug">
+            <p className="text-[18px] sm:text-[20px] md:text-[22px] font-black text-slate-800 leading-snug break-keep">
               소유 재산 가액보다<br className="block" /> 채무가 더 많다면 가능!
             </p>
           </div>
