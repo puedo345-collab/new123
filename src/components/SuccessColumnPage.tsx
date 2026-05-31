@@ -223,7 +223,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
   const paginatedStories = filteredStories.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16 font-sans">
+    <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4 md:py-6 font-sans">
       <div className="bg-[#FAF9F5]/90 backdrop-blur-md rounded-3xl shadow-2xl border border-[#FAF4E5] overflow-hidden relative">
         
         {/* Banner area */}
@@ -249,25 +249,30 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
           </div>
         </div>
 
-        {/* Search bar inside lists */}
-        <div className="px-6 pt-6 pb-2 text-left">
-          <div className="relative max-w-sm">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
-            <input
-              type="text"
-              placeholder="직업, 채무, 사유 등 성공사례 검색"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#FAF4E5] rounded-2xl text-xs font-semibold focus:outline-hidden focus:ring-1 focus:ring-amber-500"
-            />
-          </div>
-        </div>
-
-        <div className="p-6 space-y-6">
+        <div className="px-6 py-4 space-y-5">
           {/* Dynamic Success Stories Matcher */}
-          <div className="space-y-6">
+          <div className="space-y-4">
+            
+            {/* Search bar: highly visible & cohesive */}
+            <div className="space-y-1.5 text-left">
+              <label className="text-xs font-black text-amber-700 uppercase tracking-wider flex items-center gap-1">
+                <span>💡 키워드 신속 검색</span>
+                <span className="text-[10px] text-slate-400 font-normal normal-case">(직업, 채무액, 사유 등 입력)</span>
+              </label>
+              <div className="relative max-w-xl">
+                <Search className="w-4 h-4 text-amber-600 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  placeholder="예: 직장인, 프리랜서, 5천만원, 코인, 주식, 1억 등 키워드를 입력해 보세요"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-white border-2 border-amber-600/30 rounded-2xl text-xs sm:text-[13px] font-bold text-slate-800 placeholder-slate-400 focus:outline-hidden focus:border-amber-600 focus:ring-4 focus:ring-amber-500/10 transition-all shadow-xs"
+                />
+              </div>
+            </div>
+
             {/* Search filters */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-500/[0.03] p-5 rounded-2xl border border-[#FAF4E5] text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-500/[0.03] p-4 sm:p-5 rounded-2xl border border-[#FAF4E5] text-left">
               <div className="space-y-2">
                 <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">1단계: 본인의 현재 직업</label>
                 <div className="grid grid-cols-2 gap-2">
@@ -308,7 +313,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
             </div>
 
             {/* List container */}
-            <div className="space-y-4 text-left">
+            <div className="space-y-4 text-left pt-2">
               <h3 id="success-stories-list-anchor" className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
                 <Filter className="w-4 h-4 text-amber-600" />
                 <span>필터 검색된 울산 사건 성공사례 ({filteredStories.length}건)</span>
