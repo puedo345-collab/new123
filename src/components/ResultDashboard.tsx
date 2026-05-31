@@ -597,47 +597,7 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
         )}
       </div>
 
-      {/* Matched Real Success Story Card */}
-      {responses.occupation !== 'no_income' && responses.hasMoreDebtThanAssets !== 'no' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 space-y-4">
-          <div className="flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-amber-600" />
-            <h3 className="text-lg font-black text-slate-800 tracking-tight">
-              의뢰인과 유사한 실제 법원 면책 선례
-            </h3>
-          </div>
 
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-4">
-            <div className="flex justify-between items-start flex-wrap gap-2 pb-3 border-b border-slate-200">
-              <div>
-                <h4 className="font-black text-slate-800 text-base inline-block mt-1 sm:mt-0">
-                  {matchedStory.title}
-                </h4>
-              </div>
-              <span className="text-xs text-slate-500 font-bold">{matchedStory.age} | {matchedStory.job}</span>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-center">
-              <div className="p-3 bg-white rounded-xl border border-slate-100/50">
-                <span className="text-[10px] text-slate-400 font-bold block">기존 총 부채</span>
-                <span className="text-sm font-black text-slate-700">{matchedStory.originalDebt}</span>
-              </div>
-              <div className="p-3 bg-white rounded-xl border border-slate-100/50">
-                <span className="text-[10px] text-slate-400 font-bold block shrink-0">조정 후 부채</span>
-                <span className="text-sm font-black text-amber-700">{matchedStory.reducedDebt}</span>
-              </div>
-              <div className="col-span-2 md:col-span-1 p-3 bg-amber-50 rounded-xl border border-amber-200">
-                <span className="text-[10px] text-amber-600 font-extrabold block">실제 탕감율</span>
-                <span className="text-sm font-black text-amber-700">{matchedStory.reductionRate}% 할인 면책</span>
-              </div>
-            </div>
-
-            <p className="text-xs sm:text-sm text-slate-600 font-semibold leading-relaxed pt-2">
-              "{matchedStory.description}"
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Action Buttons Block */}
       <div className="flex flex-col sm:flex-row gap-3.5 justify-center items-center pt-4">
