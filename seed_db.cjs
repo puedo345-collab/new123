@@ -7,7 +7,7 @@ const seedArticles = [
   {
     id: "art_1",
     category: "코인/투자 채무",
-    title: "주식·코인 최근 채무 비율 85%, 청산가치 산정의 한계를 돌파한 30대 가장의 회생기",
+    title: "주식·코인 최근 채무 비율 85%, 청산가치 한계를 극복한 30대 가장의 회생 보고서",
     age: "30대 중반",
     job: "영업직 (프리랜서)",
     originalDebt: "1억 2,000만 원",
@@ -27,48 +27,61 @@ const seedArticles = [
     <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
   </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2026년 2월 24일</li>
-    <li><strong>금지명령 결정일:</strong> 2026년 2월 28일 (접수 후 4일 만에 독촉 차단)</li>
-    <li><strong>개시결정일:</strong> 2026년 4월 12일</li>
-    <li><strong>채권자집회기일:</strong> 2026년 5월 18일</li>
-    <li><strong>인가결정일:</strong> 2026년 5월 20일 (신청 후 약 3개월 내 초고속 인가)</li>
-  </ul>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          울산지방법원은 주식/사행성 채무 및 최근 채무 비율이 높은 사건에 대해 매우 엄격한 보정 명령을 내립니다. 본 사건의 가장 큰 걸림돌은 두 가지였습니다.<br/>
+          첫째, 코인 거래소로 흘러 들어간 자금 전액을 '청산가치(본인 재산)'에 반영하라는 법원의 보정 권고가 내려질 위기였습니다. 만약 투자 손실액이 전액 재산으로 잡히면 월 변제금이 터무니없이 높아져 회생을 중도 포기해야 하는 상황이었습니다.<br/>
+          둘째, 프리랜서 성격이 섞인 영업직 소득으로 월 소득이 매달 불규칙하여 소득 산정 시 법원의 의심을 받는 상황이었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    울산지방법원은 주식/사행성 채무 및 최근 채무 비율이 높은 사건에 대해 매우 엄격한 보정 명령을 내립니다. 본 사건의 가장 큰 걸림돌은 두 가지였습니다.<br/>
-    <strong>첫째</strong>, 코인 거래소로 흘러 들어간 자금 전액을 '청산가치(본인 재산)'에 반영하라는 법원의 보정 권고가 내려질 위기였습니다. 만약 투자 손실액이 전액 재산으로 잡히면 월 변제금이 터무니없이 높아져 회생을 중도 포기해야 하는 상황이었습니다.<br/>
-    <strong>둘째</strong>, 프리랜서 성격이 섞인 영업직 소득으로 월 소득이 매달 불규칙하여 소득 산정 시 법원의 의심을 받는 상황이었습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          저희 사무소는 14년 법원 실무 경력의 노하우를 바탕으로, 단순 실패가 아닌 배우자와의 이혼 과정에서 발생한 위자료 및 자녀 양육비 지출 내역을 세부 통장 내역 거래를 통해 1원 단위까지 분리 입증했습니다. 코인 손실금 중 실제 소비로 사라진 부분과 투자 실패로 소멸한 실질 자산을 소명 도표로 정리하여 법원이 요구하는 '최근 채무 소명 자료'를 완벽히 메웠습니다. 또한, 1인 생계비 외에 한부모 가정으로서의 '추가 생계비(자녀 치료비 및 교육비)' 필요성을 강력하게 소명하여 월 소득 대비 가용소득을 최소화하는 데 성공했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    저희 사무소는 14년 법원 실무 경력의 노하우를 바탕으로, 단순 실패가 아닌 배우자와의 이혼 과정에서 발생한 위자료 및 자녀 양육비 지출 내역을 세부 통장 내역 거래를 통해 1원 단위까지 분리 입증했습니다. 코인 손실금 중 실제 소비로 사라진 부분과 투자 실패로 소멸한 실질 자산을 소명 도표로 정리하여 법원이 요구하는 '최근 채무 소명 자료'를 완벽히 메웠습니다. 또한, 1인 생계비 외에 한부모 가정으로서의 '추가 생계비(자녀 치료비 및 교육비)' 필요성을 강력하게 소명하여 월 소득 대비 가용소득을 최소화하는 데 성공했습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과 및 법률적 교훈</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 2,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,160만 원 (원금의 18%만 변제)</li>
-      <li><span class="text-emerald-700">탕감율: 82% 면책 결정</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 60만 원 (36개월 납입)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 1억 2,000만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,160만 원 (원금의 18%만 변제)</li>
+            <li><strong>탕감율:</strong> 82% 면책 결정</li>
+            <li><strong>월 변제금:</strong> 60만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          본 사건은 법원의 청산가치 반영 원칙에 맞서, 채무자의 실질적 갱생을 위해 법무사가 얼마나 집요하게 소명 서류를 다듬는지가 인가 성공의 핵심 열쇠임을 다시 한번 보여준 모범 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    본 사건은 법원의 청산가치 반영 원칙에 맞서, 채무자의 실질적 갱생을 위해 법무사가 얼마나 집요하게 소명 서류를 다듬는지가 인가 성공의 핵심 열쇠임을 다시 한번 보여준 모범 사례입니다.
-  </p>
 </div>`,
     createdAt: "2026-05-20T10:00:00.000Z",
     updatedAt: "2026-05-20T10:00:00.000Z",
-    views: 142
+    views: 184
   },
   {
     id: "art_2",
     category: "사업 실패 채무",
-    title: "식자재 대리점 폐업 후 채권 추심 방어 및 양육비 전액 공제 성공 사례",
+    title: "폐업 후 대부업 연쇄 추심 차단, 자녀 양육비 추가 공제를 이뤄낸 40대 자영업자 회생기",
     age: "40대 중반",
     job: "식자재 유통 자영업자",
     originalDebt: "1억 6,500만 원",
@@ -76,51 +89,71 @@ const seedArticles = [
     monthlyPayment: "91만 원 (36개월)",
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    울산 북구에서 식자재 대리점을 운영하던 40대 가장 B씨는 대형 마트의 골목 상권 진입과 코로나 사태 장기화로 매출이 급락하며 가게를 정리했습니다. 매장 보증금마저 임대료 연체로 차감되었고, 물품 거래처 미수금 대환 대출 등으로 인해 1억 6천만 원이 넘는 빚을 떠안은 채 신용불량 위기에 처했습니다.
+    울산 북구에서 식자재 대리점을 운영하던 40대 중반의 B씨는 무리하게 사업을 확장하던 중 원자재 가격 급등과 거래처 부도로 인해 폐업 절차를 밟게 되었습니다. 가게 보증금마저 압류되고 두 자녀의 양육비 지출마저 감당할 수 없게 되자 생계형 채무가 1억 6,500만 원까지 불어나 심각한 독촉에 시달리게 되었습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2019년 2월 11일</li>
-    <li><strong>금지명령/중지명령 결정일:</strong> 2019년 2월 14일 (압류 및 추심 전격 차단)</li>
-    <li><strong>개시결정일:</strong> 2019년 5월 10일</li>
-    <li><strong>채권자집회기일:</strong> 2019년 6월 22일</li>
-    <li><strong>인가결정일:</strong> 2019년 7월 15일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    이미 사업장 물품 및 장비에 대한 가압류 조치가 들어가 있어 조속히 중지명령을 받아내는 것이 급선무였습니다. 또한 배우자와 협의 이혼을 진행하며 자녀 2명에 대한 매달 80만 원의 양육비 지급 의무가 있어 소득 대비 생계비 공제를 확보하지 못하면 파산이 우려되었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          이미 폐업한 사업장과 관련하여 다수의 카드사 및 대부업체로부터 유치권 행사와 통장 압류가 예고되어 있어 생계 자체가 마비될 지경이었습니다. 또한 배우자와 이혼하여 두 자녀의 양육비로 매달 고정적으로 80만 원을 지급해야 했기에, 가용소득 산정 시 생계비 추가 인정 여부가 생존을 결정짓는 핵심이었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    저희는 법원에 신속히 회생 개시 신청과 동시에 금지 및 중지명령을 신청하여 진행 중이던 장비 유치권 행사를 중단시켰습니다. 나아가 이혼 합의서 상의 양육비 판결문과 송금 약정 내역을 철저히 증명하여 일반 최저생계비 외에 추가적으로 양육비 지출액 80만 원 전부를 가용소득 산정 시 공제받도록 유도했습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          우선 압류 및 추심을 전격 차단하기 위한 금지·중지명령의 소명 자료를 신속히 구성하여 법원 접수와 동시에 처리되도록 대응했습니다. 나아가 이혼 합의서 상의 양육비 판결문과 실제 송금 약정 내역을 근거로 최저생계비 외에 추가 양육비 지출액 80만 원 전액을 추가 생계비로 공제하도록 설득력 있는 계획안을 작성하여 인정을 이끌어냈습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 6,500만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 3,300만 원</li>
-      <li><span class="text-emerald-700">탕감율: 원금의 80% 탕감</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 91만 원 (36개월 납입)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 1억 6,500만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 3,300만 원 (원금의 20% 변제)</li>
+            <li><strong>탕감율:</strong> 80% 면책 승인</li>
+            <li><strong>월 변제금:</strong> 91만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          양육비 의무와 같이 채무자가 처한 인도주의적 환경과 불가피한 추가 지출 사유를 법률적으로 꼼꼼하게 소명한다면, 까다로운 법원의 변제금 산정 기준 앞에서도 안정적인 생계비를 지켜낼 수 있음을 보여주는 유의미한 성공 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2019-02-15T09:00:00.000Z",
-    updatedAt: "2019-02-15T09:00:00.000Z",
-    views: 210
+    createdAt: "2019-03-20T10:00:00.000Z",
+    updatedAt: "2019-03-20T10:00:00.000Z",
+    views: 295
   },
   {
     id: "art_3",
     category: "생활비/다중채무",
-    title: "제조업 건설 일용직근로자의 불규칙 소득 소명 및 75% 원금 면책 사례",
+    title: "선박 블록 공장 일용직 근로자의 불규칙 소득 분석 및 75% 원금 면책 성공기",
     age: "50대 초반",
     job: "제조 공장 일용직",
     originalDebt: "7,200만 원",
@@ -128,51 +161,71 @@ const seedArticles = [
     monthlyPayment: "50만 원 (36개월)",
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    50대 초반 C씨는 울산 삼산동 인근의 아파트 공사 현장 및 선박 블록 공장에서 일용직 근로자로 근무해 왔습니다. 불규칙한 건설 수주와 겨울철 비수기로 수개월간 소득이 끊기자 고령의 부모님 병원비와 생활비를 대부업 소액 대출로 때우며 빚이 7,200만 원까지 불어났습니다.
+    울산의 선박 블록 공장에서 일용직으로 종사하던 50대 초반 C씨는 불규칙한 건설 경기와 겨울철 일감 감소로 생활고를 겪게 되었습니다. 부양해야 할 노부모의 치매 병원비와 요양원 분담금을 내기 위해 카드 돌려막기와 소액 대부업체를 이용하게 되었고, 부채는 7,200만 원에 육박하여 채무 불이행 위험에 직면했습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2020년 4월 02일</li>
-    <li><strong>금지명령 결정일:</strong> 2020년 4월 07일</li>
-    <li><strong>개시결정일:</strong> 2020년 7월 18일</li>
-    <li><strong>채권자집회기일:</strong> 2020년 8월 29일</li>
-    <li><strong>인가결정일:</strong> 2020년 9월 10일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    일용직 특성상 고정급여 명세서가 없고 소득 변동 폭이 너무 컸습니다. 울산지방법원 재판부는 일용 소득의 불규칙성을 이유로 최근 소득 산정에 현저한 의심을 품었으며, 평균치 환산 방법을 엄격하게 요구했습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          일용직 특성상 고정적인 급여명세서가 존재하지 않고 기후나 현장 상황에 따라 월 소득 편차가 너무 컸습니다. 울산지방법원 재판부는 일용직의 소득 불투명성을 근거로 최근 고소득 구간을 기준으로 변제금을 올릴 것을 엄격하게 명령하는 등 소명 난이도가 극도로 높았습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    과거 1년간의 계좌 입출금 내역을 세밀하게 분해하여 현장 발주처로부터 입금된 일당 내역 전체를 엑셀 도표로 시각화해 냈습니다. 최근 3개월의 고소득 구간 대신 1년 평균 월 실질소득을 법률적으로 소명하여 월 소득 기준점을 대폭 낮추고 최저생계비를 온전히 사수하였습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          과거 1년 치의 통장 거래 입출금 내역을 세부 항목으로 분석하여 공장 발주처로부터 직접 수령한 일당을 엑셀로 시각화해 냈습니다. 최근 3개월의 고소득 구간이 비정상적인 잔업 수당에 기반했음을 법률 논리로 변호하여 1년 평균 월 실질소득 기준을 적용함으로써 월 변제 금액을 대폭 하향 조정하는 방어 전략을 성공적으로 완수했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 7,200만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,800만 원</li>
-      <li><span class="text-emerald-700">탕감율: 75% 탕감 결정</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 50만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 7,200만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,800만 원 (원금의 25% 변제)</li>
+            <li><strong>탕감율:</strong> 75% 탕감 결정</li>
+            <li><strong>월 변제금:</strong> 50만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          급여 형태가 불완전하고 고정적이지 않은 일용직 근로자라 할지라도, 계좌 이체 명세와 실제 근무 현황을 정밀하게 입증해 낸다면 법원으로부터 합리적인 최저생계비를 온전히 보장받을 수 있음을 입증한 모범적 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2020-04-10T11:00:00.000Z",
-    updatedAt: "2020-04-10T11:00:00.000Z",
-    views: 185
+    createdAt: "2020-05-12T10:00:00.000Z",
+    updatedAt: "2020-05-12T10:00:00.000Z",
+    views: 201
   },
   {
     id: "art_4",
     category: "사기 피해 채무",
-    title: "20대 대학 졸업자 주식 투자 권유 리딩방 사기 피해 구제 사례",
+    title: "주식 리딩방 투자 사기로 발생한 사회초년생의 채무 고통 해결 사례",
     age: "20대 후반",
     job: "사무직 (사회초년생)",
     originalDebt: "4,800만 원",
@@ -180,51 +233,71 @@ const seedArticles = [
     monthlyPayment: "33만 원 (36개월)",
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    대학 졸업 후 겨우 중소기업 계약직으로 입사한 20대 여성 D씨는 가짜 주식투자 리딩 프로그램에 속아 2금융권 카드 대출로 투자금을 입금하는 사기 범죄 피해를 입었습니다. 사기 일당은 흔적도 없이 사라졌고, 고스란히 4,800만 원의 채무 독촉만 남게 되었습니다.
+    대학을 갓 졸업한 후 울산 중소기업의 계약직 사무원으로 입사한 20대 여성 D씨는 원금 보장을 약속하는 허위 주식투자 리딩방의 감언이설에 속아 2금융권 카드 대출과 신용대출을 무리하게 빌렸습니다. 결국 리딩 사기 일당은 자취를 감추었고, D씨에게는 고스란히 4,800만 원이라는 독촉장만 남게 되어 첫 단추부터 파산 위기에 봉착했습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2021년 6월 05일</li>
-    <li><strong>금지명령 결정일:</strong> 2021년 6월 09일</li>
-    <li><strong>개시결정일:</strong> 2021년 8월 24일</li>
-    <li><strong>채권자집회기일:</strong> 2021/10/05</li>
-    <li><strong>인가결정일:</strong> 2021년 10월 22일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    주식 리딩 투자 사기는 법원에서 단순 '사행성 오락 투자'로 오인하기 십상입니다. 사행성 투자 실패는 탕감율이 극도로 낮아지거나 청산가치에 100% 가산되므로, 본 사건이 명백한 사기 범죄의 피해로 인한 채무임을 입증해야 했습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          주식 리딩 투자 손실은 일반적인 개인회생 실무에서 사행성 도박 및 무리한 투자 실패로 취급받기 쉽습니다. 법원은 투자 원금을 전액 채무자의 청산가치에 과도하게 편입시켜 사실상 변제율을 100% 가까이 맞추라고 압박하는 사안이었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    경찰서에 접수한 사건사고사실확인원과 리딩 사기 단톡방 캡처본, 대화 거래 내역을 첨부하여 법무사 명의의 '사기 피해 상세 진술서'를 작성했습니다. 피해자의 고의 없는 채무 증대 사유를 명백히 소명하여 사행성 오락이 아님을 인정받았습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          단순한 투자 실패 진술이 아닌, 경찰서에 접수한 형사 고소장 사본, 사기 수법이 담긴 모바일 메신저 대화 캡처, 금전 이체 경로를 시간순 도표로 구성하여 악의적인 사기 사범의 불법 행위 피해자임을 강력히 소명했습니다. 피해 금액의 사용처가 본인의 사치나 유흥이 아님을 회계적으로 명확히 분리 증명해 냈습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 4,800만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,200만 원</li>
-      <li><span class="text-emerald-700">탕감율: 75% 탕감 결정</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 33만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 4,800만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,200만 원</li>
+            <li><strong>탕감율:</strong> 75% 탕감 성공</li>
+            <li><strong>월 변제금:</strong> 33만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          주식 및 사기 피해 사건은 채무자의 자금 흐름에 대한 철저한 법정 소명과 범죄 피해 사실의 서류적 입증을 어떻게 구성하느냐에 따라 탕감율의 향방이 완전히 결정된다는 것을 보여주는 대표적 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2021-06-22T14:00:00.000Z",
-    updatedAt: "2021-06-22T14:00:00.000Z",
-    views: 120
+    createdAt: "2021-07-15T10:00:00.000Z",
+    updatedAt: "2021-07-15T10:00:00.000Z",
+    views: 185
   },
   {
     id: "art_5",
     category: "보증 채무",
-    title: "이혼 가정 주부의 전배우자 연대보증 무단 대출 독촉 해결 사례",
+    title: "이혼 후 전배우자의 무단 도용 연대보증 채무 압류를 방어해 낸 주부의 성공기",
     age: "30대 후반",
     job: "서비스직 사원",
     originalDebt: "9,600만 원",
@@ -232,155 +305,215 @@ const seedArticles = [
     monthlyPayment: "53만 원 (36개월)",
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    30대 후반 여성 E씨는 이혼한 전남편이 혼인 기간 중 본인의 명의와 인감증명서를 도용해 받아둔 대부업체 연대보증 대출 독촉장에 직면했습니다. 이미 자녀 양육권만 쥔 채 생계비 벌이에 급급했던 의뢰인은 통장 압류 위기에 내몰렸습니다.
+    30대 후반 여성인 E씨는 이혼한 배우자가 결혼 생활 도중 본인의 인감증명서와 명의를 몰래 도용해 진행한 고금리 연대보증 부채에 시달려왔습니다. 자녀 양육비조차 제대로 받지 못하며 홀로 딸을 부양하던 중 금융사로부터 주거지 가압류 및 급여 채권 압류 통지서를 받아 큰 심리적 공포를 안고 저희를 찾아오셨습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2021년 10월 22일</li>
-    <li><strong>금지명령 결정일:</strong> 2021년 10월 26일</li>
-    <li><strong>개시결정일:</strong> 2021년 11월 30일</li>
-    <li><strong>채권자집회기일:</strong> 2021년 12월 28일</li>
-    <li><strong>인가결정일:</strong> 2022년 1월 12일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    보증채무는 채권자들의 저항과 보정 압박이 심합니다. 특히 명의도용에 대한 필적 감정과 형사 고소 절차가 수반되지 않으면 보증 책임을 그대로 져야 하는 법률적 쟁점이 있었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          연대보증 채무의 경우, 본인이 직접 빌리지 않았음에도 법적 효력이 강제되므로 보증 책임을 피해 갈 길이 막막합니다. 특히 의뢰인이 상대방의 대출 범죄 혐의에 대해 구체적인 필적 대조 자료와 공인인증서 도용 경위를 논리적으로 증명하지 못하면 기각 위기에 놓이게 됩니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    형사 고소장 사본과 실제 보증 계약서 필적 대조 자료를 활용해 명의 도용 정황을 재판부에 강력 소명했습니다. 동시에 자녀 1명을 부양가족으로 올린 2인 가구 최저생계비를 철저히 고수하고 가용소득을 최소화하는 방향으로 변제계획안을 관철시켰습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          우선 채권자들의 무단 압류 조치를 철저히 무력화하는 한편, 전배우자를 상대로 형사 고소한 사실원 사본 및 과거 혼인 기간 중 금융 계좌가 전배우자에 의해 단독 통제되었음을 보여주는 금융 대사표를 증거로 확보했습니다. 또한 자녀 1인을 포함한 2인 가구 최저생계비를 적극 고수하고 변제안을 제출하여 채권단 협의를 성공으로 유도했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 9,600만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,920만 원</li>
-      <li><span class="text-emerald-700">탕감율: 원금의 80% 탕감 인가</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 53만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 9,600만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,920만 원 (원금의 20% 변제)</li>
+            <li><strong>탕감율:</strong> 80% 원금 탕감 인가</li>
+            <li><strong>월 변제금:</strong> 53만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          가정파탄을 동반한 보증 피해 사건은 단순 면책을 요구하기보다는, 불법 도용된 대출 거래의 본질을 밝히고 채무자가 가정을 지켜야 하는 특수한 사정을 일목요연하게 정리해 설득하는 정공법이 최선임을 각인시켜 주는 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2021-11-05T15:00:00.000Z",
-    updatedAt: "2021-11-05T15:00:00.000Z",
-    views: 145
+    createdAt: "2021-12-05T10:00:00.000Z",
+    updatedAt: "2021-12-05T10:00:00.000Z",
+    views: 147
   },
   {
     id: "art_6",
-    category: "초기 생활 안정",
-    title: "코로나19 학원 매출 급감으로 발생한 프리랜서 강사의 채무 극복기",
+    category: "생활비/다중채무",
+    title: "코로나 학원 중단 프리랜서 강사의 변동 소득 증빙 및 65% 원금 면책 성공기",
     age: "40대 초반",
-    job: "수학 전문 강사",
+    job: "학원 강사",
     originalDebt: "8,500만 원",
     reducedDebt: "2,975만 원",
     monthlyPayment: "82만 원 (36개월)",
     reductionRate: 65,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    울산 남구 옥동 일대에서 학원 프리랜서 강사로 일하던 40대 F씨는 코로나 사태 이후 수강생이 대거 결석하고 비대면 전환이 늦어지며 소득이 100만 원 미만으로 감소했습니다. 연체 돌려막기로 월변제 의무가 꼬이며 생활 대출금 8,500만 원이 누적되었습니다.
+    울산 남구 삼산동 학원 밀집가에서 수학 전문 강사로 일하던 40대 F씨는 코로나 사태 장기화로 학원 휴원과 정원 축소 조치에 따라 정산 소득이 급감했습니다. 모친의 당뇨 투병 병원비와 한부모 가정으로서의 육아 생활비를 고금리 대출로 충당하다 보니, 누적된 채무가 8,500만 원에 이르게 되어 채무 불이행 위험에 내몰렸습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2022년 3월 02일</li>
-    <li><strong>금지명령 결정일:</strong> 2022년 3월 07일</li>
-    <li><strong>개시결정일:</strong> 2022년 5월 15일</li>
-    <li><strong>채권자집회기일:</strong> 2022년 6월 20일</li>
-    <li><strong>인가결정일:</strong> 2022년 7월 10일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    학원 강사는 월마다 수수료 형식으로 정산금을 수령하기 때문에 원천징수 영수증이나 세금신고 내역이 완벽하지 못하여 법원 심사관이 추가 자료 보정 명령을 빈번하게 제기하는 대상이었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          학원 강사는 매달 수수료 3.3% 정산 형태로 급여를 수령하는 프리랜서 신분이라 소득의 불규칙성이 매우 심했습니다. 울산법원 보정 위원은 지속 가능한 소득 수준을 객관적으로 입증하지 못하면 신청 자격 자체가 미달이라는 입장을 밝혀 상당한 애로사항이 있었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    학원 측과의 위임 계약서, 2년치 정산 영수증 대조표를 제출하여 실질적인 세후 평잔 소득을 유도하였습니다. 울산법원 재판관에게 강사 수입 변동의 특수성을 성실히 피력하여 단 4개월 만에 인가 승인을 획득해 드렸습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          최근 2년간의 학원 거래 정산서 및 입금증을 일자별로 세밀하게 분석하고 정형화된 평균 소득 대조 자료를 준비했습니다. 한부모 가정으로서의 불가피한 추가 양육비 지출과 요양 병원 간병비 소명 내역서 등을 법정 논리에 근거하여 추가 제출함으로써 인정 소득 수준을 채무자의 한계 변제력 안으로 정밀 설계하였습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 8,500만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,975만 원</li>
-      <li><span class="text-emerald-700">탕감율: 65% 면책 판결</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 82만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 8,500만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,975만 원 (원금의 35% 변제)</li>
+            <li><strong>탕감율:</strong> 65% 면책 판결</li>
+            <li><strong>월 변제금:</strong> 82만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          불규칙한 소득을 가진 전문직 프리랜서라 할지라도 최근 소득 수준을 회계적으로 입증하고, 채무 성격의 자선적인 보증 서류들을 세밀하게 분석한다면 안정적인 삶의 터전을 다시 굳건히 할 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2022-03-12T10:00:00.000Z",
-    updatedAt: "2022-03-12T10:00:00.000Z",
-    views: 130
+    createdAt: "2022-03-25T10:00:00.000Z",
+    updatedAt: "2022-03-25T10:00:00.000Z",
+    views: 121
   },
   {
     id: "art_7",
     category: "다중 카드 대출",
-    title: "60대 고령 화물 운전기사의 영업 차량 청산가치 제외 소명 성공 사례",
+    title: "60대 고령 화물차 영업 자산 청산가치 제외 소명을 통해 채무를 극복한 성공기",
     age: "60대 초반",
-    job: "개인화물 운전기사",
+    job: "화물 트럭 운전기사",
     originalDebt: "5,800만 원",
     reducedDebt: "2,030만 원",
     monthlyPayment: "56만 원 (36개월)",
     reductionRate: 65,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    60대 G씨는 울산 울주군을 기점으로 2.5톤 개별화물 트럭을 운전해 오던 중 고장 수리비 및 차량 캐피탈 할부금 상환 지연이 겹치며 독촉에 내몰렸습니다. 빚은 5,800만 원에 달했고 생계용 트럭이 강제 압류될 위기에 처했습니다.
+    울산 울주군에서 2.5톤 개별화물 트럭을 활용해 평생 영업을 이어오던 60대 G씨는 경기 불황과 차량 수리비 폭탄, 캐피탈 채무 지출 연체가 겹치며 파산 문턱에 섰습니다. 차량 압류로 생계 수단마저 위협받으며, 고령의 배우자 만성 질환 약값까지 밀려 총채무가 5,800만 원으로 치달았습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2020년 8월 14일</li>
-    <li><strong>금지명령 결정일:</strong> 2020년 8월 18일</li>
-    <li><strong>개시결정일:</strong> 2020년 11월 05일</li>
-    <li><strong>채권자집회기일:</strong> 2020년 12월 14일</li>
-    <li><strong>인가결정일:</strong> 2021년 1월 05일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    가장 큰 난제는 영업용 화물 트럭이 본인 재산(청산가치)으로 잡혀 매월 변제금이 터무니없이 급증하는 문제였습니다. 영업용 필수 자산을 청산가치에서 어떻게 제외시키느냐가 승패의 관건이었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          가장 거대한 난제는 의뢰인의 유일한 생계 도구인 영업용 화물 트럭이 본인의 '재산 가치(청산가치)'에 그대로 산입되어 청산가치 보장 원칙에 따라 월 변제 예정액이 터무니없이 높게 산정되는 모순이었습니다. 차량이 처분되면 소득 활동 자체가 완전 소멸하는 기로에 서 있었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    해당 화물 트럭이 압류되어 매각될 경우 의뢰인의 소득 활동 자체가 완전 불가능해진다는 점을 재판부에 강력 소명하였습니다. 차량 담보 캐피탈 채무를 미압류 대상으로 분리하고, 필수 생계 도구 배제 조항을 적용받도록 유치하여 청산가치 합산액을 낮추는 법률 방어를 완수했습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          저희 사무소는 민사집행법상의 '생업 유지에 필수적인 도구' 예외 조항을 적극 인용하여 차량 담보 대출의 대환 상쇄 구조를 법정 진술서와 실사 보고서로 정리해 소명했습니다. 화물 트럭의 실제 감가상각 가치를 증명하여 재산 가치를 최대한 깎아내리고 부양가족 질환 소명비 공제를 성공시켰습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 5,800만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,030만 원</li>
-      <li><span class="text-emerald-700">탕감율: 65% 원금 면책</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 56만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 5,800만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,030만 원 (원금의 35% 변제)</li>
+            <li><strong>탕감율:</strong> 65% 원금 면책</li>
+            <li><strong>월 변제금:</strong> 56만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          영업 자산을 기계적으로 청산가치에 잡아넣는 잘못된 관행에 법률 논리와 현장 실태 증명서로 정밀하게 방어하여 채무자의 직업적 갱생을 실현시킨 최선의 모범 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2020-08-30T13:00:00.000Z",
-    updatedAt: "2020-08-30T13:00:00.000Z",
-    views: 95
+    createdAt: "2020-09-12T10:00:00.000Z",
+    updatedAt: "2020-09-12T10:00:00.000Z",
+    views: 110
   },
   {
     id: "art_8",
     category: "생활비/다중채무",
-    title: "30대 맞벌이 부부 적자 가계대출 및 주택 담보 대환 부담 극복 사례",
+    title: "치솟는 변동 금리와 양육비 부담 한계에 도달한 30대 맞벌이 부부의 가계대출 극복기",
     age: "30대 후반",
     job: "중소기업 대리",
     originalDebt: "9,000만 원",
@@ -388,51 +521,71 @@ const seedArticles = [
     monthlyPayment: "75만 원 (36개월)",
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    맞벌이를 하며 근로 소득이 있음에도 치솟는 변동금리 이자 부담과 어린 두 자녀의 교육비/아이돌봄비 누적으로 적자 재정을 겪던 30대 부부의 사례입니다. 2금융권 신용대출 9,000만 원을 감당하기 어려운 한계에 도달했습니다.
+    울산 동구에 거주하는 30대 후반 맞벌이 부부는 아이 둘의 보육비와 전세자금 대출 변동금리가 폭등하며 매달 적자를 피할 수 없었습니다. 부족한 생활비를 메우기 위해 2금융권 신용대출과 카드론에 점차 기대게 되었고, 불과 2년 사이에 부채가 9,000만 원까지 불어나 가정 존립의 한계선에 부딪히게 되었습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2022년 9월 01일</li>
-    <li><strong>금지명령 결정일:</strong> 2022년 9월 05일</li>
-    <li><strong>개시결정일:</strong> 2022년 11월 20일</li>
-    <li><strong>채권자집회기일:</strong> 2022년 12월 28일</li>
-    <li><strong>인가결정일:</strong> 2023년 1월 15일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    부부 공동 소득이 잡혀 부양가족 수 산정에서 혜택을 받기 어려웠으며, 최근 금리 인상 폭에 따른 고정 비용 부담을 일반 최저생계비만으로 방어해 내기가 곤란한 기술적 난점이 있었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          맞벌이 부부의 경우 공동 합산 소득이 다소 높게 잡히는 경향이 있어 법원에서 1인 가구 최저생계비 기준만을 엄격하게 고수하려 했습니다. 부양가족의 적정한 분배와 부부 공동명의 임차 보증금의 청산가치 제외 소명이 중대한 쟁점이었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    부부 각자의 소득을 완전 분리 소명하고, 부부 공동 재산 중 주택 대출 담보액을 청산가치에서 안전하게 상쇄시켰습니다. 자녀 부양가족 배분을 조율하여 추가 생계비를 극대화하는 맞춤형 가용소득 최적화 설계를 제공했습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          부부 각자의 근로 계약 형태와 원천징수 실소득 영수증을 완전히 별도 구분하여 산정했고, 주거용 임차보증금의 소액 보증금 최우선변제 권리 한도를 적용받도록 방어했습니다. 아이들의 어린이집 등원 증명, 의료비 약정 거래 증빙 자료를 정밀하게 제출하여 부양가족 추가 생계비 인정을 이뤄내 가용소득을 크게 억제했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 9,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,700만 원</li>
-      <li><span class="text-emerald-700">탕감율: 원금의 70% 탕감</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 75만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 9,000만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,700만 원 (원금의 30% 변제)</li>
+            <li><strong>탕감율:</strong> 70% 원금 탕감</li>
+            <li><strong>월 변제금:</strong> 75만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          소득이 안정되어 있더라도 고정 지출 부담과 금융 금리 피해가 있는 채무자는 법원이 정한 형식적 생계비에 안주하지 말고, 가구의 특수한 필요비를 정밀하게 변론해 가용소득을 다듬어야 인생 재건이 가능함을 입증한 사례입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2022-09-18T16:00:00.000Z",
-    updatedAt: "2022-09-18T16:00:00.000Z",
-    views: 110
+    createdAt: "2022-10-18T10:00:00.000Z",
+    updatedAt: "2022-10-18T10:00:00.000Z",
+    views: 122
   },
   {
     id: "art_9",
     category: "사업 실패 채무",
-    title: "울산 동구 조선소 하청업체 구조조정 실직자 80% 채무 탕감 사례",
+    title: "조선소 구조조정 실직 후 생계 위협에 직면한 50대 조선업 가장의 회생 보고서",
     age: "50대 중반",
     job: "조선소 하청 근로자",
     originalDebt: "1억 3,000만 원",
@@ -440,51 +593,71 @@ const seedArticles = [
     monthlyPayment: "72만 원 (36개월)",
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    동구 조선소 구조조정 여파로 권고사직을 당한 50대 가장 H씨는 실직 기간이 길어지며 신용 카드로 생계를 때우다 다중 신용 채무 1억 3,000만 원이 누적된 상태였습니다. 겨우 경비직으로 재취업했으나 저임금으로 파산에 직면했습니다.
+    울산 동구의 조선소 하청업체에서 오랜 기간 용접공으로 성실히 일했던 50대 H씨는 조선업 불황으로 인한 강제 구조조정 여파로 갑작스럽게 권고사직을 당했습니다. 재취업 기간 동안 가족의 생계를 유지하기 위해 제2금융권 신용대출과 카드 연체 돌려막기를 하던 중 이자가 겉잡을 수 없이 증폭되어 총부채 1억 3,000만 원에 도달하게 되었습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2023년 1월 05일</li>
-    <li><strong>금지명령 결정일:</strong> 2023년 1월 09일</li>
-    <li><strong>개시결정일:</strong> 2023년 3월 20일</li>
-    <li><strong>채권자집회기일:</strong> 2023년 4월 28일</li>
-    <li><strong>인가결정일:</strong> 2023년 5월 12일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    과거 고소득 시기의 채무 원인이 사업적 연대보증 및 실직에 근거하여 발생하였으나, 현재 재취업한 곳의 월급이 너무 낮아 법원 회생위원으로부터 고의적인 저임금 이직이 아니냐는 해명 요건이 걸림돌이었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          과거 고소득 시기의 대출 이력이 발목을 잡았습니다. 재직 당시에는 이자를 충분히 감당했으나 권고사직 후 재취업한 아파트 경비직의 소득이 종전의 절반에 불과하자, 법원에서는 '고의적으로 저임금 직무로 이직하여 변제금을 적게 내려는 편법이 아닌가' 하는 무리한 의심과 조사가 걸림돌이 되었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    연령 및 울산 지역 조선업 경기 하락에 따른 재취업의 한계를 객관적 수치(조선업 고용동향 및 건강보험 득실 변경 내역)로 적극 입증했습니다. 소득 대비 가용소득을 최소화하는 정당성을 구축하여 변제율을 원금의 20% 선으로 극단적으로 낮춰 드렸습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          의뢰인의 실직 원인이 하청 구조조정에 기인한 불가피한 사유였음을 입증하고자 당시 조선업 고용 동향 통계청 자료와 고용보험 피보험자격 상실 확인원을 면밀히 대조 제출했습니다. 연령과 만성 관절 질환 등으로 용접 업무 복귀가 불가능하다는 진단 증빙을 피력하여, 경비직 급여를 정상적 소득 기반으로 확정 짓고 가용소득을 최소 범주로 방어하는 전략을 이끌어냈습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 3,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,600만 원</li>
-      <li><span class="text-emerald-700">탕감율: 원금의 80% 탕감 완료</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 72만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 1억 3,000만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,600만 원 (원금의 20% 변제)</li>
+            <li><strong>탕감율:</strong> 80% 원금 탕감 성공</li>
+            <li><strong>월 변제금:</strong> 72만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          산업 위축 및 실직으로 불이익을 당한 근로자라 할지라도 재취업 경위와 고용 형태에 대하여 객관적이고 성실한 서류 검증 소명을 관철한다면, 법원의 불합리한 기각 의심을 완전히 해소하고 인생 2막의 주춧돌을 세울 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2023-01-25T11:00:00.000Z",
-    updatedAt: "2023-01-25T11:00:00.000Z",
-    views: 242
+    createdAt: "2023-02-15T10:00:00.000Z",
+    updatedAt: "2023-02-15T10:00:00.000Z",
+    views: 243
   },
   {
     id: "art_10",
     category: "사업 실패 채무",
-    title: "40대 1인 헤어숍 자영업자 가공 경비 배제 및 65% 원금 면책 성공기",
+    title: "1인 뷰티숍 임대료 적자 누적 및 가공 경비 의혹을 해결한 여성 자영업자의 극복 보고서",
     age: "40대 초반",
     job: "자영업 (헤어숍 운영)",
     originalDebt: "8,500만 원",
@@ -492,51 +665,71 @@ const seedArticles = [
     monthlyPayment: "82만 원 (36개월)",
     reductionRate: 65,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    울산 중구에서 1인 헤어숍을 개업했던 40대 여성 I씨는 상가 권리금 대출과 프랜차이즈 가맹료 부담에 시달리다 매달 적자를 메우기 위해 고금리 대부업 신용대출을 빌리기 시작해 8,500만 원의 부채를 지게 되었습니다.
+    울산 중구 학성동 인근에서 작은 1인 헤어숍을 운영하던 40대 I씨는 창업 초기 권리금 대출과 점포 인테리어 할부 비용, 프랜차이즈 수수료 적자가 쌓이며 파산 직전의 지경에 도달했습니다. 가게 월세 납입마저 지속적으로 밀리며 상가 강제 명도 처분에 직면했고, 누적된 빚은 8,500만 원에 육박하여 채무 조정을 위해 법률 전문가의 조력이 절박해졌습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2023년 7월 01일</li>
-    <li><strong>금지명령 결정일:</strong> 2023년 7월 05일</li>
-    <li><strong>개시결정일:</strong> 2023년 9월 18일</li>
-    <li><strong>채권자집회기일:</strong> 2023년 10월 28일</li>
-    <li><strong>인가결정일:</strong> 2023년 11월 12일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    개인자영업자는 소득 산정이 복잡하여 장부상의 가공 경비나 현금 매출 누락을 의심받기 십상입니다. 매출과 영업 지출을 투명하게 입증하지 못하면, 법원 회생위원이 임의로 소득을 대폭 높여 변제금을 무리하게 올리는 악수가 벌어집니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          자영업자는 근로소득자와 달리 매출액 대비 '실질 순소득'의 회계적 증명이 매우 험난합니다. 매출 전표 상의 경비 중 법인이 임의로 분류한 공제 항목들에 대해 울산 회생위원이 '가공 경비(가짜 지출)' 혐의를 제기하여 실제 수입보다 변제금을 터무니없이 무리하게 책정시키려는 경향이 난제였습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    포스기 매출 정산 내역과 입고 재료비 내역, 임대료 및 카드 수수료 증빙 자료를 정밀 복식 대조표로 작성했습니다. 실제 손에 쥐는 마진율을 회계적으로 명명백백히 입증하여 법원이 요구하는 성실 가용소득 기준을 지켜냈습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          저희 사무소는 포스(POS) 단말기 상의 매출 원장과 카드 세무 신고 세부 내역, 재료 소모 매입 세금계산서, 월세 송금 내역을 바탕으로 일목요연한 6개월 통합 수지대조 도표를 작성했습니다. 매장에 사용되는 고정 임대료와 제세공과금 지출이 사업 유지를 위한 정당한 '필수 운영 경비'임을 세무서 공인인증 자료로 강력 소명하여 인정을 이끌어냈습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 8,500만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,975만 원</li>
-      <li><span class="text-emerald-700">탕감율: 65% 면책 판결</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 82만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 8,500만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,975만 원 (원금의 35% 변제)</li>
+            <li><strong>탕감율:</strong> 65% 면책 판결</li>
+            <li><strong>월 변제금:</strong> 82만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          개인 자영업자 회생의 핵심은 세부 수입 소명을 통한 '가공 매출 의혹 방어'에 있습니다. 사업 유지에 필요한 필수 불가결한 영업비와 공제 증명들을 투명하고 끈기 있게 설득하는 법률 조력이 사건 해결의 돌파구임을 각인시킵니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2023-07-14T10:00:00.000Z",
-    updatedAt: "2023-07-14T10:00:00.000Z",
-    views: 119
+    createdAt: "2023-08-10T10:00:00.000Z",
+    updatedAt: "2023-08-10T10:00:00.000Z",
+    views: 139
   },
   {
     id: "art_11",
     category: "생활비/다중채무",
-    title: "20대 대학원생 다중 대부업 연체 채무 70% 면책 승인 사례",
+    title: "연구 수당 수령 대학원생의 불완전 소득 보증 심사를 극복한 70% 면책 구제 보고서",
     age: "20대 중반",
     job: "대학 연구 보조원",
     originalDebt: "3,800만 원",
@@ -544,51 +737,71 @@ const seedArticles = [
     monthlyPayment: "31만 원 (36개월)",
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    연구원 학자금 대환 부족액과 주거 임차 비용 마련을 위해 2금융권 카드론 및 소액 대부업 다중 채무 3,800만 원을 연체하게 된 생활고 사건입니다.
+    20대 중반의 대학원생 J씨는 학자금 전세 대출 한도 초과분과 모친의 급격한 건강 악화로 발생한 다중 대부업 카드 대출 3,800만 원의 연체 위기에 내몰렸습니다. 조교 수당과 아르바이트로 생계를 이어가며 매일 빚 독촉 전화를 견뎌내던 중, 법적인 구제책을 찾아 여환동 법무사를 방문하게 되었습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2024년 2월 10일</li>
-    <li><strong>금지명령 결정일:</strong> 2024년 2월 14일</li>
-    <li><strong>개시결정일:</strong> 2024년 4월 02일</li>
-    <li><strong>채권자집회기일:</strong> 2024년 5월 10일</li>
-    <li><strong>인가결정일:</strong> 2024년 5월 28일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    의뢰인은 정규 직장인이 아닌 연구 보조 수당 수령자로서 계속적·반복적 소득 요건을 법원에 성실히 소명해야 하는 신분상의 법률적 약점이 있었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          정식 직장의 4대 보험 적용 근로자가 아니라 학과 내 위탁 프로젝트 연구 보조 수당(학연생 인건비)을 받는 신분이라, 법적으로 '계속적이고 반복적인 수입 확보' 요건을 입증하기 대단히 어려운 지점에 서 있었습니다. 법원에서는 소득 불량 및 단기 편법 신청으로 간주할 가능성이 매우 컸습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    대학 산학협력단에서 정기 발행하는 연구원 급여 명세 및 계좌 입금증을 성실히 바인딩하고, 졸업 후 연구 연장이 가능함을 소명하여 계속적 소득 창출 의사를 입증해 내어 법원 인가를 완료시켰습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          대학 산학협력단으로부터 직접 J씨 연구원으로 입금된 연구 위탁 협약서와 급여 지급 원장을 취합하여, 비록 계약직 성격이나 과제 지속성을 증명하는 행정 서류를 빈틈없이 제출했습니다. 졸업 후 동 분야 연구원으로 고용이 내정되어 있음을 지도교수 확인서 등으로 증명하여 계속성 소득 요건을 완전히 정당화시켰습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 3,800만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,140만 원</li>
-      <li><span class="text-emerald-700">탕감율: 70% 탕감 승인</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 31만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 3,800만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,140만 원</li>
+            <li><strong>탕감율:</strong> 70% 탕감 승인</li>
+            <li><strong>월 변제금:</strong> 31만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          소득의 증빙 형태가 다소 특이하거나 일반적이지 않은 사회초년생 및 대학 연구원이라 하더라도, 전문 법무사의 소명 전략에 따라 얼마든지 합법적인 갱생 혜택의 사각지대에서 빠져나올 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2024-02-28T09:00:00.000Z",
-    updatedAt: "2024-02-28T09:00:00.000Z",
-    views: 88
+    createdAt: "2024-03-10T10:00:00.000Z",
+    updatedAt: "2024-03-10T10:00:00.000Z",
+    views: 94
   },
   {
     id: "art_12",
     category: "코인/투자 채무",
-    title: "30대 대기업 생산직 도박 채무 반성 소명 및 70% 탕감 인가 사례",
+    title: "대기업 공장 근로자의 무리한 사행성 투자 실패와 70% 탕감 갱생 성공 사례",
     age: "30대 중반",
     job: "대기업 공장 근로자",
     originalDebt: "1억 500만 원",
@@ -596,51 +809,71 @@ const seedArticles = [
     monthlyPayment: "87만 원 (36개월)",
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    안정적인 대기업 공장에 재직 중임에도 일시적 인터넷 배팅으로 카드 다중 대환 대출 및 대부업체 고액 연쇄 대출이 1억 500만 원까지 번져 기각 위기에 처했던 근로자의 사건 분석입니다.
+    울산 대기업 생산직 공장에서 교대 근무를 하는 30대 중반 K씨는 직장 생활의 스트레스를 해소하고자 호기심에 모바일 스포츠 배팅과 불법 사행성 사이트에 손을 댔습니다. 초기 손실을 만회하려 고금리 카드론과 고액 직장인 신용대출을 무단으로 받아 탕진하였고, 급기야 채무액이 1억 500만 원에 육박해 정상적인 월급 압류 위기에 내몰렸습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2024년 9월 12일</li>
-    <li><strong>금지명령 결정일:</strong> 2024년 9월 18일</li>
-    <li><strong>개시결정일:</strong> 2024년 11월 05일</li>
-    <li><strong>채권자집회기일:</strong> 2024년 12월 14일</li>
-    <li><strong>인가결정일:</strong> 2025년 1월 05일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    울산법원은 불법 도박이나 무리한 사행성 배팅 채무에 대해 극도로 보수적이며 기각 명령을 자주 내립니다. 신청 이후 채무 전액을 청산가치에 과대 산입시키거나 변제율을 90% 이상으로 극단적으로 올리라는 압박이 존재했습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          울산지방법원은 도박 및 불법 배팅 성격의 채무에 대해 극도로 무거운 시선을 던집니다. 원칙적으로 이러한 사행성 부채액 전액을 본인의 청산가치에 반영하여 월 변제 비율을 90% 이상으로 책정하도록 강력한 보정 권고를 하므로 탕감율 방어가 매우 까다로운 건이었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    단순 탕감 호소 대신, 의뢰인의 도박 중독 치료 확인서, 중독 예방 센터 상담 내역, 그리고 매달 작성한 자필 반성 소명서를 지속 제출했습니다. 대기업 급여 특성상 변제 여력이 충분함을 입증하되, 향후 성실 납부 의지를 강력히 내비쳐 원금 70% 탕감율을 극적으로 확정시켰습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          단순한 선처 호소 전략에서 탈피하여 의뢰인이 도박 중독 치유 상담 센터를 이수 중임을 증명하는 공인 이수 서류, 중독 치료 병원 정신의학과 진단서, 매월 작성한 정밀 자필 소명 조서를 함께 제출했습니다. 낭비벽이 치유되고 있으며 향후 성실 변제 의지를 입증하여 청산가치 의무 편입 수위를 극적으로 낮췄습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 500만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 3,150만 원</li>
-      <li><span class="text-emerald-700">탕감율: 70% 원금 면책 성공</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 87만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 1억 500만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 3,150만 원 (원금의 30% 변제)</li>
+            <li><strong>탕감율:</strong> 70% 원금 면책 성공</li>
+            <li><strong>월 변제금:</strong> 87만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          도박 및 사행성 투자 실패는 면책 기각율이 매우 높은 최상급 위험 사건에 속하지만, 법률 대리인이 채무자의 정밀한 치료 및 진지한 반성 정황을 입증해 낸다면 최선의 면책 조정을 성취할 수 있음을 보여줍니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2024-10-05T10:00:00.000Z",
-    updatedAt: "2024-10-05T10:00:00.000Z",
-    views: 180
+    createdAt: "2024-10-12T10:00:00.000Z",
+    updatedAt: "2024-10-12T10:00:00.000Z",
+    views: 198
   },
   {
     id: "art_13",
     category: "생활비/병원비",
-    title: "50대 사별 후 만성 투병 병원비 누적 카드 채무 75% 대폭 감면 사례",
+    title: "사별 후 투병비 누적으로 발생한 50대 여성 마트 근로자의 75% 대폭 감면 보고서",
     age: "50대 후반",
     job: "요식업 매장 파트타이머",
     originalDebt: "5,400만 원",
@@ -648,412 +881,572 @@ const seedArticles = [
     monthlyPayment: "37만 원 (36개월)",
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    남편과 사별 후 식당 아르바이트로 홀로 생계를 이어가던 50대 여성 L씨는 만성 척추 협착증 투병으로 비급여 수술비와 주사 비용을 카드로 돌려막으며 5,400만 원까지 이자가 쌓인 생계 파탄 사건입니다.
+    울산 남구의 마트 반찬 코너에서 일하던 50대 후반 여성 L씨는 수년 전 사별한 배우자의 병원 치료비 연대보증과 본인의 급성 무릎 관절염 수술비가 누적되며 한계 상황에 도달했습니다. 월 130만 원 남짓의 식당 파트타임 소득만으로는 한 달 수수료와 이자도 막아낼 수 없어 총 5,400만 원 부채 독촉에 눈물을 흘려야 했습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2023년 10월 20일</li>
-    <li><strong>금지명령 결정일:</strong> 2023년 10월 24일</li>
-    <li><strong>개시결정일:</strong> 2023년 11월 20일</li>
-    <li><strong>채권자집회기일:</strong> 2023년 12월 28일</li>
-    <li><strong>인가결정일:</strong> 2024년 1월 12일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    의뢰인의 월 소득이 140만 원에 불과해 1인 최저생계비(약 120만 원)를 제외하면 월 변제 가능 액수가 너무 낮았습니다. 법원은 추가 병원비 영수증을 성실히 소명하지 않으면 생계 여건 부적합을 이유로 기각을 검토했습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          소득이 법정 최저생계비(1인 가구 기준)에 거의 턱걸이하는 수준이라 채무자가 매달 법원에 변제 가능한 최소 가용소득인 10만~20만 원 범위조차 산출하기가 위태로웠습니다. 일반적인 사무실에서는 파산 요건으로 넘기려 했으나 고령의 나이에도 근로 의욕이 매우 높았습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    지속적인 치료가 필수적임을 입증하기 위해 의사 소견서와 향후 약제비 추정 자료를 첨부해 추가 생계비(월 30만 원)를 강력 신청했습니다. 가용소득을 월 37만 원으로 조율하는 데 합의하여 75% 대폭 감면 승인을 따냈습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          파산 절차를 밟을 경우 의뢰인의 주거용 임차 소액 보증금까지 위협받을 소지가 크다고 진단, 회생으로 안전 장치를 걸었습니다. 의뢰인의 월 130만 원 급여에서 만성 투병 진단 의료 영수증과 보장 약값을 합산해 필수 요양비를 소명하고 1인 가구 가용소득을 딱 37만 원으로 칼같이 설계해 재판부를 설득했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 5,400만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,350만 원</li>
-      <li><span class="text-emerald-700">탕감율: 원금의 75% 탕감</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 37만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 5,400만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,350만 원 (원금의 25% 변제)</li>
+            <li><strong>탕감율:</strong> 75% 탕감 결정</li>
+            <li><strong>월 변제금:</strong> 37만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          고금리 신용 대출이 질병이나 사별 등 불가피한 생계 위협 과정에서 파생되었음을 채무자의 투병 진단서 및 의료 행정 내역으로 성실히 입증한다면, 법원의 가장 따뜻한 법률적 온정과 최대 수준의 면책 구제를 얻어낼 수 있음을 증명했습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2023-11-20T09:00:00.000Z",
-    updatedAt: "2023-11-20T09:00:00.000Z",
-    views: 112
+    createdAt: "2019-11-20T10:00:00.000Z",
+    updatedAt: "2019-11-20T10:00:00.000Z",
+    views: 111
   },
   {
     id: "art_14",
     category: "생활비/다중채무",
-    title: "40대 프리랜서 배달 라이더 유류비 경비 공제 및 원금 70% 탕감 성공기",
-    age: "40대 초반",
-    job: "배달 라이더 (플랫폼 근로자)",
-    originalDebt: "6,000만 원",
-    reducedDebt: "1,800만 원",
-    monthlyPayment: "50만 원 (36개월)",
-    reductionRate: 70,
+    title: "보이스피싱 범죄에 속아 발생한 30대 여성 다중 카드 연체 채무 전격 구제 보고서",
+    age: "30대 초반",
+    job: "일반 대기업 대리",
+    originalDebt: "6,500만 원",
+    reducedDebt: "1,625만 원",
+    monthlyPayment: "45만 원 (36개월)",
+    reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    40대 오토바이 배달대행 플랫폼 라이더 M씨는 배달 중 교통사고를 입어 오토바이 수리 비용과 치료비를 메우고자 다중 고금리 카드대출 6,000만 원을 받아 감당 불능 상태가 된 실무 사건입니다.
+    울산의 30대 대리 직장인 M씨는 검사를 사칭한 불법 보이스피싱 금융 범죄 사기 집단에 철저히 기만당했습니다. '범죄 계좌에 연루되었으니 기존 예금 보호를 위해 신용대출을 최대한 일으켜 예치하라'는 위조 공문에 속아 6,500만 원을 이체하고 사기 조직이 증발하며 막대한 빚 독촉에 빠졌습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2025년 3월 02일</li>
-    <li><strong>금지명령 결정일:</strong> 2025년 3월 06일</li>
-    <li><strong>개시결정일:</strong> 2025년 5월 12일</li>
-    <li><strong>채권자집회기일:</strong> 2025년 6월 20일</li>
-    <li><strong>인가결정일:</strong> 2025년 7월 05일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    배달 플랫폼 소득은 국세청에 잡히는 세전 정산액 기준이라 유류비, 오토바이 리스료, 식비 등 실질 영업 경비가 공제되지 않아 매달 가용소득이 터무니없이 과다 계상되는 법원 보정의 맹점이 존재했습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          법원 재판부는 본인 과실에 기반한 보이스피싱 송금액에 대해 엄격히 면책 요건을 강화하려는 성향이 강했습니다. 채무의 고의적 은닉이나 증발이 아닌 실제 범죄 피해를 겪었음을 법적인 증거력으로 철저히 소명해 내야 기각을 모면하는 고난도 사안이었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    플랫폼 정산 엑셀 보고서와 오토바이 리스 명세서, 주유 내역 카드 거래 내역 전체를 취합하여 실제 필요 경비 비율 35%를 산정하고 법무사 보정서로 반박 제출했습니다. 실질 세후 소득을 160만 원대로 현실화하여 원금의 70% 면책 승인을 완료했습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          경찰서의 사건사고사실확인원, 피싱 집단에 유출된 신분증 및 단말기 원격 조종 악성 앱 로그 분석 기록, 사기 송금증 사본을 수합해 피해 전말서를 명확히 구비했습니다. 피해자의 무과실 및 사회적 사기 피해자로서의 상황을 재판부에 강력 소명하여 인정을 이뤄내 가용소득을 최소화하는 데 성공했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 6,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,800만 원</li>
-      <li><span class="text-emerald-700">탕감율: 70% 원금 면책 성공</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 50만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 6,500만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,625만 원 (원금의 25% 변제)</li>
+            <li><strong>탕감율:</strong> 75% 탕감 승인</li>
+            <li><strong>월 변제금:</strong> 45만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          금융 사기 집단의 지능적 범죄에 무방비 노출되어 채무 독촉에 시달리는 사회초년생 및 직장인은 범죄 피해 사실 증명과 법률 소명 절차의 정합성에 따라 충분히 가용소득을 방어하고 면책 혜택을 획득할 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2025-03-15T11:00:00.000Z",
-    updatedAt: "2025-03-15T11:00:00.000Z",
-    views: 165
+    createdAt: "2023-05-18T10:00:00.000Z",
+    updatedAt: "2023-05-18T10:00:00.000Z",
+    views: 130
   },
   {
     id: "art_15",
     category: "사업 실패 채무",
-    title: "30대 요식업 프랜차이즈 가맹점주 폐업 상가보증금 청산가치 상쇄 성공기",
-    age: "30대 중반",
-    job: "자영업자 (치킨전문점)",
-    originalDebt: "1억 4,000만 원",
-    reducedDebt: "3,500만 원",
-    monthlyPayment: "97만 원 (36개월)",
-    reductionRate: 75,
-    content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
-  </div>
-  
-  <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    울산 울주군에서 치킨 가맹점을 운영하다 임대료 연체와 함께 원자재 대금 1억 4,000만 원의 다중 연체가 누적된 극심한 고통의 사건이었습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2022년 11월 02일</li>
-    <li><strong>금지명령 결정일:</strong> 2022년 11월 06일</li>
-    <li><strong>개시결정일:</strong> 2022년 12월 24일</li>
-    <li><strong>채권자집회기일:</strong> 2023년 2월 10일</li>
-    <li><strong>인가결정일:</strong> 2023년 2월 28일</li>
-  </ul>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    남은 상가 보증금 3,000만 원이 전액 청산가치로 산입되어 법원에서 그만큼을 갚으라는 보정 요구가 핵심 쟁점이었습니다. 권리금은 전무한 상태였지만 보증금이 재산으로 반영되면 생계 유지가 불가능했습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    임대인의 월세 연체 차감 확약서를 신속히 발부받아 잔존 보증금 실질 가치가 500만 원 미만으로 하락했음을 서류로 명확히 입증했습니다. 보증금 청산가치 산정을 완벽히 배제시켜 75%의 높은 탕감율로 인가 판결을 성사시켰습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 4,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 3,500만 원</li>
-      <li><span class="text-emerald-700">탕감율: 75% 원금 면책 성공</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 97만 원 (36개월)</li>
-    </ul>
-  </div>
-</div>`,
-    createdAt: "2022-12-05T10:00:00.000Z",
-    updatedAt: "2022-12-05T10:00:00.000Z",
-    views: 140
-  },
-  {
-    id: "art_16",
-    category: "생활비/다중채무",
-    title: "20대 1인 유튜브 크리에이터 MCN 정산 소득 3년 평균치 환산 방어 성공 사례",
-    age: "20대 후반",
-    job: "1인 크리에이터 (프리랜서)",
-    originalDebt: "5,200만 원",
-    reducedDebt: "1,820만 원",
-    monthlyPayment: "50만 원 (36개월)",
-    reductionRate: 65,
-    content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
-  </div>
-  
-  <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    최근 유튜브 채널 조회수가 급락하면서 정산금 수익이 거의 소멸한 20대 크리에이터 O씨의 사례입니다. 과거 높은 수익 시절의 장비 구매 리스료와 신용카드 5,200만 원이 연체 위기에 빠진 쟁점이 복잡한 경우였습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2025년 8월 10일</li>
-    <li><strong>금지명령 결정일:</strong> 2025년 8월 14일</li>
-    <li><strong>개시결정일:</strong> 2025년 10월 22일</li>
-    <li><strong>채권자집회기일:</strong> 2025년 11월 28일</li>
-    <li><strong>인가결정일:</strong> 2025년 12월 10일</li>
-  </ul>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    유튜브 애드센스 정산금은 계절성 및 조회수에 따라 0원에서 수천만 원까지 변동폭이 극심합니다. 법원 재판부는 최근 잘 나오던 달의 고소득을 기준으로 변제율을 올리라는 무리한 보정을 권고했습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    최근 3년치의 구글 및 MCN 플랫폼 정산 통계 원장을 취합하여, 정산 소득의 하강 주기를 과학적으로 입증했습니다. 일시적 고소득 대신 3개년 연 평균 소득 환산법을 제시하는 법무사 소명 논리로 65%의 최종 탕감률 승인을 관철했습니다.
-  </p>
-
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 5,200만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 1,820만 원</li>
-      <li><span class="text-emerald-700">탕감율: 원금 65% 면책 판결</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 50만 원 (36개월)</li>
-    </ul>
-  </div>
-</div>`,
-    createdAt: "2025-08-22T10:00:00.000Z",
-    updatedAt: "2025-08-22T10:00:00.000Z",
-    views: 105
-  },
-  {
-    id: "art_17",
-    category: "사업 실패 채무",
-    title: "50대 건설 하도급 업자의 공사대금 미수금 부채 전이 극복 및 인가 사례",
+    title: "조선업 선박 가공 납품 자영업 부도로 발생한 1억 8천 부채 70% 탕감 보고서",
     age: "50대 초반",
-    job: "건설 하도급 사업자",
+    job: "정밀 부품 가공 자영업자",
     originalDebt: "1억 8,000만 원",
     reducedDebt: "5,400만 원",
     monthlyPayment: "150만 원 (36개월)",
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    울주군에서 영세 토목 건설 하청업을 하던 50대 P씨는 원청 업체의 연쇄 부도로 대금 2억 원을 받지 못하자, 자재 납품처와 현장 근로자 임금 체불을 막기 위해 가계 신용대출을 끌어쓰며 1억 8,000만 원의 부채를 안게 된 부도성 채무 사건입니다.
+    울산 울주군에서 조선소 선박 배관 정밀 부품 납품 공장을 홀로 일구던 50대 N씨는 원청 업체의 연쇄 부도 사태와 납품 단가 폭락의 풍파를 맞았습니다. 공장 설비 담보 대출과 직원들의 급여, 하청 거래 미수 대금을 막기 위해 무리하게 대표이사 보증 대출을 빌려 쓰다 총 부채 1억 8,000만 원의 채무 폭탄을 지게 되었습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2019년 10월 05일</li>
-    <li><strong>금지명령 결정일:</strong> 2019년 10월 09일</li>
-    <li><strong>개시결정일:</strong> 2019년 11월 20일</li>
-    <li><strong>채권자집회기일:</strong> 2019년 12월 28일</li>
-    <li><strong>인가결정일:</strong> 2020년 1월 15일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    현장 자재처 채권자가 많아 신청서 접수 시 채권자 목록 누락 우려가 컸으며, 누락된 채무는 인가 결정 후에도 면책되지 않는 심각한 법적 리스크가 동반되었습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          공장 내 잔여 기계 설비와 잔존 미수금 채권이 청산가치에 과대 산정되는 과정이 중대한 걸림돌이었습니다. 잔여 채권을 실제 현금화하기 어려운 현 상태임에도 법원이 자산 가치를 높게 잡으면 변제액이 감당 불가능한 수준으로 불어날 위기였습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    신용조회 외에 미결제 거래 원장 전체를 전수 추적하여 미등록 사채 채권까지 채권자 목록에 확실하게 편입시켰습니다. 원청 부도사실증명원과 부실 공사 채권 확인서를 법원에 소명 자료로 첨부하여 70% 감면 승인을 무사히 완료시켰습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          공장 기계 설비들의 감가상각 평가서와 고장 진단서, 거래처 부도 증빙 서류를 정밀하게 수집해 기계의 실질적 잔존 처분 가치가 0원에 수렴함을 증명했습니다. 거래처 미수 채권이 회수 불능의 채무 불이행 채권임을 명명백백히 밝혀내 청산가치를 90% 이상 절감시키는 쾌거를 거뒀습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 8,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 5,400만 원</li>
-      <li><span class="text-emerald-700">탕감율: 70% 탕감 인가 완료</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 150만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 1억 8,000만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 5,400만 원 (원금의 30% 변제)</li>
+            <li><strong>탕감율:</strong> 70% 면책 승인</li>
+            <li><strong>월 변제금:</strong> 150만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          공장 설비 및 사업 자산 평가액이 무리하게 책정되어 회생을 주저하는 제조업 및 기업형 자영업자는 자산 가치의 잔존 실체를 서류상으로 파괴 및 입증하는 전략에 따라 극적인 탕감 기회를 쟁취할 수 있음을 확신시켜 줍니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2019-10-18T10:00:00.000Z",
-    updatedAt: "2019-10-18T10:00:00.000Z",
-    views: 180
+    createdAt: "2020-11-15T10:00:00.000Z",
+    updatedAt: "2020-11-15T10:00:00.000Z",
+    views: 260
+  },
+  {
+    id: "art_16",
+    category: "생활비/다중채무",
+    title: "40대 싱글맘 양육비 누락과 다중 2금융 연체 75% 탕감 인가 성공 보고서",
+    age: "40대 초반",
+    job: "간호조무사",
+    originalDebt: "7,800만 원",
+    reducedDebt: "1,950만 원",
+    monthlyPayment: "54만 원 (36개월)",
+    reductionRate: 75,
+    content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
+    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+  </div>
+  
+  <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
+    울산 중구에 거주하며 두 자녀를 양육하는 40대 싱글맘 O씨는 전배우자의 양육비 송금 두절과 간호조무사 초임 연봉 한계로 생계형 적자가 빚으로 불어났습니다. 연체 이자와 생계 비용으로 빌려 쓰기 시작한 2금융 카드 대출이 순식간에 7,800만 원까지 악화되어 주거지 보증금 압류 고지서를 마주하게 되었습니다.
+  </p>
+
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
+
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          두 아이를 부양하는 싱글맘의 가구 형태를 감안할 때 3인 가구 최저생계비를 온전히 인정받는 것이 변제 예정액 수위를 낮추는 핵심 키였습니다. 법원은 전남편의 부양 의무 소홀 사항을 회피한 채, 형식상 공동 부양가족 의무 책임을 주장하며 생계비를 대폭 삭감하라는 무리한 보정을 권고했습니다.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          과거 3년간의 양육비 계좌 거래 확인서를 통해 전배우자로부터 양육비가 단 1원도 입금되지 않았음을 투명하게 증명했습니다. 아이들의 긴급 치료 진단 의료비와 한부모 수급 증명서를 행정 논거로 수립하여 법원의 보정 압박을 완벽히 퇴치하고 3인 가구의 높은 생계비를 원안대로 사수했습니다.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 7,800만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,950만 원 (원금의 25% 변제)</li>
+            <li><strong>탕감율:</strong> 75% 탕감 결정</li>
+            <li><strong>월 변제금:</strong> 54만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          양육 책임을 전적으로 짊어진 채 고통받는 싱글맘 등 금융 취약계층은 양육비 미지급 피해 정황의 서류적 입증 깊이에 따라 최대의 법적 생계비 가치를 지킬 수 있다는 모범적 방향을 보여준 사례입니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>`,
+    createdAt: "2021-08-25T10:00:00.000Z",
+    updatedAt: "2021-08-25T10:00:00.000Z",
+    views: 154
+  },
+  {
+    id: "art_17",
+    category: "다중 카드 대출",
+    title: "보이스피싱 속 대리 대출 사기 피해를 극복한 20대 간호사의 80% 탕감 보고서",
+    age: "20대 후반",
+    job: "병원 간호사",
+    originalDebt: "8,800만 원",
+    reducedDebt: "1,760만 원",
+    monthlyPayment: "49만 원 (36개월)",
+    reductionRate: 80,
+    content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
+    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+  </div>
+  
+  <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
+    울산의 20대 후반 간호사 P씨는 '정부 지원 초저금리 대환 대출을 받기 위해서는 기존 고금리 대출을 먼저 상환해야 한다'는 지능형 대환 보이스피싱 금융 사기 집단에 사기를 당했습니다. 사기 일당의 원격 제어 앱 요구에 의해 본인 명의로 8,800만 원이 대출 이체되어 극심한 신용불량 상태로 내몰렸습니다.
+  </p>
+
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
+
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          대리 대출 피해액이 대부업체와 다수 카드사에 걸쳐 있어 금융기관들이 피해 주장을 전면 부인하며 변제 기각 항고를 무수히 쏟아냈습니다. 본인이 승인한 형식상 대출 거래라 할지라도 금융 범죄에 연계된 불법 부채임을 법리적으로 증명하는 데 큰 곤경이 따랐습니다.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          경찰 수사 개시 결정서와 악성 금융 악용 바이러스 포렌식 이력 보고서, 당일 자금 이체 기록을 입수해 제출하였습니다. 24시간 3교대 간호 근무를 하는 의뢰인의 신체적/심리적 취약점을 이용한 범죄 수법을 법률 대리인 진술서로 철저히 논증하여 법원 회생위원의 피해 면책 승인을 이뤄냈습니다.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 8,800만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,760만 원 (원금의 20% 변제)</li>
+            <li><strong>탕감율:</strong> 80% 원금 면책 성공</li>
+            <li><strong>월 변제금:</strong> 49만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          피싱 조직의 위법한 금융 대리 조작 행위로 본인 책임 부채를 떠안고 도탄에 빠진 전문직 및 청년들은 범죄 사기 경위의 체계적이고 객관적인 증거화에 따라 최대치의 채무 탕감 권리를 인정받을 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>`,
+    createdAt: "2024-05-18T10:00:00.000Z",
+    updatedAt: "2024-05-18T10:00:00.000Z",
+    views: 110
   },
   {
     id: "art_18",
-    category: "사기 피해 채무",
-    title: "40대 보육교사 명의대여 대출 피싱 사기 연체 방어 성공기",
-    age: "40대 초반",
-    job: "어린이집 보육교사",
-    originalDebt: "6,000만 원",
-    reducedDebt: "2,100만 원",
-    monthlyPayment: "58만 원 (36개월)",
-    reductionRate: 65,
+    category: "사업 실패 채무",
+    title: "상가 분양 적자와 무단 연대보증 피해를 겪은 50대 여성 자영업자의 극복 보고서",
+    age: "50대 초반",
+    job: "자영업 (카페 운영)",
+    originalDebt: "1억 1,000만 원",
+    reducedDebt: "2,750만 원",
+    monthlyPayment: "76만 원 (36개월)",
+    reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    어린이집 보육교사로 일하는 40대 Q씨는 저금리 대환 대출을 유도하는 보이스피싱 명의대여 사기에 연루되어, 본인 모르게 실행된 모바일 비대면 대출 6,000만 원이 즉시 이체되어 연체 위기에 빠진 안타까운 소송 사건입니다.
+    50대 초반인 Q씨는 울산 동구 테라스파크 인근에서 카페를 무리하게 운영하던 중 임대료 상승과 프랜차이즈 재료 납품가 폭등의 풍파를 만났습니다. 동업자의 공동대표 명의 도용 대출 보증 피해가 겹쳐 매장 가압류 통지를 받았고 부채가 1억 1,000만 원까지 치솟아 자식들에게 빚 대물림이 될 파탄 위기에 직면했습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2024년 5월 20일</li>
-    <li><strong>금지명령 결정일:</strong> 2024년 5월 24일</li>
-    <li><strong>개시결정일:</strong> 2024년 7월 18일</li>
-    <li><strong>채권자집회기일:</strong> 2024년 8월 29일</li>
-    <li><strong>인가결정일:</strong> 2024년 9월 10일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    비대면 대출은 신청인의 모바일 기기로 실행되어 본인이 빌린 것이나 마찬가지로 취급되므로, 고의로 빌려 은닉했다는 채권 은행의 강력한 이의신청 및 고의 기각 공세가 가장 험난한 고비였습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          카페 내 집기들과 남은 가맹 임차 권리금 등의 자산 평가 가치가 높게 산정되어 월 변제금이 높게 책정될 위험이 거대한 장벽이었습니다. 실제로는 처분이 거의 불가능한 수준임에도 법원이 자산 가치를 기계적으로 높이 평가하려는 태도를 방어해야 했습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    피해 직후 경찰서에 즉각 신고한 수사 정보 제공 내역서와 범죄 계좌 거래 정지 사실 확인원을 제출했습니다. 피싱 범죄자가 송금받아 취득한 내역을 금융 기록으로 완벽 증명함으로써 채무자의 무죄성을 법원으로부터 소명 인정받았습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          카페 인테리어 감가상각 가치를 정밀 대조하고 매장의 임대료 연체 상태로 인해 상가 권리금의 실 가치가 0원임을 회계 증명서로 밝혀냈습니다. 동업자의 배임 혐의에 대한 민사 소송 조서와 인감 도용 증거를 법원에 함께 피력하여 무단 연대보증 책임의 상쇄 혜택을 획득시켰습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 6,000만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,100만 원</li>
-      <li><span class="text-emerald-700">탕감율: 65% 원금 면책 성공</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 58만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 1억 1,000만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,750만 원 (원금의 25% 변제)</li>
+            <li><strong>탕감율:</strong> 75% 원금 면책</li>
+            <li><strong>월 변제금:</strong> 76만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          허울뿐인 임차 자산 가치가 과도하게 평가되어 변제 폭탄 고충을 겪는 상가 자영업자들은 자산의 실질적 잔존 가치를 깎아내리고 동업 사기 등의 채무 불이행 사유를 체계적으로 논리 증명하는 것이 회생 성공의 첩경입니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2024-06-11T12:00:00.000Z",
-    updatedAt: "2024-06-11T12:00:00.000Z",
-    views: 119
+    createdAt: "2019-08-14T10:00:00.000Z",
+    updatedAt: "2019-08-14T10:00:00.000Z",
+    views: 120
   },
   {
     id: "art_19",
-    category: "생활비/다중채무",
-    title: "30대 대기업 공장 생산직 특근수당 제외 및 72% 원금 면책 인가 성공 사례",
+    category: "생활비/병원비",
+    title: "부모님의 만성 투병으로 발생한 30대 미혼 여성 직장인의 생활비 채무 극복 보고서",
     age: "30대 초반",
-    job: "제조 공장 생산직원",
-    originalDebt: "7,800만 원",
-    reducedDebt: "2,184만 원",
-    monthlyPayment: "60만 원 (36개월)",
-    reductionRate: 72,
+    job: "일반 중소기업 사원",
+    originalDebt: "4,200만 원",
+    reducedDebt: "1,050만 원",
+    monthlyPayment: "29만 원 (36개월)",
+    reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    울산 중공업 및 자동차 생산 공장에서 특교 교대근무로 일하던 30대 근로자 R씨는 잦은 야근 수당 축소와 잔업 중단으로 실수령액이 절반가량 급감하자 가계 생활비 7,800만 원의 다중 채무가 덮쳐 회생을 의뢰했습니다.
+    울산 남구 무거동의 중소기업에 근무하는 30대 미혼 사원 R씨는 아버지가 갑작스러운 간암 진단을 받아 거액의 수술비와 만성 표적 항암제 간병비 부담을 홀로 짊어지게 되었습니다. 수수료와 신용카드 돌려막기 끝에 다중 채무가 4,200만 원으로 치솟아 급여에 압류 독촉장이 도착하며 막장에 치달았습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2021년 7월 12일</li>
-    <li><strong>금지명령 결정일:</strong> 2021년 7월 16일</li>
-    <li><strong>개시결정일:</strong> 2021년 9월 10일</li>
-    <li><strong>채권자집회기일:</strong> 2021년 10월 22일</li>
-    <li><strong>인가결정일:</strong> 2021년 11월 05일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    법원은 대기업 생산직의 경우 기본급 외에 불규칙한 특근 수당과 잔업 수당 전액을 월 고정 소득에 가산하라는 보정 권고를 내립니다. 이를 그대로 받아들이면 이자 변제금이 엄청나게 상승하게 됩니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          미혼 단독 1인 가구 소득 기준으로는 최저생계비가 한정되어 있어 아버지의 표적 항암제 비용과 고정적인 의료 지출비 내역을 추가적으로 공제받지 못한다면 회생 납입금 자체를 중도 포기해야만 하는 벼랑 끝에 서 있었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    근무 회사의 경영 악화 통지서 및 연도별 잔업 특근 수량 추이 분석서를 법원에 제출했습니다. 향후 수당 소득이 비정기적이며 고정 수령이 불가능하다는 합리적 증명을 전개하여, 특근수당을 과세 소득 합계에서 성공적으로 도려내고 72% 감면율로 승인을 이끌어 냈습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          가족들의 실제 거주 형태와 암 투병 진단서 및 병원 장기 입원 명세 도표를 명확히 작성하여, 미혼 세대주임에도 아버지를 '실질적 추가 부양가족' 및 '특별 추가 의료 생계비' 대상자로 소명하는 변론을 성공시켰습니다. 매달 수반되는 항암 약값을 가용소득 공제 항목으로 완벽하게 반영시켰습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 7,800만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,184만 원</li>
-      <li><span class="text-emerald-700">탕감율: 72% 원금 면책 성공</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 60만 원 (36개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 4,200만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,050만 원 (원금의 25% 변제)</li>
+            <li><strong>탕감율:</strong> 75% 원금 면책 성공</li>
+            <li><strong>월 변제금:</strong> 29만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          가족들의 만성 질환 투병비 누적으로 신용 연체 위기를 당하는 효도 채무자들은 법률 대리인의 정교한 추가 의료 생계비 배론 소명에 따라 가구 소득 한계를 돌파하여 최대치의 법적 면책을 받을 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2021-08-14T10:00:00.000Z",
-    updatedAt: "2021-08-14T10:00:00.000Z",
-    views: 125
+    createdAt: "2023-09-18T10:00:00.000Z",
+    updatedAt: "2023-09-18T10:00:00.000Z",
+    views: 124
   },
   {
     id: "art_20",
-    category: "생활비/병원비",
-    title: "50대 암 투병 환자의 기초생활수급 전환 전 신속 면책 90% 승인 사례",
-    age: "50대 초반",
-    job: "단순 가사 노동자",
-    originalDebt: "4,600만 원",
-    reducedDebt: "460만 원",
-    monthlyPayment: "12만 원 (38개월)",
-    reductionRate: 90,
+    category: "보증 채무",
+    title: "친지의 무단 명의 도용 동업 대출 사기 피해를 극복한 40대 가장의 80% 탕감 보고서",
+    age: "40대 초반",
+    job: "일반 공장 기계 설비원",
+    originalDebt: "9,200만 원",
+    reducedDebt: "1,840만 원",
+    monthlyPayment: "51만 원 (36개월)",
+    reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black mb-4">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
     <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
-    만성 위암 3기 진단을 받고 근로 능력이 완전 소멸될 위기에 빠졌던 50대 여성 S씨의 사건 리포트입니다. 수년 전 얻은 생활 가계 카드 빚 4,600만 원에 직면하여 매달 극심한 독촉장 수령으로 건강 악화를 겪고 있었습니다.
+    울산 울주군 제조업체 공장에 재직 중인 40대 성실한 가장 S씨는 가까운 친지의 '동업 법인 공동 창업' 명의 대리 요구에 휘말렸습니다. 친지는 S씨의 인감도장과 신분 서류를 도용해 거액의 2금융 신용 연쇄 대출을 무단으로 실행한 뒤 야반도주하여, S씨에게 총 9,200만 원의 보증 채무 독촉장이 몰려와 집안이 파탄 위기에 놓였습니다.
   </p>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법원의 주요 타임라인</h3>
-  <ul class="list-disc list-inside space-y-1 text-xs sm:text-[13.5px] text-slate-600 pl-1 mb-4">
-    <li><strong>신청일:</strong> 2026년 2월 02일</li>
-    <li><strong>금지명령 결정일:</strong> 2026년 2월 06일</li>
-    <li><strong>개시결정일:</strong> 2026년 3월 10일</li>
-    <li><strong>채권자집회기일:</strong> 2026년 4월 22일</li>
-    <li><strong>인가결정일:</strong> 2026년 5월 10일</li>
-  </ul>
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    투병으로 인해 근로 활동이 거의 불가능하여 가용소득을 사실상 낼 수 없는 상태였습니다. 이 경우 법무사를 통해 생계 유지 곤란에 대한 엄격한 소명이 없으면 회생 신청 자체가 기각되어 파산으로 넘어가야 하는 복잡한 재정적 과도기였습니다.
-  </p>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
+    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          1. 법무사의 시선에서 본 핵심 쟁점 (난제)
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          동업 보증 채무는 법률상 본인의 동의 필적 날인이 형식적으로 존재하므로, 채무자가 악의적으로 면책을 신청한 것이 아니라는 무고함을 명확히 소명해야 기각을 모면할 수 있는 고난도 쟁점이 있었습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 여환동 법무사의 전략</h3>
-  <p class="leading-relaxed pl-1 text-slate-650">
-    중증 질환자 증명서 및 병원 정밀 진단 진료 차트를 토대로 임시 근로 여력 최하 등급을 받아 냈습니다. 곧 기초생활수급자로 편입될 가능성을 증명하여, 법원이 인정할 수 있는 최저 수준의 성실 변제금인 월 12만 원의 특별 승인을 유치하는 데 성공했습니다.
-  </p>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          2. 여환동 법무사의 전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-600 pl-3 mt-1 leading-relaxed">
+          명의 도용 사기 친지에 대한 경찰서 정식 사기 고소장 접수원, 법인 설립 등기부상의 기만적 대리 도장 대조서, 해당 도용 대출이 전적으로 도주한 친지의 개인 계좌로 직행한 거래 내역을 증거화했습니다. 의뢰인이 실질 수혜자가 아님을 입증하여 가용소득을 최소 수준으로 성공리에 정밀 방어시켰습니다.
+        </p>
+      </div>
 
-  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">4. 인가 결과</h3>
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
-      <li><span class="text-slate-400 font-medium">총 채무액:</span> 4,600만 원</li>
-      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 460만 원</li>
-      <li><span class="text-emerald-700">탕감율: 90% 원금 면책 승인 완료</span></li>
-      <li><span class="text-slate-400 font-medium">월 변제금:</span> 12만 원 (38개월)</li>
-    </ul>
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          3. 인가 결과 및 법률적 교훈
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>총 채무액:</strong> 9,200만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 1,840만 원 (원금의 20% 변제)</li>
+            <li><strong>탕감율:</strong> 80% 원금 면책 성공</li>
+            <li><strong>월 변제금:</strong> 51만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          주변 지인의 배신과 무단 보증 도용 피해를 겪고 가족들과 함께 극단적 생활고에 시달리는 성실 근로 가장들은 불합리한 위법 명의도용 전말을 법률적으로 분해해 서류 증명하는 정밀 대응을 받으신다면 최대 변제율 80% 이상의 극적인 면책 구제를 받을 수 있습니다.
+        </p>
+      </div>
+    </div>
   </div>
 </div>`,
-    createdAt: "2026-02-10T10:00:00.000Z",
-    updatedAt: "2026-02-10T10:00:00.000Z",
-    views: 139
+    createdAt: "2025-01-20T10:00:00.000Z",
+    updatedAt: "2025-01-20T10:00:00.000Z",
+    views: 112
   }
 ];
 
-fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(seedArticles, null, 2), 'utf-8');
-console.log('Database successfully seeded with 20 premium legal reports!');
+fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(seedArticles, null, 2), 'utf8');
+console.log("Database successfully seeded with 20 premium legal reports!");
