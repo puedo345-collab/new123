@@ -279,7 +279,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
             <div className="space-y-4 text-left pt-2">
               <h3 id="success-stories-list-anchor" className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
                 <Filter className="w-4 h-4 text-amber-600" />
-                <span>울산 사건 성공사례 ({filteredStories.length}건)</span>
+                <span>울산지방법원 사건 성공사례 ({filteredStories.length}건)</span>
               </h3>
 
               {loading ? (
