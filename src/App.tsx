@@ -511,6 +511,7 @@ export default function App() {
     setUserResponses(null); // Reset past scores
     setBrandPageActive(false);
     setAdminPageActive(false);
+    setBankruptcyPageActive(false);
     if (mode === 'case') {
       setCaseMatcherActive(true);
       setPlanSimulatorActive(false);
@@ -532,6 +533,7 @@ export default function App() {
     setUserResponses(responses);
     setBrandPageActive(false);
     setAdminPageActive(false);
+    setBankruptcyPageActive(false);
     // Smooth scroll back up to results dashboard
     setTimeout(() => {
       heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -543,6 +545,7 @@ export default function App() {
     setUserResponses(null);
     setBrandPageActive(false);
     setAdminPageActive(false);
+    setBankruptcyPageActive(false);
     setSurveyActive(true);
     setSurveyMode('general');
     setCaseMatcherActive(false);
@@ -560,6 +563,7 @@ export default function App() {
     setUserResponses(null);
     setBrandPageActive(false);
     setAdminPageActive(false);
+    setBankruptcyPageActive(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const currentType = window.history.state?.type;
