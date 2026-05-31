@@ -55,7 +55,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 1억 2,000만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,160만 원 (원금의 18%만 변제)</li>
             <li><strong>탕감율:</strong> 82% 면책 결정</li>
@@ -122,7 +122,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 1억 6,500만 원</li>
             <li><strong>조정 후 총변제액:</strong> 3,300만 원 (원금의 20% 변제)</li>
             <li><strong>탕감율:</strong> 80% 면책 승인</li>
@@ -189,7 +189,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 7,200만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,800만 원 (원금의 25% 변제)</li>
             <li><strong>탕감율:</strong> 75% 탕감 결정</li>
@@ -256,7 +256,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 4,800만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,200만 원</li>
             <li><strong>탕감율:</strong> 75% 탕감 성공</li>
@@ -323,7 +323,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 9,600만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,920만 원 (원금의 20% 변제)</li>
             <li><strong>탕감율:</strong> 80% 원금 탕감 인가</li>
@@ -390,7 +390,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 8,500만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,975만 원 (원금의 35% 변제)</li>
             <li><strong>탕감율:</strong> 65% 면책 판결</li>
@@ -457,7 +457,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 5,800만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,030만 원 (원금의 35% 변제)</li>
             <li><strong>탕감율:</strong> 65% 원금 면책</li>
@@ -524,7 +524,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 9,000만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,700만 원 (원금의 30% 변제)</li>
             <li><strong>탕감율:</strong> 70% 원금 탕감</li>
@@ -591,7 +591,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 1억 3,000만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,600만 원 (원금의 20% 변제)</li>
             <li><strong>탕감율:</strong> 80% 원금 탕감 성공</li>
@@ -658,7 +658,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 8,500만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,975만 원 (원금의 35% 변제)</li>
             <li><strong>탕감율:</strong> 65% 면책 판결</li>
@@ -725,7 +725,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 3,800만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,140만 원</li>
             <li><strong>탕감율:</strong> 70% 탕감 승인</li>
@@ -792,7 +792,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 1억 500만 원</li>
             <li><strong>조정 후 총변제액:</strong> 3,150만 원 (원금의 30% 변제)</li>
             <li><strong>탕감율:</strong> 70% 원금 면책 성공</li>
@@ -859,7 +859,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 5,400만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,350만 원 (원금의 25% 변제)</li>
             <li><strong>탕감율:</strong> 75% 탕감 결정</li>
@@ -926,7 +926,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 6,500만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,625만 원 (원금의 25% 변제)</li>
             <li><strong>탕감율:</strong> 75% 탕감 승인</li>
@@ -993,7 +993,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 1억 8,000만 원</li>
             <li><strong>조정 후 총변제액:</strong> 5,400만 원 (원금의 30% 변제)</li>
             <li><strong>탕감율:</strong> 70% 면책 승인</li>
@@ -1060,7 +1060,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 7,800만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,950만 원 (원금의 25% 변제)</li>
             <li><strong>탕감율:</strong> 75% 탕감 결정</li>
@@ -1127,7 +1127,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 8,800만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,760만 원 (원금의 20% 변제)</li>
             <li><strong>탕감율:</strong> 80% 원금 면책 성공</li>
@@ -1194,7 +1194,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 1억 1,000만 원</li>
             <li><strong>조정 후 총변제액:</strong> 2,750만 원 (원금의 25% 변제)</li>
             <li><strong>탕감율:</strong> 75% 원금 면책</li>
@@ -1261,7 +1261,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 4,200만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,050만 원 (원금의 25% 변제)</li>
             <li><strong>탕감율:</strong> 75% 원금 면책 성공</li>
@@ -1328,7 +1328,7 @@ const seedArticles = [
           4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-disc list-inside space-y-1">
+          <ul class="list-none space-y-1.5 pl-1">
             <li><strong>총 채무액:</strong> 9,200만 원</li>
             <li><strong>조정 후 총변제액:</strong> 1,840만 원 (원금의 20% 변제)</li>
             <li><strong>탕감율:</strong> 80% 원금 면책 성공</li>

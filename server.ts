@@ -150,7 +150,7 @@ function initArticlesDatabase() {
 
   <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 인가 결과 및 법률적 교훈</h3>
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
-    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
+    <ul class="list-none list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
       <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 2,000만 원</li>
       <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,160만 원 (원금의 18%만 변제)</li>
       <li><span class="text-emerald-700">탕감율: 82% 면책 결정</span></li>
