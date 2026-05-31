@@ -23,9 +23,9 @@ export default function Footer({ onAdminClick }: FooterProps) {
           <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3 md:justify-end">
             <a
               href="tel:010-5410-5679"
-              className="px-6 py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-2xl transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-amber-950/30 text-[15px] sm:text-base w-full sm:w-auto"
+              className="px-6 py-3.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:border-amber-500/50 font-black rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xs hover:shadow-md text-[15px] sm:text-base w-full sm:w-auto active:scale-[0.98] select-none"
             >
-              <PhoneCall className="w-5 h-5 text-white animate-bounce" />
+              <PhoneCall className="w-5 h-5 text-amber-400 animate-pulse" />
               법무사 즉시 상담  010-5410-5679
             </a>
           </div>
