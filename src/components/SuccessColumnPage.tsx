@@ -224,38 +224,12 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
           <div className="space-y-1">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
               <Scale className="w-7 h-7 text-amber-500 stroke-[2]" />
-              성공사례 및 칼럼
+              성공사례
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 font-semibold leading-relaxed">
-              울산지방법원 14년 실무 경력의 여환동 법무사가 전하는 실제 면책 및 탕감사례와 전문 회생 가이드.
+              울산지방법원 14년 실무 경력의 여환동 법무사가 전하는 실제 면책 및 탕감사례.
             </p>
           </div>
-        </div>
-
-        {/* Tab Selector */}
-        <div className="grid grid-cols-2 border-b border-[#FAF4E5] bg-[#FAF9F5] p-2 gap-1.5">
-          <button
-            onClick={() => { setActiveSubTab('matcher'); setSearchQuery(''); }}
-            className={`py-3.5 px-3 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${
-              activeSubTab === 'matcher'
-                ? 'bg-slate-900 text-white shadow-md'
-                : 'text-slate-500 hover:bg-[#FAF4E5] hover:text-slate-800'
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            의뢰인 맞춤 성공사례 매칭
-          </button>
-          <button
-            onClick={() => { setActiveSubTab('columns'); setSearchQuery(''); }}
-            className={`py-3.5 px-3 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${
-              activeSubTab === 'columns'
-                ? 'bg-slate-900 text-white shadow-md'
-                : 'text-slate-500 hover:bg-[#FAF4E5] hover:text-slate-800'
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            법률 가이드 & 전문 칼럼
-          </button>
         </div>
 
         {/* Search bar inside lists */}
@@ -264,7 +238,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
             <input
               type="text"
-              placeholder={activeSubTab === 'matcher' ? "직업, 채무, 사유 등 성공사례 검색" : "칼럼 제목 및 지식 검색"}
+              placeholder="직업, 채무, 사유 등 성공사례 검색"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#FAF4E5] rounded-2xl text-xs font-semibold focus:outline-hidden focus:ring-1 focus:ring-amber-500"
@@ -273,192 +247,126 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
         </div>
 
         <div className="p-6 space-y-6">
-          <AnimatePresence mode="wait">
-            {activeSubTab === 'matcher' ? (
-              // CASE 1: Dynamic Success Stories Matcher Tab
-              <motion.div
-                key="stories-tab"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                {/* Search filters */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-500/[0.03] p-5 rounded-2xl border border-[#FAF4E5] text-left">
-                  <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">1단계: 본인의 현재 직업</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {jobs.map((job) => (
-                        <button
-                          key={job.value}
-                          onClick={() => setSelectedJob(job.value)}
-                          className={`py-2 px-2.5 rounded-xl border font-black text-xs sm:text-[13px] tracking-tight transition-all cursor-pointer ${
-                            selectedJob === job.value
-                              ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
-                              : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
-                          }`}
-                        >
-                          {job.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">2단계: 부채 규모 수준</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {debts.map((debt) => (
-                        <button
-                          key={debt.value}
-                          onClick={() => setSelectedDebt(debt.value)}
-                          className={`py-2 px-2.5 rounded-xl border font-black text-xs sm:text-[13px] tracking-tight transition-all cursor-pointer ${
-                            selectedDebt === debt.value
-                              ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
-                              : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
-                          }`}
-                        >
-                          {debt.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+          {/* Dynamic Success Stories Matcher */}
+          <div className="space-y-6">
+            {/* Search filters */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-500/[0.03] p-5 rounded-2xl border border-[#FAF4E5] text-left">
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">1단계: 본인의 현재 직업</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {jobs.map((job) => (
+                    <button
+                      key={job.value}
+                      onClick={() => setSelectedJob(job.value)}
+                      className={`py-2 px-2.5 rounded-xl border font-black text-xs sm:text-[13px] tracking-tight transition-all cursor-pointer ${
+                        selectedJob === job.value
+                          ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
+                          : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
+                      }`}
+                    >
+                      {job.label}
+                    </button>
+                  ))}
                 </div>
+              </div>
 
-                {/* List container */}
-                <div className="space-y-4 text-left">
-                  <h3 className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
-                    <Filter className="w-4 h-4 text-amber-600" />
-                    <span>필터 검색된 울산 사건 성공사례 ({filteredStories.length}건)</span>
-                  </h3>
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">2단계: 부채 규모 수준</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {debts.map((debt) => (
+                    <button
+                      key={debt.value}
+                      onClick={() => setSelectedDebt(debt.value)}
+                      className={`py-2 px-2.5 rounded-xl border font-black text-xs sm:text-[13px] tracking-tight transition-all cursor-pointer ${
+                        selectedDebt === debt.value
+                          ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
+                          : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
+                      }`}
+                    >
+                      {debt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-                  {loading ? (
-                    <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
-                      <Clock className="w-8 h-8 text-amber-500 animate-spin" />
-                      <p className="text-xs text-slate-400 font-bold">성공사례 데이터베이스 동기화 중...</p>
-                    </div>
-                  ) : filteredStories.length === 0 ? (
-                    <div className="py-16 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 text-xs text-slate-400 font-medium">
-                      조건에 만족하는 등록 사례가 없습니다. 필터를 조정해 보세요!
-                    </div>
-                  ) : (
-                    filteredStories.map((story) => (
-                      <div
-                        key={story.id}
-                        className="p-5 sm:p-6 rounded-2xl border border-[#FAF4E5] bg-white shadow-3xs hover:border-amber-300 hover:shadow-xs transition-all duration-200 space-y-4"
-                      >
-                        <div className="flex justify-between items-start flex-wrap gap-2 pb-2.5 border-b border-slate-100">
-                          <div>
-                            <span className="inline-block px-1.5 py-0.5 rounded-md bg-amber-500/10 text-[#AA8010] text-[9px] font-black border border-amber-500/20 mr-1.5 uppercase leading-none">
-                              {story.category}
-                            </span>
-                            <h4 className="font-black text-slate-900 text-sm sm:text-base inline-block">
-                              {story.title}
-                            </h4>
-                          </div>
-                          <span className="text-[11px] text-slate-400 font-bold">
-                            {story.age || "-"} • {story.job || "-"}
-                          </span>
-                        </div>
+            {/* List container */}
+            <div className="space-y-4 text-left">
+              <h3 className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
+                <Filter className="w-4 h-4 text-amber-600" />
+                <span>필터 검색된 울산 사건 성공사례 ({filteredStories.length}건)</span>
+              </h3>
 
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-center">
-                          <div className="p-2 bg-[#FAF9F5] rounded-xl border border-amber-500/5">
-                            <span className="text-[9px] text-slate-400 font-black block mb-0.5">기존 채무총액</span>
-                            <span className="text-xs sm:text-sm font-black text-slate-700">{story.originalDebt || "-"}</span>
-                          </div>
-                          <div className="p-2 bg-[#FAF9F5] rounded-xl border border-amber-500/5">
-                            <span className="text-[9px] text-slate-400 font-black block mb-0.5">조정 후 변제금액</span>
-                            <span className="text-xs sm:text-sm font-black text-[#A16207]">{story.reducedDebt || "-"}</span>
-                          </div>
-                          <div className="col-span-2 md:col-span-1 p-2 bg-emerald-500/[0.04] rounded-xl border border-emerald-500/10">
-                            <span className="text-[9px] text-emerald-600 font-black block mb-0.5">실제 원금 탕감률</span>
-                            <span className="text-xs sm:text-sm font-black text-emerald-700">{story.reductionRate || 0}% 면책결정</span>
-                          </div>
-                        </div>
-
-                        <div className="space-y-3 pt-0.5">
-                          <p className="text-xs sm:text-[13.5px] text-slate-600 font-semibold leading-relaxed">
-                            "{story.content.replace(/<[^>]*>/g, '').slice(0, 160)}..."
-                          </p>
-                          
-                          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-2 border-t border-dashed border-slate-100">
-                            <button
-                              onClick={() => handleOpenArticle(story)}
-                              className="text-xs text-[#AA8010] hover:text-amber-800 font-black cursor-pointer underline underline-offset-4"
-                            >
-                              🔍 대표법무사 상세 분석글 보기
-                            </button>
-                            <button
-                              onClick={() => handleApplyMatch(story)}
-                              className="px-4 py-2 bg-amber-600 text-white font-extrabold text-xs rounded-xl hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
-                            >
-                              <span>이 조건으로 자격진단 개시</span>
-                              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                            </button>
-                          </div>
-                        </div>
+              {loading ? (
+                <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
+                  <Clock className="w-8 h-8 text-amber-500 animate-spin" />
+                  <p className="text-xs text-slate-400 font-bold">성공사례 데이터베이스 동기화 중...</p>
+                </div>
+              ) : filteredStories.length === 0 ? (
+                <div className="py-16 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 text-xs text-slate-400 font-medium">
+                  조건에 만족하는 등록 사례가 없습니다. 필터를 조정해 보세요!
+                </div>
+              ) : (
+                filteredStories.map((story) => (
+                  <div
+                    key={story.id}
+                    className="p-5 sm:p-6 rounded-2xl border border-[#FAF4E5] bg-white shadow-3xs hover:border-amber-300 hover:shadow-xs transition-all duration-200 space-y-4"
+                  >
+                    <div className="flex justify-between items-start flex-wrap gap-2 pb-2.5 border-b border-slate-100">
+                      <div>
+                        <span className="inline-block px-1.5 py-0.5 rounded-md bg-amber-500/10 text-[#AA8010] text-[9px] font-black border border-amber-500/20 mr-1.5 uppercase leading-none">
+                          {story.category}
+                        </span>
+                        <h4 className="font-black text-slate-900 text-sm sm:text-base inline-block">
+                          {story.title}
+                        </h4>
                       </div>
-                    ))
-                  )}
-                </div>
-              </motion.div>
-            ) : (
-              // CASE 2: Representative Lawyer's Columns / Blogs Tab
-              <motion.div
-                key="columns-tab"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-6"
-              >
-                <div className="space-y-4 text-left">
-                  <h3 className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
-                    <BookOpen className="w-4 h-4 text-amber-600" />
-                    <span>여환동 법무사 전용 회생/파산 지식 칼럼 ({filteredColumns.length}건)</span>
-                  </h3>
+                      <span className="text-[11px] text-slate-400 font-bold">
+                        {story.age || "-"} • {story.job || "-"}
+                      </span>
+                    </div>
 
-                  {loading ? (
-                    <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
-                      <Clock className="w-8 h-8 text-amber-500 animate-spin" />
-                      <p className="text-xs text-slate-400 font-bold">전문 칼럼 정보를 불러오는 중...</p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-center">
+                      <div className="p-2 bg-[#FAF9F5] rounded-xl border border-amber-500/5">
+                        <span className="text-[9px] text-slate-400 font-black block mb-0.5">기존 채무총액</span>
+                        <span className="text-xs sm:text-sm font-black text-slate-700">{story.originalDebt || "-"}</span>
+                      </div>
+                      <div className="p-2 bg-[#FAF9F5] rounded-xl border border-amber-500/5">
+                        <span className="text-[9px] text-slate-400 font-black block mb-0.5">조정 후 변제금액</span>
+                        <span className="text-xs sm:text-sm font-black text-[#A16207]">{story.reducedDebt || "-"}</span>
+                      </div>
+                      <div className="col-span-2 md:col-span-1 p-2 bg-emerald-500/[0.04] rounded-xl border border-emerald-500/10">
+                        <span className="text-[9px] text-emerald-600 font-black block mb-0.5">실제 원금 탕감률</span>
+                        <span className="text-xs sm:text-sm font-black text-emerald-700">{story.reductionRate || 0}% 면책결정</span>
+                      </div>
                     </div>
-                  ) : filteredColumns.length === 0 ? (
-                    <div className="py-16 text-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 text-xs text-slate-400 font-medium">
-                      등록된 법률 칼럼이 없습니다.
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {filteredColumns.map((col) => (
-                        <div
-                          key={col.id}
-                          onClick={() => handleOpenArticle(col)}
-                          className="bg-white rounded-2xl p-5 border border-[#FAF4E5] shadow-3xs hover:border-amber-300 hover:shadow-xs transition-all duration-200 cursor-pointer flex flex-col justify-between text-left group"
+
+                    <div className="space-y-3 pt-0.5">
+                      <p className="text-xs sm:text-[13.5px] text-slate-600 font-semibold leading-relaxed">
+                        "{story.content.replace(/<[^>]*>/g, '').slice(0, 160)}..."
+                      </p>
+                      
+                      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-2 border-t border-dashed border-slate-100">
+                        <button
+                          onClick={() => handleOpenArticle(story)}
+                          className="text-xs text-[#AA8010] hover:text-amber-800 font-black cursor-pointer underline underline-offset-4"
                         >
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center text-[10px] text-slate-400 font-semibold border-b border-slate-50 pb-1.5">
-                              <span className="flex items-center gap-1 text-amber-700 font-black">
-                                <Sparkles className="w-3 h-3" />
-                                법무사 직접작성
-                              </span>
-                              <span>조회수: {col.views || 0}회 | {new Date(col.createdAt).toLocaleDateString()}</span>
-                            </div>
-                            <h4 className="font-black text-slate-800 text-sm sm:text-base leading-snug group-hover:text-amber-800 transition-colors line-clamp-1">
-                              {col.title}
-                            </h4>
-                            <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3">
-                              {col.content.replace(/<[^>]*>/g, '')}
-                            </p>
-                          </div>
-                          <span className="text-xs font-black text-slate-900 group-hover:text-amber-800 transition-colors block mt-4 flex items-center gap-0.5">
-                            자세히 읽기 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                          </span>
-                        </div>
-                      ))}
+                          🔍 대표법무사 상세 분석글 보기
+                        </button>
+                        <button
+                          onClick={() => handleApplyMatch(story)}
+                          className="px-4 py-2 bg-amber-600 text-white font-extrabold text-xs rounded-xl hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
+                        >
+                          <span>이 조건으로 자격진단 개시</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
                     </div>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

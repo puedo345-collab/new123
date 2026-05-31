@@ -1044,7 +1044,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
                   }`}
                 >
-                  ✍ 성공사례 / 칼럼 관리
+                  ✍ 성공사례 관리
                 </button>
               </div>
 
@@ -1416,9 +1416,9 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                     
                     <button
                       onClick={() => handleOpenEditor(null)}
-                      className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
-                    >
-                      ✍ 새 성공사례/칼럼 작성하기
+                    className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                  >
+                    ✍ 새 성공사례 작성하기
                     </button>
                   </div>
 
@@ -1431,7 +1431,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       </div>
                     ) : articles.length === 0 ? (
                       <div className="col-span-2 py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 md:text-sm font-semibold">
-                        등록된 성공사례나 칼럼 글이 없습니다. [새 성공사례/칼럼 작성하기]를 눌러 첫 글을 남겨보세요!
+                        등록된 성공사례 글이 없습니다. [새 성공사례 작성하기]를 눌러 첫 글을 남겨보세요!
                       </div>
                     ) : (
                       articles
@@ -2142,10 +2142,10 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       <div className="space-y-4 pt-2 text-left">
                         <div className="space-y-1">
                           <h3 className="text-lg font-black tracking-tight text-slate-900">
-                            {selectedArticle ? "✍ 성공사례/칼럼 글 수정" : "✍ 새 성공사례/칼럼 글 등록"}
+                            {selectedArticle ? "✍ 성공사례 글 수정" : "✍ 새 성공사례 글 등록"}
                           </h3>
                           <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                            대표법무사님이 직접 의뢰인 성공사례 혹은 칼럼 정보를 실시간 작성 및 임베딩합니다.
+                            대표법무사님이 직접 의뢰인 성공사례를 실시간 작성 및 임베딩합니다.
                           </p>
                         </div>
 
@@ -2160,7 +2160,6 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                 onChange={(e) => setEditorCategory(e.target.value)}
                                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-bold text-slate-800 cursor-pointer"
                               >
-                                <option value="칼럼">📖 대표법무사 전문 칼럼</option>
                                 <option value="코인/투자 채무">🪙 코인/투자 채무</option>
                                 <option value="생활비/다중채무">👨‍👩‍👧 생활비/다중채무</option>
                                 <option value="사업 실패 채무">💼 사업 실패 채무</option>
