@@ -92,7 +92,334 @@ function initDatabase() {
   }
 }
 
+const ARTICLES_FILE_PATH = path.join(process.cwd(), "articles.json");
+
+interface Article {
+  id: string;
+  category: string;
+  title: string;
+  age?: string;
+  job?: string;
+  originalDebt?: string;
+  reducedDebt?: string;
+  monthlyPayment?: string;
+  reductionRate?: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  views?: number;
+}
+
+function initArticlesDatabase() {
+  if (!fs.existsSync(ARTICLES_FILE_PATH)) {
+    const seedArticles: Article[] = [
+      {
+        id: "art_1",
+        category: "코인/투자 채무",
+        title: "코인 투자 실패로 인한 채무 급증 해결",
+        age: "20대 후반",
+        job: "IT 프리랜서",
+        originalDebt: "6,400만 원",
+        reducedDebt: "1,800만 원",
+        monthlyPayment: "50만 원 (36개월)",
+        reductionRate: 72,
+        content: "코인 선물 투자 손실로 대부업 대출과 카드 현금서비스를 반복하며 다중 연체 상태에 빠졌습니다. 법무사 여환동 사무소를 통해 개인회생 요건을 확인하고, 채무 발생 경위에 대한 소명 자료(최근대출 사용처 도표 등)를 충실히 준비한 결과, 울산지방법원으로부터 높은 탕감율의 변제 계획을 인가받아 사실상 채무 대부분을 탕감받았습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 120
+      },
+      {
+        id: "art_2",
+        category: "생활비/다중채무",
+        title: "자녀 교육 및 생활비 다중 카드 대출 탕감",
+        age: "40대 중반",
+        job: "4대 가입 직장인",
+        originalDebt: "8,500만 원",
+        reducedDebt: "2,550만 원",
+        monthlyPayment: "70만 원 (36개월)",
+        reductionRate: 70,
+        content: "코로나19 여파와 가계 지출 급증으로 다중 채무가 누적되어, 매달 원금보다 많은 이자만 갚아나가는 상황에 처한 가장이었습니다. 본인과 부양가족의 최저생계비를 변제금 산정에서 전액 공제받아 실질적인 생활비를 확보하면서도, 전체 채무의 70%를 탕감받는 변제 계획을 법원으로부터 인가받았습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 95
+      },
+      {
+        id: "art_3",
+        category: "사업 실패 채무",
+        title: "식자재 대리점 폐업, 이직 후 성공한 사례",
+        age: "30대 후반",
+        job: "개인사업자 -> 프리랜서 이직",
+        originalDebt: "1억 2,000만 원",
+        reducedDebt: "2,400만 원",
+        monthlyPayment: "66만 원 (36개월)",
+        reductionRate: 80,
+        content: "매출 부진으로 점포를 정리하는 과정에서 임대료 연체 채무와 물품을 납품받은 채무가 겹쳐 상당한 부채를 안고 통장 등에 압류를 당하게 되었습니다. 저희와 함께 보유 재산의 시가를 적정하게 산정한 결과, 최종 변제율을 낮춰 채무의 약 80%를 탕감받고, 개인회생 인가결정과 동시에 모든 압류를 일괄 해제할 수 있었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 180
+      },
+      {
+        id: "art_4",
+        category: "생활비/병원비",
+        title: "병원비와 생활비로 불어난 신용카드 채무 해결",
+        age: "30대 초반",
+        job: "4대 보험 직장인",
+        originalDebt: "3,800만 원",
+        reducedDebt: "1,140만 원",
+        monthlyPayment: "32만 원 (36개월)",
+        reductionRate: 70,
+        content: "가족의 갑작스러운 병원비를 마련하기 위해 카드론과 현금서비스를 반복하다 다중 연체 상태에 빠진 직장인이었습니다.많지 않던 월급으로 매달 불어나는 이자에 극심한 부담을 겪던 중 울산지방법원에 개인회생을 신청하였고, 원금의 70% 탕감과 이자 전액 면제를 포함한 변제 계획이 인가되어 월 변제금 32만 원으로 확정되었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 74
+      },
+      {
+        id: "art_5",
+        category: "사기 피해 채무",
+        title: "보이스피싱 사기로 인해 발생한 대출금",
+        age: "20대 중반",
+        job: "중소기업 직장인",
+        originalDebt: "2,600만 원",
+        reducedDebt: "910만 원",
+        monthlyPayment: "25만 원 (36개월)",
+        reductionRate: 65,
+        content: "사회초년생 직장인으로 명의도용 보이스피싱 피해를 입어 갑자기 불어난 대출금 채무로 고통받던 중, 저희 사무소의 사기피해 진술서 작성을 통해 사기 피해 사실을 소명하고 정직한 직장 소득과 부양가족을 인정받아 65%의 높은 원금 면책결정을 받았습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 112
+      },
+      {
+        id: "art_6",
+        category: "초기 생활 안정",
+        title: "소득 불균형에 따른 카드 연체 해결",
+        age: "30대 중반",
+        job: "학원 강사 (프리랜서)",
+        originalDebt: "4,200만 원",
+        reducedDebt: "1,470만 원",
+        monthlyPayment: "40만 원 (36개월)",
+        reductionRate: 65,
+        content: "학원 강사직 특성상 비정기적인 소득과 소득 공백 기간에 카드 연체와 현금서비스를 누적했던 프리랜서입니다. 불안정한 소득 증빙 조건에서도 최근 소득 평균값을 명확히 소명하여 청산가치를 낮추고 원금의 65%를 법원으로부터 면책 승인받았습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 89
+      },
+      {
+        id: "art_7",
+        category: "다중 카드 대출",
+        title: "일용직 소득자의 소액 다중 연체 채무 정리",
+        age: "40대 초반",
+        job: "건설 일용직 프리랜서",
+        originalDebt: "3,100만 원",
+        reducedDebt: "1,085만 원",
+        monthlyPayment: "30만 원 (36개월)",
+        reductionRate: 65,
+        content: "일용직 소득이 불규칙하여 월세와 식비를 대부업 소액 대출로 때우다 연체 위기에 몰렸던 의뢰인이었습니다. 법무사 여환동 사무소의 빠른 금지명령 접수로 당일 추심 정지를 이끌어냈으며, 가용한 자금을 성실히 계산해 월 30만 원 변제 계획으로 조속히 안정을 취하셨습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 65
+      },
+      {
+        id: "art_8",
+        category: "창업 실패/미수금",
+        title: "온라인 쇼핑몰 폐업 후 잔존 소량 경영빚 해결",
+        age: "30대 초반",
+        job: "온라인 개인사업자",
+        originalDebt: "4,800만 원",
+        reducedDebt: "1,680만 원",
+        monthlyPayment: "46만 원 (36개월)",
+        reductionRate: 65,
+        content: "경쟁 심화로 운영하던 1인 온라인 쇼핑몰을 접으며, 회사에 취업 후 울산지방법원에 접수하였으며, 잔존 자산이 전무하다는 사실을 입증하여 청산가치를 최저 수준으로 인정받았으나, 채무액이 다소 적어 전체 채무의 65%를 탕감 받을 수 있었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 93
+      },
+      {
+        id: "art_9",
+        category: "점포 확장 실패",
+        title: "카페 매장 운영하면서 신청 후 인가결정 사례",
+        age: "50대 초반",
+        job: "영세 외식업 개인사업자",
+        originalDebt: "3,900만 원",
+        reducedDebt: "1,365만 원",
+        monthlyPayment: "37만 원 (37개월)",
+        reductionRate: 65,
+        content: "울산 성남동에서 카페를 운영하며 매장 유지비와 원자재 구매용 전용 신용카드 결제 대금이 여러 항목으로 누적되어 사실상 변제가 불가능한 상황에 이른 자영업자입니다. 실제 사업 소득과 고정 운영비를 근거로 기본 유지 경영비를 공제받아 매달 실질적으로 감당 가능한 수준으로 변제금을 최소화하는 플랜을 설계받고 한시름 놓을 수 있었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 110
+      },
+      {
+        id: "art_10",
+        category: "주식/투자 실패",
+        title: "무리한 주식 미수 및 신용융자 채무 대기업 직장인 구제",
+        age: "30대 중반",
+        job: "대기업 생산직 직장인",
+        originalDebt: "7,800만 원",
+        reducedDebt: "2,340만 원",
+        monthlyPayment: "65만 원 (36개월)",
+        reductionRate: 70,
+        content: "주식 시장 급락으로 인한 미수금 및 신용융자 반대매매로 발생한 긴급 대환대출 압박을 해결한 사례입니다. 매달 높은 원리금 부담에서 보증인 동원 없이 70%의 높은 감면율로 울산지법 개시 결정을 받아 안정을 되찾았습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 145
+      },
+      {
+        id: "art_11",
+        category: "보증 채무",
+        title: "지인 보증 채무 연대인수 연체 공무원 직장인 구제",
+        age: "40대 초반",
+        job: "공기업 근무 직장인",
+        originalDebt: "1억 1,000만 원",
+        reducedDebt: "3,850만 원",
+        monthlyPayment: "106만 원 (36개월)",
+        reductionRate: 65,
+        content: "과거 호의로 제공한 연대보증이 주채무자 파산으로 이관되어 고액 추심에 직면했던 공공기관 재직자입니다. 법무사 여환동 특화 설계를 바탕으로 공무원 신분 불이익 처분 규정 등을 방어하며 법원에 원금 65% 감면 계획안을 통과시켰습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 82
+      },
+      {
+        id: "art_12",
+        category: "생활비/교육기금",
+        title: "자녀 학비 마련 다중 카드론 및 신용대출 상환 구제",
+        age: "40대 후반",
+        job: "일반 중소기업 직장인",
+        originalDebt: "6,200만 원",
+        reducedDebt: "2,170만 원",
+        monthlyPayment: "60만 원 (36개월)",
+        reductionRate: 65,
+        content: "중소기업 재직 고객으로 자녀 학자금과 부모님 병원비를 동시에 대출받아 생긴 이중고를 극복한 사례입니다. 근로 고유 수당 일부 소명을 거치며 가용 소득을 정밀하게 조정한 결과 총 채무액의 65%를 감면받는 가시적 효과를 얻었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 104
+      },
+      {
+        id: "art_13",
+        category: "사기 및 가전대출",
+        title: "전세 사기 피해 및 카드 다중 채무 직장인 구제",
+        age: "30대 후반",
+        job: "금융사 마케터 직장인",
+        originalDebt: "9,500만 원",
+        reducedDebt: "3,325만 원",
+        monthlyPayment: "92만 원 (36개월)",
+        reductionRate: 65,
+        content: "역전세 및 지인 사기로 전세자금대출 상환 부족액이 카드 신용 대부업 다중 채무로 부풀어 올랐던 금융사 마케팅 담당자입니다. 철저한 재산 내역 소명으로 총 가계 빚의 65%를 감면받는 회생안 인가를 성공적으로 완료했습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 137
+      },
+      {
+        id: "art_14",
+        category: "장비 리스 연체",
+        title: "특수 장비 리스료 연체 및 현장 대금 미지급 복구",
+        age: "40대 중반",
+        job: "건설 현장 일용직 프리랜서",
+        originalDebt: "5,800만 원",
+        reducedDebt: "1,740만 원",
+        monthlyPayment: "48만 원 (36개월)",
+        reductionRate: 70,
+        content: "화물 장비 대여 및 건설 리스 연체 압박에 시달리던 현장 특수직 프리랜서입니다. 불안정한 기후 및 소득 주기를 완만하게 법원 재판부에 피력함으로써, 청산가치를 대폭 보정받아 이자 100% 감면 및 원금 70% 탕감을 완료하였습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 92
+      },
+      {
+        id: "art_15",
+        category: "개발 지연 채무",
+        title: "소프트웨어 프로젝트 아웃소싱 무산 연대채무 해소",
+        age: "30대 중반",
+        job: "IT 소프트웨어 개발 프리랜서",
+        originalDebt: "8,900만 원",
+        reducedDebt: "2,670만 원",
+        monthlyPayment: "74만 원 (36개월)",
+        reductionRate: 70,
+        content: "외주 개발 단가 상승과 대금 미수령으로 카드론과 2금융권 채무를 메우다 파산 일보 직전이었던 IT 엔지니어입니다. 법무사 여환동 사무소의 빠른 부채 증명 절차 개시로 최근 채무 사유에 대한 타당성을 입증해 70% 면책 승인을 유치하였습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 119
+      },
+      {
+        id: "art_16",
+        category: "임대료/수수료 채무",
+        title: "코로나 시기 학원 유지비 및 다중 수수료 채무 정리",
+        age: "40대 초반",
+        job: "학원 수학 강사 프리랜서",
+        originalDebt: "7,200만 원",
+        reducedDebt: "2,520만 원",
+        monthlyPayment: "70만 원 (36개월)",
+        reductionRate: 65,
+        content: "비대면 수업 전환으로 프리랜서 정기 인센티브 수령 지출 비용이 누적되어 상환액이 늘어난 고객입니다. 자격진단 분석으로 월 가용소득 합계를 합리적으로 법원에 제출하여 법무사 대리 진행으로 원금의 65% 공제 인가를 받았습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 71
+      },
+      {
+        id: "art_17",
+        category: "물품 대금 연체",
+        title: "의류 도,소매업 오프라인 매장 운영하면서 진행",
+        age: "40대 중반",
+        job: "의류 도소매 개인사업자",
+        originalDebt: "1억 6,000만 원",
+        reducedDebt: "4,800만 원",
+        monthlyPayment: "133만 원 (36개월)",
+        reductionRate: 70,
+        content: "울산 무거동에서 의류 매장을 운영하다 매출 급감으로 폐업하게 된 자영업자입니다. 재고 매입 미수금과 시설(인테리어) 리스 대출이 겹쳐 도합 1억 6천만 원의 연체 채무를 안게 되었습니다. 세무·회계 자료를 통해 실질 영업 손실과 소득 감소를 입증하고 청산가치를 절반 가량 낮춰 보정한 결과, 원리금 전체의 70%를 면제받을 수 있었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 153
+      },
+      {
+        id: "art_18",
+        category: "공장 보강 부채",
+        title: "설비 기계 수리비 누적 공장 자금 가계 대환 승인",
+        age: "50대 중반",
+        job: "제조업 공장 유통 개인사업자",
+        originalDebt: "2억 3,000만 원",
+        reducedDebt: "6,900만 원",
+        monthlyPayment: "191만 원 (36개월)",
+        reductionRate: 70,
+        content: "영세 유통라인 하청 실패로 설비리스 압류가 들어온 제조 사업자입니다. 법무사 여환동 사무소의 대외 자금 흐름 고지 정비로 공장 유지를 위한 필수 최저 생계 여력을 인정받어 70% 탕감을 수반하며 정상 회복되었습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 111
+      },
+      {
+        id: "art_19",
+        category: "가맹 전대 연체",
+        title: "프랜차이즈 가맹 전대 매매 보증 연합 부도 차단",
+        age: "40대 초반",
+        job: "화장품 유통업 개인사업자",
+        originalDebt: "8,800만 원",
+        reducedDebt: "3,080만 원",
+        monthlyPayment: "85만 원 (36개월)",
+        reductionRate: 65,
+        content: "유통 채널 철수로 상품 도매 잔대금 수억 동반 과입력이 발생했던 영세 자영업자입니다. 법률 대리 자문 특혜로 매출 이익율 하락 공제를 적극 반영받아 안정적인 월 85만 원 36개월 변제 계획으로 안식을 취했습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 124
+      },
+      {
+        id: "art_20",
+        category: "매장 유지 부채",
+        title: "인테리어 자재 공사 지연 및 임대료 자영업 부채 면제",
+        age: "50대 초반",
+        job: "프랜차이즈 가맹점 개인사업자",
+        originalDebt: "1억 2,500만 원",
+        reducedDebt: "4,375만 원",
+        monthlyPayment: "121만 원 (36개월)",
+        reductionRate: 65,
+        content: "가맹 비용 지출 대비 상권 매출이 나오지 않아 매달 수백만 원 임대료 손실을 가계 대출로 충당하던 업주입니다. 울산지방법원 회생 절차를 통해 보증금 잔존액을 시가에서 소거하고 원금의 65% 고정 탕감 판결을 이뤘습니다.",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        views: 139
+      }
+    ];
+    fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(seedArticles, null, 2), "utf-8");
+  }
+}
+
 initDatabase();
+initArticlesDatabase();
 
 // Read from JSON DB
 function readSubmissions(): Submission[] {
@@ -662,6 +989,124 @@ async function startServer() {
 
     writeSubmissions(filtered);
     res.json({ success: true, message: "선택한 의뢰인 정보들이 성공적으로 영구 일괄 삭제되었습니다." });
+  });
+
+  // Helper functions for articles
+  const readArticles = (): Article[] => {
+    try {
+      if (!fs.existsSync(ARTICLES_FILE_PATH)) return [];
+      const data = fs.readFileSync(ARTICLES_FILE_PATH, "utf-8");
+      return JSON.parse(data);
+    } catch (error) {
+      console.error("Error reading articles database:", error);
+      return [];
+    }
+  };
+
+  const writeArticles = (data: Article[]) => {
+    try {
+      fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
+    } catch (error) {
+      console.error("Error writing to articles database:", error);
+    }
+  };
+
+  // API: Get List of Articles (Public)
+  app.get("/api/articles", (req, res) => {
+    const list = readArticles();
+    res.json(list);
+  });
+
+  // API: Get Single Article (Public - and increments views)
+  app.get("/api/articles/:id", (req, res) => {
+    const { id } = req.params;
+    const list = readArticles();
+    const index = list.findIndex(art => art.id === id);
+    if (index === -1) {
+      res.status(404).json({ error: "해당 글을 찾을 수 없습니다." });
+      return;
+    }
+    // Increment view count
+    list[index].views = (list[index].views || 0) + 1;
+    writeArticles(list);
+    res.json(list[index]);
+  });
+
+  // API: Create Article (Protected)
+  app.post("/api/articles", verifyAdmin, (req, res) => {
+    const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content } = req.body;
+    if (!category || !title || !content) {
+      res.status(400).json({ error: "카테고리, 제목, 본문 내용은 필수 항목입니다." });
+      return;
+    }
+
+    const list = readArticles();
+    const newId = "art_" + Math.random().toString(36).substr(2, 9);
+    const newArticle: Article = {
+      id: newId,
+      category: sanitizeInput(category),
+      title: sanitizeInput(title),
+      age: age ? sanitizeInput(age) : undefined,
+      job: job ? sanitizeInput(job) : undefined,
+      originalDebt: originalDebt ? sanitizeInput(originalDebt) : undefined,
+      reducedDebt: reducedDebt ? sanitizeInput(reducedDebt) : undefined,
+      monthlyPayment: monthlyPayment ? sanitizeInput(monthlyPayment) : undefined,
+      reductionRate: reductionRate ? Number(reductionRate) : undefined,
+      content: content, // HTML content containing Base64 images - DO NOT escape HTML tags to support custom blogs
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      views: 0
+    };
+
+    list.unshift(newArticle);
+    writeArticles(list);
+    res.status(201).json({ success: true, article: newArticle });
+  });
+
+  // API: Update Article (Protected)
+  app.patch("/api/articles/:id", verifyAdmin, (req, res) => {
+    const { id } = req.params;
+    const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content } = req.body;
+
+    const list = readArticles();
+    const index = list.findIndex(art => art.id === id);
+    if (index === -1) {
+      res.status(404).json({ error: "해당 글을 찾을 수 없습니다." });
+      return;
+    }
+
+    const updated: Article = {
+      ...list[index],
+      ...(category !== undefined && { category: sanitizeInput(category) }),
+      ...(title !== undefined && { title: sanitizeInput(title) }),
+      ...(age !== undefined && { age: sanitizeInput(age) }),
+      ...(job !== undefined && { job: sanitizeInput(job) }),
+      ...(originalDebt !== undefined && { originalDebt: sanitizeInput(originalDebt) }),
+      ...(reducedDebt !== undefined && { reducedDebt: sanitizeInput(reducedDebt) }),
+      ...(monthlyPayment !== undefined && { monthlyPayment: sanitizeInput(monthlyPayment) }),
+      ...(reductionRate !== undefined && { reductionRate: Number(reductionRate) }),
+      ...(content !== undefined && { content: content }),
+      updatedAt: new Date().toISOString()
+    };
+
+    list[index] = updated;
+    writeArticles(list);
+    res.json({ success: true, article: updated });
+  });
+
+  // API: Delete Article (Protected)
+  app.delete("/api/articles/:id", verifyAdmin, (req, res) => {
+    const { id } = req.params;
+    const list = readArticles();
+    const filtered = list.filter(art => art.id !== id);
+
+    if (list.length === filtered.length) {
+      res.status(404).json({ error: "해당 글을 찾을 수 없습니다." });
+      return;
+    }
+
+    writeArticles(filtered);
+    res.json({ success: true, message: "성공사례/칼럼 글이 안전하게 영구 삭제되었습니다." });
   });
 
   // Use Vite middleware for development

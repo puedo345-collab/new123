@@ -11,6 +11,7 @@ import RepaymentPlanBuilder from './components/RepaymentPlanBuilder';
 import LawyerIntroduction from './components/LawyerIntroduction';
 import BankruptcyNotes from './components/BankruptcyNotes';
 import AdminDashboard from './components/AdminDashboard';
+import SuccessColumnPage from './components/SuccessColumnPage';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scale, HeartHandshake, ShieldCheck, Info, X, Sparkles, MessageCircle, Phone, Calendar, Clock, ChevronDown, Check, MessageSquare } from 'lucide-react';
 
@@ -25,6 +26,8 @@ export default function App() {
   const [isOverFooter, setIsOverFooter] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const [bankruptcyPageActive, setBankruptcyPageActive] = useState(false);
+  const [successColumnsActive, setSuccessColumnsActive] = useState(false);
+  const [successColumnTabMode, setSuccessColumnTabMode] = useState<'matcher' | 'columns'>('matcher');
 
   const getTodayDateString = () => {
     const today = new Date();
@@ -149,6 +152,22 @@ export default function App() {
         setTimeout(forceScrollTop, 30);
         setTimeout(forceScrollTop, 100);
         setTimeout(forceScrollTop, 250);
+      } else if (successColumnsActive) {
+        setSuccessColumnsActive(false);
+        setBrandPageActive(false);
+        setBankruptcyPageActive(false);
+        setSurveyActive(false);
+        setCaseMatcherActive(false);
+        setPlanSimulatorActive(false);
+        setUserResponses(null);
+        setCurrentSection(null);
+        
+        const forceScrollTop = () => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        };
+        forceScrollTop();
       } else if (currentSection) {
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -159,9 +178,15 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, currentSection]);
+  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, successColumnsActive, currentSection]);
 
   // Push history state when opening overlays/modals/pages to prevent site exit on back button
+  React.useEffect(() => {
+    if (successColumnsActive && window.history.state?.type !== 'successColumns') {
+      window.history.pushState({ type: 'successColumns' }, '');
+    }
+  }, [successColumnsActive]);
+
   React.useEffect(() => {
     if (bankruptcyPageActive && window.history.state?.type !== 'bankruptcyPage') {
       window.history.pushState({ type: 'bankruptcyPage' }, '');
@@ -445,6 +470,9 @@ export default function App() {
     if (sectionId !== 'bankruptcy') {
       setBankruptcyPageActive(false);
     }
+    if (sectionId !== 'success_columns') {
+      setSuccessColumnsActive(false);
+    }
 
     if (sectionId === 'hero') {
       setSurveyActive(false);
@@ -478,6 +506,15 @@ export default function App() {
       );
     } else if (sectionId === 'bankruptcy') {
       setBankruptcyPageActive(true);
+      setBrandPageActive(false);
+      setSurveyActive(false);
+      setCaseMatcherActive(false);
+      setPlanSimulatorActive(false);
+      setUserResponses(null);
+      setCurrentSection(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (sectionId === 'success_columns') {
+      setSuccessColumnsActive(true);
       setBrandPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
@@ -561,19 +598,17 @@ export default function App() {
     setAdminPageActive(false);
     setBankruptcyPageActive(false);
     if (mode === 'case') {
-      setCaseMatcherActive(true);
-      setPlanSimulatorActive(false);
-      setSurveyActive(false);
+      handleNavClick('success_columns');
     } else {
       setSurveyActive(true);
       setSurveyMode(mode === 'plan' ? 'general' : (mode || 'general'));
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
+      // Scroll smoothly to target survey zone
+      setTimeout(() => {
+        heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
-    // Scroll smoothly to target survey zone
-    setTimeout(() => {
-      heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
   };
 
   const handleSurveyComplete = (responses: SurveyResponses) => {
@@ -654,6 +689,34 @@ export default function App() {
               >
                 <AdminDashboard
                   onBack={() => setAdminPageActive(false)}
+                />
+              </motion.div>
+            ) : successColumnsActive ? (
+              <motion.div
+                key="success-columns-page"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="w-full"
+              >
+                <SuccessColumnPage
+                  onBack={() => handleNavClick('hero')}
+                  onSelectPlan={({ occupation, debtAmount }) => {
+                    clearAdminSession();
+                    setUserResponses(null);
+                    setBrandPageActive(false);
+                    setAdminPageActive(false);
+                    setBankruptcyPageActive(false);
+                    setSuccessColumnsActive(false);
+                    setSurveyActive(true);
+                    setSurveyMode('general');
+                    setCaseMatcherActive(false);
+                    setPlanSimulatorActive(false);
+                    setTimeout(() => {
+                      heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                  }}
+                  initialTab={successColumnTabMode}
                 />
               </motion.div>
             ) : bankruptcyPageActive ? (
@@ -824,7 +887,7 @@ export default function App() {
         </div>
 
         {/* Permanent Premium Guidelines and Stories (Scroll Trigger Point) */}
-        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && (
+        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && !successColumnsActive && (
           <div ref={eligibilityRef} className="scroll-mt-16 sm:scroll-mt-28" id="brand">
             <EligibilityNotes />
           </div>

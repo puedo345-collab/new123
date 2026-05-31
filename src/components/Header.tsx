@@ -136,7 +136,8 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
     { id: 'brand', label: '법무사 소개' },
     { id: 'stories', label: '개인회생 신청자격' },
     { id: 'bankruptcy', label: '개인파산 신청자격' },
-    { id: 'faq', label: '자주 묻는 질문' }
+    { id: 'faq', label: '자주 묻는 질문' },
+    { id: 'success_columns', label: '성공사례/칼럼' }
   ];
 
   return (

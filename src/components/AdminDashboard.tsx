@@ -29,6 +29,7 @@ import {
   Bell
 } from "lucide-react";
 
+
 interface Submission {
   id: string;
   name: string;
@@ -48,6 +49,22 @@ interface Submission {
   isSimpleConsultation?: boolean;
 }
 
+interface Article {
+  id: string;
+  category: string;
+  title: string;
+  age?: string;
+  job?: string;
+  originalDebt?: string;
+  reducedDebt?: string;
+  monthlyPayment?: string;
+  reductionRate?: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  views?: number;
+}
+
 interface AdminDashboardProps {
   onBack: () => void;
 }
@@ -62,8 +79,29 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [revealedPhones, setRevealedPhones] = useState<Record<string, boolean>>({});
   const [token, setToken] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"list" | "statistics">("list");
+  const [activeTab, setActiveTab] = useState<"list" | "statistics" | "articles">("list");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  // Articles list & editor states
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [articlesLoading, setArticlesLoading] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
+  const [editorTitle, setEditorTitle] = useState("");
+  const [editorCategory, setEditorCategory] = useState("성공사례");
+  const [editorContent, setEditorContent] = useState("");
+  const [editorAge, setEditorAge] = useState("");
+  const [editorJob, setEditorJob] = useState("");
+  const [editorOriginalDebt, setEditorOriginalDebt] = useState("");
+  const [editorReducedDebt, setEditorReducedDebt] = useState("");
+  const [editorMonthlyPayment, setEditorMonthlyPayment] = useState("");
+  const [editorReductionRate, setEditorReductionRate] = useState("");
+  const [editorError, setEditorError] = useState("");
+  const [editorSuccess, setEditorSuccess] = useState("");
+
+  const [isArticleDeleteConfirmOpen, setIsArticleDeleteConfirmOpen] = useState(false);
+  const [deleteArticleId, setDeleteArticleId] = useState("");
+  const [deleteArticleTitle, setDeleteArticleTitle] = useState("");
 
   // Change Password Modal States
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
@@ -305,13 +343,8 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       window.dispatchEvent(new CustomEvent("logo-updated"));
       window.dispatchEvent(new CustomEvent("profile-updated"));
 
-      setTimeout(() => {
-        setIsImagesOpen(false);
-        setImagesSuccess("");
-      }, 1500);
-
     } catch (err: any) {
-      setImagesError(err.message || "이미지 저장에 실패했습니다.");
+      setImagesError(err.message || "이미지 저장 중 오류가 발생했습니다.");
     }
   };
 
@@ -369,6 +402,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setToken(savedToken);
       setIsAuthenticated(true);
       fetchSubmissions(savedToken);
+      fetchArticles();
     }
   }, []);
 
@@ -387,6 +421,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         setToken(data.token);
         setIsAuthenticated(true);
         fetchSubmissions(data.token);
+        fetchArticles();
       } else {
         setAuthError(data.message || "비밀번호가 올바르지 않습니다.");
       }
@@ -400,6 +435,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     setToken(null);
     setIsAuthenticated(false);
     setSubmissions([]);
+    setArticles([]);
     setPassword("");
   };
 
@@ -413,13 +449,27 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         const data = await res.json();
         setSubmissions(data);
       } else {
-        // Token might have expired or changed
         handleLogout();
       }
     } catch (err) {
       console.error("Error fetching submissions:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchArticles = async () => {
+    setArticlesLoading(true);
+    try {
+      const res = await fetch("/api/articles");
+      if (res.ok) {
+        const data = await res.json();
+        setArticles(data);
+      }
+    } catch (err) {
+      console.error("Error fetching articles:", err);
+    } finally {
+      setArticlesLoading(false);
     }
   };
 
@@ -494,6 +544,128 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setSingleDeleteId("");
       setSingleDeleteName("");
     }
+  };
+
+  const handleOpenEditor = (article: Article | null = null) => {
+    setSelectedArticle(article);
+    setEditorError("");
+    setEditorSuccess("");
+    if (article) {
+      setEditorTitle(article.title);
+      setEditorCategory(article.category);
+      setEditorContent(article.content);
+      setEditorAge(article.age || "");
+      setEditorJob(article.job || "");
+      setEditorOriginalDebt(article.originalDebt || "");
+      setEditorReducedDebt(article.reducedDebt || "");
+      setEditorMonthlyPayment(article.monthlyPayment || "");
+      setEditorReductionRate(article.reductionRate ? String(article.reductionRate) : "");
+    } else {
+      setEditorTitle("");
+      setEditorCategory("성공사례");
+      setEditorContent("");
+      setEditorAge("");
+      setEditorJob("");
+      setEditorOriginalDebt("");
+      setEditorReducedDebt("");
+      setEditorMonthlyPayment("");
+      setEditorReductionRate("");
+    }
+    setIsEditorModalOpen(true);
+  };
+
+  const handleSaveArticle = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEditorError("");
+    setEditorSuccess("");
+
+    if (!editorTitle.trim() || !editorCategory.trim() || !editorContent.trim()) {
+      setEditorError("제목, 카테고리, 본문 내용은 필수 기입 요소입니다.");
+      return;
+    }
+
+    const payload = {
+      title: editorTitle.trim(),
+      category: editorCategory.trim(),
+      content: editorContent.trim(),
+      age: editorAge.trim() || undefined,
+      job: editorJob.trim() || undefined,
+      originalDebt: editorOriginalDebt.trim() || undefined,
+      reducedDebt: editorReducedDebt.trim() || undefined,
+      monthlyPayment: editorMonthlyPayment.trim() || undefined,
+      reductionRate: editorReductionRate.trim() ? Number(editorReductionRate) : undefined,
+    };
+
+    try {
+      const url = selectedArticle ? `/api/articles/${selectedArticle.id}` : "/api/articles";
+      const method = selectedArticle ? "PATCH" : "POST";
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setEditorSuccess(selectedArticle ? "글이 안전하게 수정되었습니다!" : "새 글이 등록되었습니다!");
+        fetchArticles();
+        setTimeout(() => {
+          setIsEditorModalOpen(false);
+          setSelectedArticle(null);
+        }, 1200);
+      } else {
+        setEditorError(data.error || "글 저장에 실패했습니다.");
+      }
+    } catch (err) {
+      setEditorError("네트워크 통신 중 에러가 발생했습니다.");
+    }
+  };
+
+  const handleDeleteArticleClick = (id: string, title: string) => {
+    setDeleteArticleId(id);
+    setDeleteArticleTitle(title);
+    setIsArticleDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteArticleExecute = async () => {
+    if (!token || !deleteArticleId) return;
+    try {
+      const res = await fetch(`/api/articles/${deleteArticleId}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setArticles(prev => prev.filter(art => art.id !== deleteArticleId));
+        showCustomAlert("성공", "성공사례/칼럼 글이 안전하게 삭제되었습니다.", "success");
+      } else {
+        showCustomAlert("오류", "글 삭제 중 에러가 발생했습니다.", "error");
+      }
+    } catch (err) {
+      console.error("Error deleting article:", err);
+      showCustomAlert("오류", "서버 통신 중 실패했습니다.", "error");
+    } finally {
+      setIsArticleDeleteConfirmOpen(false);
+      setDeleteArticleId("");
+      setDeleteArticleTitle("");
+    }
+  };
+
+  const handleEditorImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      setEditorError("이미지 크기는 최대 3MB까지 가능합니다.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      const imgHtml = `<img src="${base64}" alt="첨부사진" style="max-width:100%; height:auto; border-radius:12px; margin: 12px 0; display:block;" />`;
+      setEditorContent(prev => prev + imgHtml);
+    };
+    reader.readAsDataURL(file);
   };
 
   const togglePhoneReveal = (id: string) => {
@@ -852,8 +1024,34 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                 </div>
               </div>
 
-              {/* Statistics Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              {/* Tab Selector for Admin View */}
+              <div className="flex gap-2 border-b border-slate-200 pb-4 mb-6">
+                <button
+                  onClick={() => setActiveTab("list")}
+                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+                    activeTab === "list"
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                  }`}
+                >
+                  📋 상담 신청 고객 리스트
+                </button>
+                <button
+                  onClick={() => setActiveTab("articles")}
+                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+                    activeTab === "articles"
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                  }`}
+                >
+                  ✍ 성공사례 / 칼럼 관리
+                </button>
+              </div>
+
+              {activeTab === "list" && (
+                <>
+                  {/* Statistics Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                 <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
                   <span className="block text-[11px] text-slate-400 font-bold uppercase tracking-wider">누적 총 신청건수</span>
                   <div className="flex items-baseline gap-1 mt-2">
@@ -1197,6 +1395,110 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                   })
                 )}
               </div>
+              </>
+              )}
+
+              {/* Articles Management View */}
+              {activeTab === "articles" && (
+                <div className="space-y-6">
+                  {/* Action Bar */}
+                  <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div className="relative w-full md:max-w-xs">
+                      <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                      <input
+                        type="text"
+                        placeholder="글 제목 혹은 내용 검색"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      />
+                    </div>
+                    
+                    <button
+                      onClick={() => handleOpenEditor(null)}
+                      className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                    >
+                      ✍ 새 성공사례/칼럼 작성하기
+                    </button>
+                  </div>
+
+                  {/* Articles Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {articlesLoading ? (
+                      <div className="col-span-2 py-20 text-center flex flex-col items-center justify-center gap-3">
+                        <RefreshCw className="w-10 h-10 text-emerald-500 animate-spin" />
+                        <p className="text-sm text-slate-400 font-bold">칼럼 및 성공사례 목록을 동기화하고 있습니다...</p>
+                      </div>
+                    ) : articles.length === 0 ? (
+                      <div className="col-span-2 py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 md:text-sm font-semibold">
+                        등록된 성공사례나 칼럼 글이 없습니다. [새 성공사례/칼럼 작성하기]를 눌러 첫 글을 남겨보세요!
+                      </div>
+                    ) : (
+                      articles
+                        .filter(art => art.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map((art) => {
+                          const isCase = art.category !== "칼럼";
+                          return (
+                            <div key={art.id} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-3xs flex flex-col justify-between hover:shadow-xs transition-all">
+                              <div className="space-y-4">
+                                <div className="flex justify-between items-start">
+                                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-black tracking-wide border ${
+                                    isCase ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-blue-50 border-blue-200 text-blue-700"
+                                  }`}>
+                                    {art.category}
+                                  </span>
+                                  <span className="text-[10px] text-slate-400 font-semibold">
+                                    조회수: {art.views || 0}회 | {new Date(art.createdAt).toLocaleDateString()}
+                                  </span>
+                                </div>
+                                <h3 className="text-base font-black text-slate-900 leading-snug line-clamp-1">
+                                  {art.title}
+                                </h3>
+                                
+                                {isCase && (
+                                  <div className="grid grid-cols-3 gap-1.5 text-center text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-100 font-extrabold text-slate-600">
+                                    <div>
+                                      <span className="block text-[9px] text-slate-400 leading-none mb-1">나이/직업</span>
+                                      {art.age || "-"} / {art.job || "-"}
+                                    </div>
+                                    <div>
+                                      <span className="block text-[9px] text-slate-400 leading-none mb-1">기존채무</span>
+                                      {art.originalDebt || "-"}
+                                    </div>
+                                    <div>
+                                      <span className="block text-[9px] text-slate-400 leading-none mb-1">조정결과</span>
+                                      <span className="text-rose-600 font-bold">{art.reducedDebt || "-"}</span>
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                <div 
+                                  className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2"
+                                  dangerouslySetInnerHTML={{ __html: art.content.replace(/<[^>]*>/g, '') }}
+                                />
+                              </div>
+                              
+                              <div className="flex gap-2 pt-5 border-t border-slate-100 mt-5">
+                                <button
+                                  onClick={() => handleOpenEditor(art)}
+                                  className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-lg text-xs transition-colors cursor-pointer"
+                                >
+                                  수정하기
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteArticleClick(art.id, art.title)}
+                                  className="py-2 px-3.5 bg-rose-50 hover:bg-rose-100 text-rose-600 hover:text-rose-700 border border-rose-200 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center justify-center"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Navigation Back */}
               <div className="pt-6 text-center border-t border-slate-200">
@@ -1792,6 +2094,386 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             className="flex-1 py-3 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center"
                           >
                             영구 삭제 승인
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </AnimatePresence>
+
+              {/* Article WYSIWYG Editor Modal */}
+              <AnimatePresence>
+                {isEditorModalOpen && (
+                  <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+                    {/* Backdrop */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.6 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => {
+                        setIsEditorModalOpen(false);
+                        setSelectedArticle(null);
+                      }}
+                      className="absolute inset-0 bg-slate-950"
+                    />
+
+                    {/* Modal Content */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.98, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.98, y: 15 }}
+                      className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative z-10 border border-slate-100 overflow-y-auto max-h-[90vh] text-slate-900"
+                    >
+                      <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 bg-amber-500" />
+                      
+                      <button
+                        onClick={() => {
+                          setIsEditorModalOpen(false);
+                          setSelectedArticle(null);
+                        }}
+                        className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
+                        aria-label="닫기"
+                        type="button"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+
+                      <div className="space-y-4 pt-2 text-left">
+                        <div className="space-y-1">
+                          <h3 className="text-lg font-black tracking-tight text-slate-900">
+                            {selectedArticle ? "✍ 성공사례/칼럼 글 수정" : "✍ 새 성공사례/칼럼 글 등록"}
+                          </h3>
+                          <p className="text-xs text-slate-400 font-semibold leading-relaxed">
+                            대표법무사님이 직접 의뢰인 성공사례 혹은 칼럼 정보를 실시간 작성 및 임베딩합니다.
+                          </p>
+                        </div>
+
+                        <form onSubmit={handleSaveArticle} className="space-y-4 pt-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                                구분 (카테고리)
+                              </label>
+                              <select
+                                value={editorCategory}
+                                onChange={(e) => setEditorCategory(e.target.value)}
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-bold text-slate-800 cursor-pointer"
+                              >
+                                <option value="칼럼">📖 대표법무사 전문 칼럼</option>
+                                <option value="코인/투자 채무">🪙 코인/투자 채무</option>
+                                <option value="생활비/다중채무">👨‍👩‍👧 생활비/다중채무</option>
+                                <option value="사업 실패 채무">💼 사업 실패 채무</option>
+                                <option value="생활비/병원비">🏥 생활비/병원비</option>
+                                <option value="사기 피해 채무">⚠️ 사기 피해 채무</option>
+                                <option value="보증 채무">🤝 보증 채무</option>
+                                <option value="성공사례">✨ 일반 성공사례</option>
+                              </select>
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                                글 제목
+                              </label>
+                              <input
+                                type="text"
+                                value={editorTitle}
+                                onChange={(e) => setEditorTitle(e.target.value)}
+                                placeholder="예: 코인 투자 실패로 인한 채무 급증 해결 사례"
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-semibold text-slate-900 outline-none"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          {/* Extra fields if category is NOT column */}
+                          {editorCategory !== "칼럼" && (
+                            <div className="bg-amber-50/20 p-4 rounded-2xl border border-[#FAF4E5] grid grid-cols-2 sm:grid-cols-3 gap-3 text-left">
+                              <div className="col-span-2 sm:col-span-1">
+                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                  연령대 (예: 20대 후반, 40대 중반)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editorAge}
+                                  onChange={(e) => setEditorAge(e.target.value)}
+                                  placeholder="20대 후반"
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                  직업 (예: IT 프리랜서, 자영업자)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editorJob}
+                                  onChange={(e) => setEditorJob(e.target.value)}
+                                  placeholder="IT 프리랜서"
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                  원래 빚 총액 (예: 6,400만 원)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editorOriginalDebt}
+                                  onChange={(e) => setEditorOriginalDebt(e.target.value)}
+                                  placeholder="6,400만 원"
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                  조정 후 빚 총액 (예: 1,800만 원)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editorReducedDebt}
+                                  onChange={(e) => setEditorReducedDebt(e.target.value)}
+                                  placeholder="1,800만 원"
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                  월 변제금 (예: 50만 원 (36개월))
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editorMonthlyPayment}
+                                  onChange={(e) => setEditorMonthlyPayment(e.target.value)}
+                                  placeholder="50만 원 (36개월)"
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                                  실제 탕감률 % (예: 72)
+                                </label>
+                                <input
+                                  type="number"
+                                  value={editorReductionRate}
+                                  onChange={(e) => setEditorReductionRate(e.target.value)}
+                                  placeholder="72"
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
+                                />
+                              </div>
+                            </div>
+                          )}
+
+                          {/* HTML WYSIWYG Content Area */}
+                          <div className="space-y-1.5">
+                            <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                              본문 내용 및 디자인 편집기 (HTML WYSIWYG Editor)
+                            </label>
+                            
+                            {/* Editor Toolbar */}
+                            <div className="flex flex-wrap gap-1 bg-slate-100 p-1.5 rounded-xl border border-slate-250">
+                              <button
+                                type="button"
+                                onClick={() => setEditorContent(prev => prev + "<b>굵은 텍스트</b>")}
+                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
+                                title="굵게"
+                              >
+                                굵게 (Bold)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditorContent(prev => prev + "<u>밑줄</u>")}
+                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
+                                title="밑줄"
+                              >
+                                밑줄 (Under)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditorContent(prev => prev + '<h2 style="font-size: 20px; font-weight: 800; color: #0F172A; margin-top: 20px; margin-bottom: 8px;">소제목2</h2>')}
+                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
+                                title="소제목 H2"
+                              >
+                                H2
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditorContent(prev => prev + '<h3 style="font-size: 17px; font-weight: 800; color: #AA8010; margin-top: 16px; margin-bottom: 6px;">소제목3</h3>')}
+                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
+                                title="소제목 H3"
+                              >
+                                H3
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditorContent(prev => prev + "<p style='margin: 10px 0;'>줄바꿈 단락</p>")}
+                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
+                                title="단락 추가"
+                              >
+                                단락 (P)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const url = prompt("유튜브 동영상 재생 주소나 일반 공유 링크를 붙여넣으세요:\n(예: https://youtu.be/xxxx 혹은 https://www.youtube.com/watch?v=xxxx)");
+                                  if (url) {
+                                    let videoId = "";
+                                    const match1 = url.match(/v=([^&#]+)/);
+                                    const match2 = url.match(/youtu\.be\/([^&#\?]+)/);
+                                    if (match1) videoId = match1[1];
+                                    else if (match2) videoId = match2[1];
+                                    
+                                    if (videoId) {
+                                      const embedHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:16px; margin: 16px 0; border: 1px solid #FAF4E5;"><iframe src="https://www.youtube.com/embed/${videoId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen></iframe></div>`;
+                                      setEditorContent(prev => prev + embedHtml);
+                                    } else {
+                                      alert("유효한 유튜브 비디오 ID를 인식할 수 없습니다.");
+                                    }
+                                  }
+                                }}
+                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded text-red-650 cursor-pointer"
+                                title="유튜브 비디오 프레임 임베딩"
+                              >
+                                📺 유튜브 삽입
+                              </button>
+                              
+                              {/* File Portrait Image Upload in toolbar */}
+                              <div className="relative inline-block">
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={handleEditorImageUpload}
+                                  className="absolute inset-0 opacity-0 cursor-pointer w-[65px]"
+                                />
+                                <button
+                                  type="button"
+                                  className="px-2.5 py-1 text-xs font-black bg-pink-50 border border-pink-250 hover:bg-pink-100 rounded text-pink-700 pointer-events-none"
+                                >
+                                  📷 사진 첨부
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Main editing area */}
+                            <textarea
+                              value={editorContent}
+                              onChange={(e) => setEditorContent(e.target.value)}
+                              placeholder="위 툴바 버튼을 사용해 서식을 넣거나, HTML 태그를 직접 적어 세련되게 꾸밀 수 있습니다. 이미지나 유튜브 동영상 삽입도 지원합니다."
+                              className="w-full h-64 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed"
+                              required
+                            />
+                            
+                            {/* Live html preview */}
+                            {editorContent.trim() && (
+                              <div className="space-y-1 mt-4">
+                                <span className="block text-[10px] font-black text-slate-400 uppercase tracking-wide">🔍 실시간 디자인 미리보기 (Live Design Preview)</span>
+                                <div 
+                                  className="p-5 border border-amber-100 rounded-2xl bg-amber-50/10 max-h-48 overflow-y-auto text-xs prose"
+                                  dangerouslySetInnerHTML={{ __html: editorContent }}
+                                />
+                              </div>
+                            )}
+                          </div>
+
+                          {editorError && (
+                            <div className="p-3 bg-rose-50 border border-rose-100 rounded-xl flex items-start gap-2 text-rose-700 text-xs font-bold leading-relaxed">
+                              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                              <span>{editorError}</span>
+                            </div>
+                          )}
+
+                          {editorSuccess && (
+                            <div className="p-3 bg-emerald-50 border border-emerald-100 rounded-xl flex items-start gap-2 text-emerald-800 text-xs font-bold leading-relaxed">
+                              <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600 mt-0.5" />
+                              <span>{editorSuccess}</span>
+                            </div>
+                          )}
+
+                          <div className="pt-2 flex gap-2.5">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setIsEditorModalOpen(false);
+                                setSelectedArticle(null);
+                              }}
+                              className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer text-center"
+                            >
+                              작성 취소
+                            </button>
+                            <button
+                              type="submit"
+                              className="flex-1 py-3.5 bg-gradient-to-r from-amber-600 to-yellow-500 bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center"
+                            >
+                              {selectedArticle ? "글 수정 완료하기" : "새 글 등록 완료"}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </AnimatePresence>
+
+              {/* Article Delete Confirmation Modal */}
+              <AnimatePresence>
+                {isArticleDeleteConfirmOpen && (
+                  <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+                    {/* Backdrop */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.6 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => setIsArticleDeleteConfirmOpen(false)}
+                      className="absolute inset-0 bg-slate-950"
+                    />
+
+                    {/* Modal Body */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                      className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
+                    >
+                      <div className="absolute top-0 inset-x-0 h-1.5 bg-rose-600" />
+                      
+                      <button
+                        onClick={() => setIsArticleDeleteConfirmOpen(false)}
+                        className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
+                        aria-label="닫기"
+                        type="button"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+
+                      <div className="space-y-4 pt-2 text-left">
+                        <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto sm:mx-0">
+                          <Trash2 className="w-6 h-6" />
+                        </div>
+
+                        <div className="space-y-2">
+                          <h3 className="text-lg font-black tracking-tight text-slate-900">
+                            성공사례/칼럼 글 영구 삭제
+                          </h3>
+                          <p className="text-xs text-slate-500 font-bold leading-relaxed whitespace-pre-line">
+                            [경고] 작성하신 글 `"{deleteArticleTitle}"`을 서버 데이터베이스에서 완전히 영구 삭제하시겠습니까?
+                            이 작업은 절대 복구할 수 없습니다.
+                          </p>
+                        </div>
+
+                        <div className="pt-3 flex gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => setIsArticleDeleteConfirmOpen(false)}
+                            className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer text-center"
+                          >
+                            취소
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleDeleteArticleExecute}
+                            className="flex-1 py-3 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center"
+                          >
+                            글 영구 삭제 승인
                           </button>
                         </div>
                       </div>
