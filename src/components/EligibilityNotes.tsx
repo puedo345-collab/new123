@@ -233,7 +233,7 @@ export default function EligibilityNotes() {
                 >
                   <button
                     onClick={() => setActiveFaq(isSelected ? null : faq.id)}
-                    className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[19px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
+                    className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
                   >
                     <span className="flex items-start gap-2.5 w-full text-justify flex-1">
                       <HelpCircle className="w-4.5 h-4.5 text-slate-400 shrink-0 mt-1" />
