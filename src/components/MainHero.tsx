@@ -95,12 +95,12 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
         </motion.div>
 
         {/* Worry chips area */}
-        <div className="mt-12 flex flex-wrap justify-center gap-2.5 max-w-2xl mx-auto px-2">
+        <div className="mt-12 flex flex-row md:flex-wrap justify-start md:justify-center gap-2.5 max-w-2xl mx-auto px-4 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-none select-none scroll-smooth pb-2 md:pb-0 w-full">
           {worrychips.map((chip, index) => (
             <span
               key={index}
               onClick={() => onWorryChipClick && onWorryChipClick(index)}
-              className="px-4.5 py-2.5 rounded-full bg-amber-50/50 text-amber-800 border border-amber-200/40 text-[12.6px] font-extrabold shadow-3xs hover:bg-amber-100/60 hover:text-amber-900 hover:scale-[1.03] active:scale-95 transition-all duration-200 cursor-pointer"
+              className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-amber-50/50 text-amber-800 border border-amber-200/40 text-[12.5px] sm:text-[15.5px] font-extrabold shadow-3xs hover:bg-amber-100/60 hover:text-amber-900 hover:scale-[1.03] active:scale-95 transition-all duration-200 cursor-pointer shrink-0 inline-block"
             >
               #{chip}
             </span>

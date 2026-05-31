@@ -39,6 +39,15 @@ html, body {
   background: #A89B82;
 }
 
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 /* Luxurious Golden Grid Mesh Web Overlay for Background */
 .gold-mesh-grid {
   background-image: 
