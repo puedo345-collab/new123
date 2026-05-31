@@ -8,6 +8,7 @@ import {
   ArrowRight, 
   Award, 
   ChevronLeft, 
+  ChevronDown,
   ShieldCheck, 
   Calendar, 
   Eye, 
@@ -52,6 +53,9 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
 
   // Selected article for detailed reading overlay
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+
+  // Accordion state to collapse and expand stories smoothly
+  const [expandedStoryId, setExpandedStoryId] = useState<string | null>(null);
 
   const jobs = [
     { value: 'all', label: '전체 직업' },
@@ -307,63 +311,100 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                   조건에 만족하는 등록 사례가 없습니다. 필터를 조정해 보세요!
                 </div>
               ) : (
-                filteredStories.map((story) => (
+              filteredStories.map((story) => {
+                const isExpanded = expandedStoryId === story.id;
+                return (
                   <div
                     key={story.id}
-                    className="p-5 sm:p-6 rounded-2xl border border-[#FAF4E5] bg-white shadow-3xs hover:border-amber-300 hover:shadow-xs transition-all duration-200 space-y-4"
+                    className={`rounded-2xl border transition-all duration-250 overflow-hidden bg-white ${
+                      isExpanded 
+                        ? 'border-amber-400 shadow-md ring-1 ring-amber-400/20' 
+                        : 'border-[#FAF4E5] shadow-3xs hover:border-amber-300 hover:shadow-xs'
+                    }`}
                   >
-                    <div className="flex justify-between items-start flex-wrap gap-2 pb-2.5 border-b border-slate-100">
-                      <div>
-                        <span className="inline-block px-1.5 py-0.5 rounded-md bg-amber-500/10 text-[#AA8010] text-[9px] font-black border border-amber-500/20 mr-1.5 uppercase leading-none">
-                          {story.category}
-                        </span>
-                        <h4 className="font-black text-slate-900 text-sm sm:text-base inline-block">
+                    {/* Card Header (Click to toggle) */}
+                    <div 
+                      className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3 select-none cursor-pointer"
+                      onClick={() => setExpandedStoryId(isExpanded ? null : story.id)}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 min-w-0 flex-1 text-left">
+                        {/* Category Tag & Title */}
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="inline-block px-2 py-0.5 rounded-md bg-amber-500/10 text-[#AA8010] text-[9.5px] font-black border border-amber-500/20 uppercase leading-none">
+                            {story.category}
+                          </span>
+                          <span className="text-[11px] text-slate-400 font-bold sm:hidden">
+                            {story.age || "-"} • {story.job || "-"}
+                          </span>
+                        </div>
+                        <h4 className="font-black text-slate-800 text-sm sm:text-base truncate leading-snug">
                           {story.title}
                         </h4>
                       </div>
-                      <span className="text-[11px] text-slate-400 font-bold">
-                        {story.age || "-"} • {story.job || "-"}
-                      </span>
+
+                      {/* Key Metrics Inline Flow */}
+                      <div className="flex items-center gap-3 shrink-0 flex-wrap justify-between md:justify-end">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1">
+                          <span className="text-slate-400 font-medium">기존</span>
+                          <span className="font-black text-slate-700">{story.originalDebt}</span>
+                          <span className="text-slate-350">➔</span>
+                          <span className="text-amber-800 font-black">{story.reducedDebt}</span>
+                          <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded text-[10px] ml-0.5">
+                            {story.reductionRate}% 탕감
+                          </span>
+                        </div>
+
+                        <div className="hidden sm:flex items-center gap-2 text-right">
+                          <span className="text-[11px] text-slate-400 font-bold">
+                            {story.age || "-"} • {story.job || "-"}
+                          </span>
+                        </div>
+
+                        {/* Toggle indicator */}
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-slate-100 text-slate-500 transition-transform duration-200 shrink-0 ${isExpanded ? 'rotate-180 bg-amber-100 text-amber-700' : ''}`}>
+                          <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-center">
-                      <div className="p-2 bg-[#FAF9F5] rounded-xl border border-amber-500/5">
-                        <span className="text-[9px] text-slate-400 font-black block mb-0.5">기존 채무총액</span>
-                        <span className="text-xs sm:text-sm font-black text-slate-700">{story.originalDebt || "-"}</span>
-                      </div>
-                      <div className="p-2 bg-[#FAF9F5] rounded-xl border border-amber-500/5">
-                        <span className="text-[9px] text-slate-400 font-black block mb-0.5">조정 후 변제금액</span>
-                        <span className="text-xs sm:text-sm font-black text-[#A16207]">{story.reducedDebt || "-"}</span>
-                      </div>
-                      <div className="col-span-2 md:col-span-1 p-2 bg-emerald-500/[0.04] rounded-xl border border-emerald-500/10">
-                        <span className="text-[9px] text-emerald-600 font-black block mb-0.5">실제 원금 탕감률</span>
-                        <span className="text-xs sm:text-sm font-black text-emerald-700">{story.reductionRate || 0}% 면책결정</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3 pt-0.5">
-                      <p className="text-xs sm:text-[13.5px] text-slate-600 font-semibold leading-relaxed">
-                        "{story.content.replace(/<[^>]*>/g, '').slice(0, 160)}..."
-                      </p>
-                      
-                      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-2 border-t border-dashed border-slate-100">
-                        <button
-                          onClick={() => handleOpenArticle(story)}
-                          className="text-xs text-[#AA8010] hover:text-amber-800 font-black cursor-pointer underline underline-offset-4"
+                    {/* Expanded Content (Details & Actions) */}
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
                         >
-                          🔍 대표법무사 상세 분석글 보기
-                        </button>
-                        <button
-                          onClick={() => handleApplyMatch(story)}
-                          className="px-4 py-2 bg-amber-600 text-white font-extrabold text-xs rounded-xl hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
-                        >
-                          <span>이 조건으로 자격진단 개시</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                        </button>
-                      </div>
-                    </div>
+                          <div 
+                            className="px-4 pb-4 sm:px-5 sm:pb-5 pt-1 border-t border-dashed border-slate-150 space-y-4 text-left"
+                          >
+                            <p className="text-xs sm:text-[13.5px] text-slate-600 font-semibold leading-relaxed pt-2">
+                              "{story.content.replace(/<[^>]*>/g, '')}"
+                            </p>
+                            
+                            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2.5 pt-3 border-t border-dashed border-slate-100">
+                              <button
+                                onClick={() => handleOpenArticle(story)}
+                                className="text-xs text-[#AA8010] hover:text-amber-800 font-black cursor-pointer underline underline-offset-4 text-left py-1"
+                              >
+                                🔍 대표법무사 상세 분석글 보기
+                              </button>
+                              <button
+                                onClick={() => handleApplyMatch(story)}
+                                className="px-4 py-2 bg-amber-600 text-white font-extrabold text-xs rounded-xl hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
+                              >
+                                <span>이 조건으로 자격진단 개시</span>
+                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                ))
+                );
+              })
               )}
             </div>
           </div>
