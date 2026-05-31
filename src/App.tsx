@@ -30,14 +30,21 @@ export default function App() {
   const handleConfirmExit = () => {
     setExitModalOpen(false);
     (window as any).bypassExitBlock = true;
-    window.history.back(); // Go back to homeBase
+    
+    // Go back 2 steps in history at once to exit past our preventExit and homeBase states
+    window.history.go(-2);
+    
+    // Safety fallback in case go(-2) behaves differently on some mobile WebView engines
     setTimeout(() => {
-      window.history.back(); // Go back to exit the site
-    }, 50);
+      window.history.back();
+    }, 100);
   };
 
-  // Push history state to intercept accidental exits on landing page
+  // Push history state to intercept accidental exits on landing page (Mobile ONLY)
   React.useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return; // Completely disabled on PC
+
     const initHistory = () => {
       if (window.history.state?.type !== 'homeBase' && window.history.state?.type !== 'preventExit') {
         window.history.replaceState({ type: 'homeBase' }, '');
@@ -177,6 +184,9 @@ export default function App() {
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) return;
+
         // Intercept exit intent on homepage, show exit modal, and push state back to preserve history
         window.history.pushState({ type: 'preventExit' }, '');
         setExitModalOpen(true);
