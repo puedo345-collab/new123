@@ -218,8 +218,8 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
     });
   };
 
-  const filteredStories = getFilteredStories();
-  const filteredColumns = getFilteredColumns();
+  const filteredStories = getFilteredStories().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const filteredColumns = getFilteredColumns().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(filteredStories.length / itemsPerPage);
