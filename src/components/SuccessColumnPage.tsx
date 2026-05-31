@@ -322,50 +322,50 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                         : 'border-[#FAF4E5] shadow-3xs hover:border-amber-300 hover:shadow-xs'
                     }`}
                   >
-                    {/* Card Header (Click to toggle) */}
-                    <div 
-                      className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-3 select-none cursor-pointer"
-                      onClick={() => setExpandedStoryId(isExpanded ? null : story.id)}
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 min-w-0 flex-1 text-left">
-                        {/* Category Tag & Title */}
-                        <div className="flex items-center gap-2 shrink-0">
-                          <span className="inline-block px-2 py-0.5 rounded-md bg-amber-500/10 text-[#AA8010] text-[9.5px] font-black border border-amber-500/20 uppercase leading-none">
-                            {story.category}
-                          </span>
-                          <span className="text-[11px] text-slate-400 font-bold sm:hidden">
-                            {story.age || "-"} • {story.job || "-"}
-                          </span>
-                        </div>
-                        <h4 className="font-black text-slate-800 text-sm sm:text-base truncate leading-snug">
-                          {story.title}
-                        </h4>
-                      </div>
-
-                      {/* Key Metrics Inline Flow */}
-                      <div className="flex items-center gap-3 shrink-0 flex-wrap justify-between md:justify-end">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1">
-                          <span className="text-slate-400 font-medium">기존</span>
-                          <span className="font-black text-slate-700">{story.originalDebt}</span>
-                          <span className="text-slate-350">➔</span>
-                          <span className="text-amber-800 font-black">{story.reducedDebt}</span>
-                          <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded text-[10px] ml-0.5">
-                            {story.reductionRate}% 탕감
-                          </span>
-                        </div>
-
-                        <div className="hidden sm:flex items-center gap-2 text-right">
-                          <span className="text-[11px] text-slate-400 font-bold">
-                            {story.age || "-"} • {story.job || "-"}
-                          </span>
-                        </div>
-
-                        {/* Toggle indicator */}
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-slate-100 text-slate-500 transition-transform duration-200 shrink-0 ${isExpanded ? 'rotate-180 bg-amber-100 text-amber-700' : ''}`}>
-                          <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
-                        </div>
-                      </div>
-                    </div>
+                     {/* Card Header (Click to toggle) */}
+                     <div 
+                       className="p-4 sm:p-5 flex flex-col md:grid md:grid-cols-12 md:gap-4 md:items-center select-none cursor-pointer"
+                       onClick={() => setExpandedStoryId(isExpanded ? null : story.id)}
+                     >
+                       {/* Left Title: col-span-5 */}
+                       <div className="col-span-12 md:col-span-5 min-w-0 text-left flex items-center gap-2">
+                         <span className="text-[11px] text-slate-400 font-bold sm:hidden">
+                           {story.age || "-"} • {story.job || "-"}
+                         </span>
+                         <h4 className="font-black text-slate-800 text-sm sm:text-base truncate leading-snug w-full" title={story.title}>
+                           {story.title}
+                         </h4>
+                       </div>
+ 
+                       {/* Middle Metrics Box: col-span-4 */}
+                       <div className="col-span-12 md:col-span-4 flex md:justify-start items-center">
+                         <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1 w-full md:w-auto justify-between md:justify-start">
+                           <div className="flex items-center gap-1.5">
+                             <span className="text-slate-400 font-medium">기존</span>
+                             <span className="font-black text-slate-700">{story.originalDebt}</span>
+                             <span className="text-slate-355">➔</span>
+                             <span className="text-amber-800 font-black">{story.reducedDebt}</span>
+                           </div>
+                           <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded text-[10px] ml-0.5 shrink-0">
+                             {story.reductionRate}% 탕감
+                           </span>
+                         </div>
+                       </div>
+ 
+                       {/* Right Age/Job Info: col-span-2 */}
+                       <div className="hidden md:block col-span-12 md:col-span-2 text-right">
+                         <span className="text-[11px] text-slate-400 font-bold whitespace-nowrap">
+                           {story.age || "-"} • {story.job || "-"}
+                         </span>
+                       </div>
+ 
+                       {/* Right Chevron Down: col-span-1 */}
+                       <div className="col-span-12 md:col-span-1 flex items-center justify-end shrink-0">
+                         <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-slate-100 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 bg-amber-100 text-amber-700' : ''}`}>
+                           <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
+                         </div>
+                       </div>
+                     </div>
 
                     {/* Expanded Content (Details & Actions) */}
                     <AnimatePresence initial={false}>
