@@ -80,8 +80,29 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [revealedPhones, setRevealedPhones] = useState<Record<string, boolean>>({});
   const [token, setToken] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"list" | "statistics" | "articles">("list");
+  const [activeTab, setActiveTab] = useState<"list" | "statistics" | "articles" | "faqs">("list");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  // FAQItem interface definition
+  interface FAQItem {
+    id: string;
+    question: string;
+    answer: string;
+  }
+
+  // FAQ list & editor states
+  const [faqs, setFaqs] = useState<FAQItem[]>([]);
+  const [faqsLoading, setFaqsLoading] = useState(false);
+  const [selectedFaq, setSelectedFaq] = useState<FAQItem | null>(null);
+  const [isFaqEditorModalOpen, setIsFaqEditorModalOpen] = useState(false);
+  const [editorQuestion, setEditorQuestion] = useState("");
+  const [editorAnswer, setEditorAnswer] = useState("");
+  const [faqEditorError, setFaqEditorError] = useState("");
+  const [faqEditorSuccess, setFaqEditorSuccess] = useState("");
+
+  const [isFaqDeleteConfirmOpen, setIsFaqDeleteConfirmOpen] = useState(false);
+  const [deleteFaqId, setDeleteFaqId] = useState("");
+  const [deleteFaqQuestion, setDeleteFaqQuestion] = useState("");
 
   // Articles list & editor states
   const [articles, setArticles] = useState<Article[]>([]);
@@ -407,6 +428,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setIsAuthenticated(true);
       fetchSubmissions(savedToken);
       fetchArticles(savedToken);
+      fetchFaqs(savedToken);
     }
   }, []);
 
@@ -426,6 +448,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         setIsAuthenticated(true);
         fetchSubmissions(data.token);
         fetchArticles(data.token);
+        fetchFaqs(data.token);
       } else {
         setAuthError(data.message || "비밀번호가 올바르지 않습니다.");
       }
@@ -440,6 +463,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     setIsAuthenticated(false);
     setSubmissions([]);
     setArticles([]);
+    setFaqs([]);
     setPassword("");
   };
 
@@ -478,6 +502,23 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       console.error("Error fetching articles:", err);
     } finally {
       setArticlesLoading(false);
+    }
+  };
+
+  const fetchFaqs = async (authToken?: string) => {
+    const currentToken = authToken || token;
+    if (!currentToken) return;
+    setFaqsLoading(true);
+    try {
+      const res = await fetch("/api/faqs");
+      if (res.ok) {
+        const data = await res.json();
+        setFaqs(data);
+      }
+    } catch (err) {
+      console.error("Error fetching FAQs:", err);
+    } finally {
+      setFaqsLoading(false);
     }
   };
 
@@ -715,6 +756,91 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setIsArticleDeleteConfirmOpen(false);
       setDeleteArticleId("");
       setDeleteArticleTitle("");
+    }
+  };
+
+  const handleOpenFaqEditor = (faq: FAQItem | null = null) => {
+    setSelectedFaq(faq);
+    setFaqEditorError("");
+    setFaqEditorSuccess("");
+    if (faq) {
+      setEditorQuestion(faq.question);
+      setEditorAnswer(faq.answer);
+    } else {
+      setEditorQuestion("");
+      setEditorAnswer("");
+    }
+    setIsFaqEditorModalOpen(true);
+  };
+
+  const handleSaveFaq = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFaqEditorError("");
+    setFaqEditorSuccess("");
+
+    if (!editorQuestion.trim() || !editorAnswer.trim()) {
+      setFaqEditorError("질문과 답변 내용은 필수 입력 항목입니다.");
+      return;
+    }
+
+    const payload = {
+      question: editorQuestion.trim(),
+      answer: editorAnswer.trim()
+    };
+
+    try {
+      const url = selectedFaq ? `/api/faqs/${selectedFaq.id}` : "/api/faqs";
+      const method = selectedFaq ? "PATCH" : "POST";
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setFaqEditorSuccess(selectedFaq ? "자주 묻는 질문이 실시간 수정되었습니다!" : "자주 묻는 질문이 실시간 등록되었습니다!");
+        fetchFaqs();
+        setTimeout(() => {
+          setIsFaqEditorModalOpen(false);
+          setSelectedFaq(null);
+        }, 1200);
+      } else {
+        setFaqEditorError(data.error || "자주 묻는 질문 저장에 실패했습니다.");
+      }
+    } catch (err) {
+      setFaqEditorError("네트워크 통신 중 에러가 발생했습니다.");
+    }
+  };
+
+  const handleDeleteFaqClick = (id: string, question: string) => {
+    setDeleteFaqId(id);
+    setDeleteFaqQuestion(question);
+    setIsFaqDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteFaqExecute = async () => {
+    if (!token || !deleteFaqId) return;
+    try {
+      const res = await fetch(`/api/faqs/${deleteFaqId}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setFaqs(prev => prev.filter(faq => String(faq.id) !== String(deleteFaqId)));
+        showCustomAlert("성공", "자주 묻는 질문이 안전하게 영구 삭제되었습니다.", "success");
+      } else {
+        showCustomAlert("오류", "자주 묻는 질문 삭제 중 에러가 발생했습니다.", "error");
+      }
+    } catch (err) {
+      console.error("Error deleting FAQ:", err);
+      showCustomAlert("오류", "서버 통신 중 실패했습니다.", "error");
+    } finally {
+      setIsFaqDeleteConfirmOpen(false);
+      setDeleteFaqId("");
+      setDeleteFaqQuestion("");
     }
   };
 
@@ -1111,6 +1237,16 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                   }`}
                 >
                   ✍ 성공사례 관리
+                </button>
+                <button
+                  onClick={() => setActiveTab("faqs")}
+                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+                    activeTab === "faqs"
+                      ? "bg-slate-900 text-white shadow-md"
+                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                  }`}
+                >
+                  ❓ 자주 묻는 질문 관리
                 </button>
               </div>
 
@@ -1601,6 +1737,88 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             </div>
                           );
                         })
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* FAQs Management View */}
+              {activeTab === "faqs" && (
+                <div className="space-y-6">
+                  {/* Action Bar */}
+                  <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div className="relative w-full md:w-80">
+                      <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                      <input
+                        type="text"
+                        placeholder="자주 묻는 질문/답변 검색"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      />
+                    </div>
+                    
+                    <button
+                      onClick={() => handleOpenFaqEditor(null)}
+                      className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                    >
+                      ❓ 새 자주 묻는 질문 등록
+                    </button>
+                  </div>
+
+                  {/* FAQs List Container */}
+                  <div className="space-y-4">
+                    {faqsLoading ? (
+                      <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
+                        <RefreshCw className="w-10 h-10 text-emerald-500 animate-spin" />
+                        <p className="text-sm text-slate-400 font-bold">자주 묻는 질문 목록을 동기화하고 있습니다...</p>
+                      </div>
+                    ) : faqs.length === 0 ? (
+                      <div className="col-span-2 py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 md:text-sm font-semibold">
+                        등록된 자주 묻는 질문이 없습니다. [새 자주 묻는 질문 등록]을 눌러 첫 질문을 남겨보세요!
+                      </div>
+                    ) : (
+                      faqs
+                        .filter(faq => {
+                          const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                                faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+                          return matchesSearch;
+                        })
+                        .map((faq, idx) => (
+                          <div key={faq.id} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-3xs flex flex-col justify-between hover:shadow-xs transition-all relative overflow-hidden text-left">
+                            <div className="space-y-3">
+                              <div className="flex justify-between items-start gap-4">
+                                <h3 className="text-base font-black text-slate-900 leading-snug flex gap-2">
+                                  <span className="text-emerald-600 font-black shrink-0">Q.</span>
+                                  <span className="break-all">{faq.question}</span>
+                                </h3>
+                                <span className="text-[10px] text-slate-400 font-semibold shrink-0">
+                                  순번: {idx + 1}
+                                </span>
+                              </div>
+                              
+                              <div className="pl-6 pt-3 border-t border-slate-100 flex gap-2 text-xs font-semibold text-slate-600 leading-relaxed text-justify break-all w-full">
+                                <span className="text-amber-600 font-black shrink-0">A.</span>
+                                <div className="w-full text-justify break-all" style={{ textAlign: 'justify', textJustify: 'inter-character', wordBreak: 'break-all' }}>{faq.answer}</div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex gap-2 pt-5 border-t border-slate-100 mt-5">
+                              <button
+                                onClick={() => handleOpenFaqEditor(faq)}
+                                className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-lg text-xs transition-colors cursor-pointer"
+                              >
+                                질문과 답변 수정하기
+                              </button>
+                              <button
+                                onClick={() => handleDeleteFaqClick(faq.id, faq.question)}
+                                className="py-2 px-3.5 bg-rose-50 hover:bg-rose-100 text-rose-600 hover:text-rose-700 border border-rose-200 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center justify-center"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        ))
                     )}
                   </div>
                 </div>
@@ -2600,6 +2818,189 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             className="flex-1 py-3 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center"
                           >
                             글 영구 삭제 승인
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </AnimatePresence>
+
+              {/* FAQ Editor Modal */}
+              <AnimatePresence>
+                {isFaqEditorModalOpen && (
+                  <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+                    {/* Backdrop */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.6 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => {
+                        setIsFaqEditorModalOpen(false);
+                        setSelectedFaq(null);
+                      }}
+                      className="absolute inset-0 bg-slate-950"
+                    />
+
+                    {/* Modal Content */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.98, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.98, y: 15 }}
+                      className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative z-10 border border-slate-100 overflow-y-auto max-h-[90vh] text-slate-900"
+                    >
+                      <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 bg-emerald-500" />
+                      
+                      <button
+                        onClick={() => {
+                          setIsFaqEditorModalOpen(false);
+                          setSelectedFaq(null);
+                        }}
+                        className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
+                        aria-label="닫기"
+                        type="button"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+
+                      <div className="space-y-4 pt-2 text-left">
+                        <div className="space-y-1">
+                          <h3 className="text-lg font-black tracking-tight text-slate-900">
+                            {selectedFaq ? "❓ 자주 묻는 질문 수정" : "❓ 새 자주 묻는 질문 등록"}
+                          </h3>
+                          <p className="text-xs text-slate-400 font-semibold leading-relaxed">
+                            관리자 페이지에서 수정하거나 등록한 내용은 사용자 화면에 실시간으로 즉시 반영됩니다.
+                          </p>
+                        </div>
+
+                        <form onSubmit={handleSaveFaq} className="space-y-4 pt-2">
+                          <div>
+                            <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                              질문 (Question)
+                            </label>
+                            <input
+                              type="text"
+                              value={editorQuestion}
+                              onChange={(e) => setEditorQuestion(e.target.value)}
+                              placeholder="예: 울산지방법원 회생 절차는 평균 며칠이 소요되나요?"
+                              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 text-xs font-semibold text-slate-900 outline-none"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                              답변 (Answer)
+                            </label>
+                            <textarea
+                              value={editorAnswer}
+                              onChange={(e) => setEditorAnswer(e.target.value)}
+                              placeholder="질문에 대한 상세하고 전문적인 법률 답변을 자유롭게 기입해 주세요."
+                              className="w-full h-48 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none leading-relaxed text-justify"
+                              style={{ textAlign: 'justify', textJustify: 'inter-character', wordBreak: 'break-all' }}
+                              required
+                            />
+                          </div>
+
+                          {faqEditorError && (
+                            <div className="p-3 bg-rose-50 border border-rose-100 rounded-xl flex items-start gap-2 text-rose-700 text-xs font-bold leading-relaxed">
+                              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                              <span>{faqEditorError}</span>
+                            </div>
+                          )}
+
+                          {faqEditorSuccess && (
+                            <div className="p-3 bg-emerald-50 border border-emerald-100 rounded-xl flex items-start gap-2 text-emerald-800 text-xs font-bold leading-relaxed">
+                              <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600 mt-0.5" />
+                              <span>{faqEditorSuccess}</span>
+                            </div>
+                          )}
+
+                          <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setIsFaqEditorModalOpen(false);
+                                setSelectedFaq(null);
+                              }}
+                              className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer text-center order-2 sm:order-1"
+                            >
+                              작성 취소
+                            </button>
+                            <button
+                              type="submit"
+                              className="flex-1 py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-550 text-white font-black rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center order-1 sm:order-2"
+                            >
+                              {selectedFaq ? "질문 바로 수정등록" : "질문 바로 게시 (Publish)"}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </AnimatePresence>
+
+              {/* FAQ Delete Confirmation Modal */}
+              <AnimatePresence>
+                {isFaqDeleteConfirmOpen && (
+                  <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+                    {/* Backdrop */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.6 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => setIsFaqDeleteConfirmOpen(false)}
+                      className="absolute inset-0 bg-slate-950"
+                    />
+
+                    {/* Modal Body */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                      className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
+                    >
+                      <div className="absolute top-0 inset-x-0 h-1.5 bg-rose-600" />
+                      
+                      <button
+                        onClick={() => setIsFaqDeleteConfirmOpen(false)}
+                        className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
+                        aria-label="닫기"
+                        type="button"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+
+                      <div className="space-y-4 pt-2 text-left">
+                        <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto sm:mx-0">
+                          <Trash2 className="w-6 h-6" />
+                        </div>
+
+                        <div className="space-y-2">
+                          <h3 className="text-lg font-black tracking-tight text-slate-900">
+                            자주 묻는 질문 영구 삭제
+                          </h3>
+                          <p className="text-xs text-slate-500 font-bold leading-relaxed whitespace-pre-line">
+                            [경고] 질문 `"{deleteFaqQuestion}"`을 서버 데이터베이스에서 완전히 영구 삭제하시겠습니까?
+                            이 작업은 절대 복구할 수 없으며 사용자 화면에서도 즉시 지워집니다.
+                          </p>
+                        </div>
+
+                        <div className="pt-3 flex gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => setIsFaqDeleteConfirmOpen(false)}
+                            className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer text-center"
+                          >
+                            취소
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleDeleteFaqExecute}
+                            className="flex-1 py-3 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center"
+                          >
+                            질문 영구 삭제 승인
                           </button>
                         </div>
                       </div>

@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FAQ_ITEMS } from '../data';
 import { Scale, CheckCircle2, AlertCircle, Sparkles, ChevronDown, ChevronUp, Lock, Target, HelpCircle, Landmark, ArrowRight, Library, FileText, Check } from 'lucide-react';
+
+interface FAQItem {
+  id: string | number;
+  question: string;
+  answer: string;
+}
 
 // Removed custom inline highlighter to avoid nested layout spans that block text justification.
 
 export default function EligibilityNotes() {
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [activeFaq, setActiveFaq] = useState<string | number | null>(null);
+  const [faqItems, setFaqItems] = useState<FAQItem[]>([]);
+
+  React.useEffect(() => {
+    // Fetch real-time FAQs from backend
+    fetch('/api/faqs')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setFaqItems(data);
+        }
+      })
+      .catch(err => {
+        console.error("Error loading FAQs:", err);
+      });
+  }, []);
 
   React.useEffect(() => {
     const handleExpandFaq = (e: Event) => {
-      const customEvent = e as CustomEvent<{ faqId: number }>;
-      if (customEvent.detail && typeof customEvent.detail.faqId === 'number') {
+      const customEvent = e as CustomEvent<{ faqId: string | number }>;
+      if (customEvent.detail && (typeof customEvent.detail.faqId === 'number' || typeof customEvent.detail.faqId === 'string')) {
         setActiveFaq(customEvent.detail.faqId);
       }
     };
@@ -223,7 +243,7 @@ export default function EligibilityNotes() {
           </div>
 
           <div className="mt-10 sm:mt-12 max-w-3xl mx-auto space-y-4">
-            {FAQ_ITEMS.map((faq) => {
+            {faqItems.map((faq) => {
               const isSelected = activeFaq === faq.id;
               return (
                 <div
