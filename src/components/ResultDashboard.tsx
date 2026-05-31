@@ -214,11 +214,11 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
 
     if (responses.occupation === 'no_income') {
       reductionRate = 0;
-      warningMsg = '※ 신청 보류 조치: 현재 일정한 소득(월급, 사업소득, 영업소득, 연금, 프리랜서 등)이 없는 상태(무직, 주부, 학생 등)로 진단되어 현행법상 지속적인 소득을 기본 전제로 하는 개인회생 신청은 현재 규정으로는 불가능합니다. 다만, 단기 아르바이트나 파트타임 등 소득 활동의 개시 채널을 즉시 안내받아 보완하시거나, 소득이 전무한 상태에서 빚을 일시에 전액 탕감(100% 면책)받는 "개인파산 및 면책 신청" 제도로의 전환 등 맞춤형 특별 조치가 가능합니다. 상세 자격 충족 요건 조율을 위해 반드시 법무사의 1:1 개별 상담을 즉시 받아보시길 권장해 드립니다.';
+      warningMsg = '보완 조치 사항: 현재 일정한 소득(월급, 사업소득, 연금 등)이 없는 상태(무직, 주부, 학생 등)일 경우에는, 지속적인 소득을  전제로 하는 개인회생 신청은 불가능합니다. 다만, 단기 아르바이트나 파트타임 등의 소득도 무관하므로 소득 활동을 개시하면 즉시 신청을 할 수도 있습니다. 참고로, 소득이 없는 상태에서 빚을 일시에 전액 탕감(100% 면책)받는 "개인파산 및 면책 신청" 제도로의 전환을 고려해 보아야 하므로,  자격 충족 요건 조율을 위해 반드시 법무사의 1:1 개별 상담을 받아보시길 권장해 드립니다.';
       eligibilityGrade = '신청 보류 (소득 보완 필요)';
-      progressColor = 'bg-rose-600';
-      textColor = 'text-rose-800';
-      ringColor = 'ring-rose-150';
+      progressColor = 'bg-slate-700';
+      textColor = 'text-slate-800';
+      ringColor = 'ring-slate-200';
     } else if (responses.hasMoreDebtThanAssets === 'no') {
       reductionRate = 0; // Asset greater than debt is legally blocked
       warningMsg = '※ 신청 불가 우려: 보유하신 순 재산의 합산액이 총 채무액보다 많을 경우, 채무초과를 인정받지 못해 법원으로부터 기각 결정을 받게 됩니다. 다만, 일반 개인이 재산을 산정할 때 범하기 쉬운 계산 착오(부동산에서 담보 채무를 공제하지 않는 착오, 임차보증금에서 소액보증금을 공제하지 않는 착오 등)를 재 검토하면 재산 평가 가액이 낮아져 회생 진행이 가능해지는 사례가 매우 빈번하므로, 재산가액을 정확히 산정할 수 없는 분은 법무사와 개별 상담을 통해 재산 재평가를 받아보시길 강력 추천합니다.';
@@ -583,20 +583,20 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
             transition={{ duration: 0.4, ease: "easeOut" }}
             className={`p-5 sm:p-6 rounded-2xl border ${
               responses.occupation === 'no_income' 
-                ? 'bg-rose-50/95 border-rose-200/80 shadow-[0_4px_20px_rgba(225,29,72,0.06)]' 
+                ? 'bg-slate-900 border-slate-800 shadow-[0_8px_30px_rgba(15,23,42,0.15)] text-slate-100' 
                 : 'bg-amber-50/95 border-amber-200/80 shadow-[0_4px_20px_rgba(245,158,11,0.06)]'
             } flex flex-row items-start gap-4 transition-all hover:scale-[1.005]`}
           >
             <div className="space-y-2 flex-1">
               <div className="flex items-center gap-2">
                 <span className={`text-[15.2px] sm:text-[16.7px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md ${
-                  responses.occupation === 'no_income' ? 'bg-rose-200/60 text-rose-800' : 'bg-amber-200/60 text-amber-800'
+                  responses.occupation === 'no_income' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-amber-200/60 text-amber-800'
                 }`}>
                   개인회생 요건 보완 필요성
                 </span>
               </div>
               <div className={`text-[15.2px] sm:text-[16.5px] font-bold leading-relaxed ${
-                responses.occupation === 'no_income' ? 'text-rose-900/90' : 'text-amber-900/90'
+                responses.occupation === 'no_income' ? 'text-slate-200' : 'text-amber-900/90'
               }`}>
                 {est.warningMsg}
               </div>

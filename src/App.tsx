@@ -76,6 +76,10 @@ export default function App() {
   // Handle browser back button (popstate) for overlay screens and modals
   React.useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
+      if ((window as any).isProgrammaticBack) {
+        (window as any).isProgrammaticBack = false;
+        return;
+      }
       if (privacyModalOpen) {
         setPrivacyModalOpen(false);
         setConsultationOpen(true);
