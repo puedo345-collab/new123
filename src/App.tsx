@@ -765,7 +765,7 @@ export default function App() {
 
         {/* Permanent Premium Guidelines and Stories (Scroll Trigger Point) */}
         {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && (
-          <div ref={eligibilityRef} className="scroll-mt-24 sm:scroll-mt-28" id="brand">
+          <div ref={eligibilityRef} className="scroll-mt-16 sm:scroll-mt-28" id="brand">
             <EligibilityNotes />
           </div>
         )}

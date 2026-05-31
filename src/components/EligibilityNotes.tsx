@@ -22,7 +22,7 @@ export default function EligibilityNotes() {
   }, []);
 
   return (
-    <section className="pt-16 md:pt-24 lg:pt-32 pb-16 md:pb-24 lg:pb-32 bg-transparent border-b border-[#FAF4E5] break-keep">
+    <section className="pt-3 md:pt-24 lg:pt-32 pb-16 md:pb-24 lg:pb-32 bg-transparent border-b border-[#FAF4E5] break-keep">
       <div className="max-w-5xl md:max-w-6xl mx-auto px-4 sm:px-8">
 
         {/* Eligibility Header Area */}
@@ -217,7 +217,7 @@ export default function EligibilityNotes() {
         </div>
 
         {/* Accordion FAQ Area ("세상의 이야기") */}
-        <div id="faq" className="scroll-mt-24 sm:scroll-mt-28 mt-16 md:mt-24 lg:mt-32 pt-16 md:pt-24 lg:pt-32 border-t border-[#FAF4E5]">
+        <div id="faq" className="scroll-mt-16 sm:scroll-mt-28 mt-4 md:mt-24 lg:mt-32 pt-4 md:pt-24 lg:pt-32 border-t border-[#FAF4E5]">
           <div className="text-center">
             <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.12]">자주 묻는 질문</h3>
           </div>

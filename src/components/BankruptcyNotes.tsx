@@ -21,7 +21,7 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.25 }}
-      className="bg-[#FAF9F5] min-h-screen pt-12 pb-16 md:pt-16 lg:pt-20 md:pb-24 text-slate-800 font-sans break-keep"
+      className="bg-[#FAF9F5] min-h-screen pt-4 pb-16 md:pt-16 lg:pt-20 md:pb-24 text-slate-800 font-sans break-keep"
       id="bankruptcy-notes-page"
     >
       <div className="max-w-5xl md:max-w-6xl mx-auto px-4 sm:px-8">
