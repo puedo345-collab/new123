@@ -101,7 +101,7 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
   ];
 
   const worrychips = [
-    '부동산경매 절차개시!',
+    '부동산 경매 절차가..',
     '집에 빨간딱지가!',
     '전화 독촉 스트레스!',
     '코인 및 주식 투자손실',
