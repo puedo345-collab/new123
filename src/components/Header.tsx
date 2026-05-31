@@ -229,7 +229,7 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
 
       {/* Mobile Menu Panel */}
       {isOpen && (
-        <div className="md:hidden border-t border-[#FAF4E5] bg-[#FAF9F5] shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
+        <nav className="md:hidden border-t border-[#FAF4E5] bg-[#FAF9F5] shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="px-4 pt-4 pb-6 space-y-3">
             {navItems.map((item) => (
               <button
@@ -274,7 +274,7 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
               ※ 법무사 여환동 직접 검토 및 철저한 개인정보 보호 보장
             </p>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );
