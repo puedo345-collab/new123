@@ -1,6 +1,58 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Menu, X, Scale } from 'lucide-react';
 
+const processLogoImage = (base64Str: string): Promise<string> => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(base64Str);
+          return;
+        }
+        ctx.drawImage(img, 0, 0);
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const a = data[i + 3];
+          
+          // Calculate grayscale value
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+          
+          // If the pixel is close to pure white, make it transparent
+          if (r > 240 && g > 240 && b > 240) {
+            data[i + 3] = 0;
+          } else {
+            // Otherwise, color the non-white emblem to deep slate (#0F172A = RGB 15, 23, 42)
+            data[i] = 15;
+            data[i + 1] = 23;
+            data[i + 2] = 42;
+            
+            // Adjust transparency to preserve anti-aliasing smooth edges
+            const factor = Math.max(0, 255 - gray) / 255;
+            data[i + 3] = Math.round(a * factor);
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+        resolve(canvas.toDataURL());
+      } catch (e) {
+        resolve(base64Str);
+      }
+    };
+    img.onerror = () => {
+      resolve(base64Str);
+    };
+    img.src = base64Str;
+  });
+};
+
 interface HeaderProps {
   onNavClick: (section: string) => void;
   onStartSurvey: () => void;
@@ -17,9 +69,10 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
       setLogoLoading(true);
       fetch('/api/logo-image')
         .then((res) => res.json())
-        .then((data) => {
+        .then(async (data) => {
           if (data && data.image) {
-            setLogoImg(data.image);
+            const processed = await processLogoImage(data.image);
+            setLogoImg(processed);
           } else {
             setLogoImg(null);
           }
@@ -95,19 +148,17 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
             <div 
               id="header-logo-container"
               onClick={() => onNavClick('hero')}
-              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden shadow-2xs shrink-0 ${
-                logoLoading ? 'bg-transparent' : (logoImg ? 'bg-white border border-slate-200/80' : 'bg-slate-900 border border-slate-800')
-              }`}
+              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden shrink-0 bg-transparent`}
             >
               {!logoLoading && (
                 logoImg ? (
                   <img 
                     src={logoImg} 
                     alt="여환동 법률 로고" 
-                    className="w-full h-full object-contain p-1 filter grayscale-[0.6] sepia-[0.2] brightness-[1.02] contrast-[1.1] transition-all duration-300" 
+                    className="w-full h-full object-contain p-0.5 transition-all duration-300" 
                   />
                 ) : (
-                  <Scale className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2] text-amber-500" />
+                  <Scale className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2] text-[#0F172A]" />
                 )
               )}
             </div>
@@ -116,7 +167,7 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
               className="flex flex-col cursor-pointer justify-center min-w-0" 
               onClick={() => onNavClick('hero')}
             >
-              <span className="text-[13.5px] min-[360px]:text-[15.5px] min-[390px]:text-[19px] sm:text-[22px] font-black tracking-tight text-slate-900 block leading-tight pt-0.5 whitespace-nowrap break-keep">
+              <span className="text-[13.5px] min-[360px]:text-[15.5px] min-[390px]:text-[19px] sm:text-[22px] font-black tracking-tight text-[#0F172A] block leading-tight pt-0.5 whitespace-nowrap break-keep">
                 법무사 여환동 사무소
               </span>
             </div>
