@@ -95,8 +95,8 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
             <div 
               id="header-logo-container"
               onClick={() => onNavClick('hero')}
-              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden text-amber-500 shadow-xs shrink-0 ${
-                logoLoading ? 'bg-transparent' : (logoImg ? 'bg-transparent' : 'bg-slate-900 border border-slate-800')
+              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden shadow-2xs shrink-0 ${
+                logoLoading ? 'bg-transparent' : (logoImg ? 'bg-white border border-slate-200/80' : 'bg-slate-900 border border-slate-800')
               }`}
             >
               {!logoLoading && (
@@ -104,10 +104,10 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                   <img 
                     src={logoImg} 
                     alt="여환동 법률 로고" 
-                    className="w-full h-full object-contain mix-blend-multiply filter grayscale-[100%] brightness-[0.22] contrast-[1.25] opacity-95 transition-all duration-300" 
+                    className="w-full h-full object-contain p-1 filter grayscale-[0.6] sepia-[0.2] brightness-[1.02] contrast-[1.1] transition-all duration-300" 
                   />
                 ) : (
-                  <Scale className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
+                  <Scale className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2] text-amber-500" />
                 )
               )}
             </div>
