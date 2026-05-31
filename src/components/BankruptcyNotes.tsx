@@ -214,6 +214,17 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
           </div>
         </div>
 
+        {/* Bottom Navigation Button */}
+        <div className="mt-16 md:mt-24 lg:mt-32 text-center pb-8">
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-slate-900 text-white font-black text-[16px] sm:text-[17px] tracking-tight hover:bg-slate-850 active:scale-95 transition-all duration-150 cursor-pointer shadow-lg hover:shadow-xl border border-slate-800"
+            id="bankruptcy-notes-bottom-back-btn"
+          >
+            <ArrowLeft className="w-4.5 h-4.5" />
+            메인 페이지로 이동하기
+          </button>
+        </div>
 
       </div>
     </motion.div>
