@@ -103,7 +103,7 @@ export default function EligibilityNotes() {
                     02
                   </div>
                   <div className="space-y-2 text-left">
-                    <h4 className="font-extrabold text-[#BC8412] text-[19px] sm:text-[21px]">채무 합계액 한도</h4>
+                    <h4 className="font-extrabold text-slate-800 text-[19px] sm:text-[21px]">채무 합계액 한도</h4>
                     <p className="text-[16px] sm:text-[18px] text-slate-500 font-bold leading-relaxed font-sans w-full" style={{ textAlign: 'justify', textJustify: 'inter-character', wordBreak: 'break-all' }}>
                       무담보 채무(신용 대출, 신용카드 연체대금 등) 10억 이하, 담보 채무(아파트·주택 담보 채무, 자동차 담보 채무 등) 15억 이하 이면서, 너무 소액의 채무는 인가 가능성이 낮으므로 약 1천만 원 이상의 채무가 있으면 됩니다.
                     </p>
