@@ -1238,16 +1238,6 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                 >
                   ✍ 성공사례 관리
                 </button>
-                <button
-                  onClick={() => setActiveTab("faqs")}
-                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
-                    activeTab === "faqs"
-                      ? "bg-slate-900 text-white shadow-md"
-                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
-                  }`}
-                >
-                  ❓ 자주 묻는 질문 관리
-                </button>
               </div>
 
               {activeTab === "list" && (
