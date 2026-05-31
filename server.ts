@@ -116,14 +116,51 @@ function initArticlesDatabase() {
       {
         id: "art_1",
         category: "코인/투자 채무",
-        title: "코인 투자 실패로 인한 채무 급증 해결",
-        age: "20대 후반",
-        job: "IT 프리랜서",
-        originalDebt: "6,400만 원",
-        reducedDebt: "1,800만 원",
-        monthlyPayment: "50만 원 (36개월)",
-        reductionRate: 72,
-        content: "코인 선물 투자 손실로 대부업 대출과 카드 현금서비스를 반복하며 다중 연체 상태에 빠졌습니다. 법무사 여환동 사무소를 통해 개인회생 요건을 확인하고, 채무 발생 경위에 대한 소명 자료(최근대출 사용처 도표 등)를 충실히 준비한 결과, 울산지방법원으로부터 높은 탕감율의 변제 계획을 인가받아 사실상 채무 대부분을 탕감받았습니다.",
+        title: "주식·코인 최근 채무 비율 85%, 청산가치 산정의 한계를 돌파한 30대 가장의 회생기",
+        age: "30대 중반",
+        job: "영업직 (프리랜서)",
+        originalDebt: "1억 2,000만 원",
+        reducedDebt: "2,160만 원",
+        monthlyPayment: "60만 원 (36개월)",
+        reductionRate: 82,
+        content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
+    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+  </div>
+  
+  <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
+    울산에 거주하는 30대 중반의 직장인 A씨는 어린 딸을 홀로 양육하는 한부모 가장이었습니다. 고물가 속 생활비 부담을 덜고자 시작한 코인/선물 투자가 잇단 손실로 이어졌고, 이를 메우기 위해 연 20%가 넘는 카드론과 대부업 고금리 대출에 손을 대면서 불과 1년 만에 채무가 1억 2천만 원까지 급증했습니다. 최근 발생한 대출 비중이 전체의 85%에 달해 일반적인 대리인 사무소에서는 기각 가능성이 매우 높다고 판단한 고위험 사건이었습니다.
+  </p>
+
+  <div class="my-6">
+    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
+  </div>
+
+  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">1. 법무사의 시선에서 본 핵심 쟁점 (난제)</h3>
+  <p class="leading-relaxed pl-1 text-slate-650">
+    울산지방법원은 주식/사행성 채무 및 최근 채무 비율이 높은 사건에 대해 매우 엄격한 보정 명령을 내립니다. 본 사건의 가장 큰 걸림돌은 두 가지였습니다.<br/>
+    <strong>첫째</strong>, 코인 거래소로 흘러 들어간 자금 전액을 '청산가치(본인 재산)'에 반영하라는 법원의 보정 권고가 내려질 위기였습니다. 만약 투자 손실액이 전부 재산으로 잡히면 월 변제금이 터무니없이 높아져 회생을 중도 포기해야 하는 상황이었습니다.<br/>
+    <strong>둘째</strong>, 프리랜서 성격이 섞인 영업직 소득으로 월 소득이 매달 불규칙하여 소득 산정 시 법원의 의심을 받는 상황이었습니다.
+  </p>
+
+  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">2. 여환동 법무사 사무소의 독보적 전략</h3>
+  <p class="leading-relaxed pl-1 text-slate-650">
+    저희 사무소는 14년 법원 실무 경력의 노하우를 바탕으로, 단순 실패가 아닌 배우자와의 이혼 과정에서 발생한 위자료 및 자녀 양육비 지출 내역을 세부 통장 내역 거래를 통해 1원 단위까지 분리 입증했습니다. 코인 손실금 중 실제 소비로 사라진 부분과 투자 실패로 소멸한 실질 자산을 소명 도표로 정리하여 법원이 요구하는 '최근 채무 소명 자료'를 완벽히 메웠습니다. 또한, 1인 생계비 외에 한부모 가정으로서의 '추가 생계비(자녀 치료비 및 교육비)' 필요성을 강력하게 소명하여 월 소득 대비 가용소득을 최소화하는 데 성공했습니다.
+  </p>
+
+  <h3 class="text-sm sm:text-base font-black text-slate-900 border-l-4 border-amber-600 pl-2 pt-2">3. 인가 결과 및 법률적 교훈</h3>
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-2 space-y-2">
+    <ul class="list-disc list-inside space-y-1.5 font-bold text-slate-800 text-xs sm:text-[13.5px]">
+      <li><span class="text-slate-400 font-medium">총 채무액:</span> 1억 2,000만 원</li>
+      <li><span class="text-slate-400 font-medium">조정 후 총변제액:</span> 2,160만 원 (원금의 18%만 변제)</li>
+      <li><span class="text-emerald-700">탕감율: 82% 면책 결정</span></li>
+      <li><span class="text-slate-400 font-medium">월 변제금:</span> 60만 원 (36개월 납입)</li>
+    </ul>
+  </div>
+  <p class="leading-relaxed pl-1 text-slate-650">
+    본 사건은 법원의 청산가치 반영 원칙에 맞서, 채무자의 실질적 갱생을 위해 법무사가 얼마나 집요하게 소명 서류를 다듬는지가 인가 성공의 핵심 열쇠임을 다시 한번 보여준 모범 사례입니다.
+  </p>
+</div>`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         views: 120

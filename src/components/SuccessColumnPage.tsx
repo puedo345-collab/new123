@@ -302,43 +302,18 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                       >
                          {/* Card Header (Click to toggle) */}
                          <div 
-                           className="p-4 sm:p-5 flex flex-col md:grid md:grid-cols-12 md:gap-4 md:items-center select-none cursor-pointer"
+                           className="p-4 sm:p-5 flex justify-between items-center select-none cursor-pointer"
                            onClick={() => setExpandedStoryId(isExpanded ? null : story.id)}
                          >
-                           {/* Left Title: col-span-4 */}
-                           <div className="col-span-12 md:col-span-4 min-w-0 text-left flex items-center gap-2">
-                             <span className="text-[11px] text-slate-400 font-bold sm:hidden">
-                               {story.age || "-"} • {story.job || "-"}
-                             </span>
+                           {/* Left Title: Full width minus chevron */}
+                           <div className="flex-1 min-w-0 text-left">
                              <h4 className="font-black text-slate-800 text-sm sm:text-base truncate leading-snug w-full" title={story.title}>
                                {story.title}
                              </h4>
                            </div>
       
-                           {/* Middle Metrics Box: col-span-5 */}
-                           <div className="col-span-12 md:col-span-5 flex md:justify-start items-center">
-                             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1 w-full md:w-auto justify-between md:justify-start whitespace-nowrap">
-                               <div className="flex items-center gap-1.5 whitespace-nowrap">
-                                 <span className="text-slate-400 font-medium whitespace-nowrap">기존</span>
-                                 <span className="font-black text-slate-700 whitespace-nowrap">{story.originalDebt}</span>
-                                 <span className="text-slate-350 whitespace-nowrap">➔</span>
-                                 <span className="text-amber-800 font-black whitespace-nowrap">{story.reducedDebt}</span>
-                               </div>
-                               <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded text-[10px] ml-0.5 shrink-0 whitespace-nowrap">
-                                 {story.reductionRate}% 탕감
-                               </span>
-                             </div>
-                           </div>
-      
-                           {/* Right Age/Job Info: col-span-2 */}
-                           <div className="hidden md:block col-span-12 md:col-span-2 text-right">
-                             <span className="text-[11px] text-slate-400 font-bold whitespace-nowrap">
-                               {story.age || "-"} • {story.job || "-"}
-                             </span>
-                           </div>
-      
-                           {/* Right Chevron Down: col-span-1 */}
-                           <div className="col-span-12 md:col-span-1 flex items-center justify-end shrink-0">
+                           {/* Right Chevron Down: shrink-0 */}
+                           <div className="flex items-center justify-end shrink-0 ml-4">
                              <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-slate-100 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 bg-amber-100 text-amber-700' : ''}`}>
                                <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
                              </div>
