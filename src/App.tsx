@@ -601,6 +601,7 @@ export default function App() {
     setBrandPageActive(false);
     setAdminPageActive(false);
     setBankruptcyPageActive(false);
+    setSuccessColumnsActive(false);
     if (mode === 'case') {
       handleNavClick('success_columns');
     } else {
