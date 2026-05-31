@@ -249,28 +249,10 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
           </div>
         </div>
 
-        <div className="px-6 py-4 space-y-5">
+        <div className="px-6 py-4 space-y-4">
           {/* Dynamic Success Stories Matcher */}
           <div className="space-y-4">
             
-            {/* Search bar: highly visible & cohesive */}
-            <div className="space-y-1.5 text-left">
-              <label className="text-xs font-black text-amber-700 uppercase tracking-wider flex items-center gap-1">
-                <span>💡 키워드 신속 검색</span>
-                <span className="text-[10px] text-slate-400 font-normal normal-case">(직업, 채무액, 사유 등 입력)</span>
-              </label>
-              <div className="relative max-w-xl">
-                <Search className="w-4 h-4 text-amber-600 absolute left-3.5 top-3" />
-                <input
-                  type="text"
-                  placeholder="예: 직장인, 프리랜서, 5천만원, 코인, 주식, 1억 등 키워드를 입력해 보세요"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white border-2 border-amber-600/30 rounded-2xl text-xs sm:text-[13px] font-bold text-slate-800 placeholder-slate-400 focus:outline-hidden focus:border-amber-600 focus:ring-4 focus:ring-amber-500/10 transition-all shadow-xs"
-                />
-              </div>
-            </div>
-
             {/* Search filters */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-500/[0.03] p-4 sm:p-5 rounded-2xl border border-[#FAF4E5] text-left">
               <div className="space-y-2">
