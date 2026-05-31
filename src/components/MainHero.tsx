@@ -22,10 +22,10 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
           hasTriggered = true;
           // Wait 300ms after entering viewport for smooth focus transition
           setTimeout(() => {
-            el.scrollTo({ left: 45, behavior: 'smooth' });
+            el.scrollTo({ left: 55, behavior: 'smooth' });
             setTimeout(() => {
               el.scrollTo({ left: 0, behavior: 'smooth' });
-            }, 550);
+            }, 1000);
           }, 300);
           
           observer.unobserve(el);
