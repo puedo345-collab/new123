@@ -20,24 +20,19 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          울산에 거주하는 30대 중반의 영업직 직장인 A씨는 어린 딸을 홀로 양육하는 한부모 가장이었습니다. 생활비 부담을 덜고자 시작한 주식과 코인 선물 투자가 손실로 이어졌고, 이를 메우기 위해 연 20%가 넘는 카드론과 대부업 고금리 대출에 손을 대면서 불과 1년 만에 채무가 1억 2천만 원까지 급증했습니다. 최근 발생한 대출 비중이 전체의 85%에 달해 일반적인 대리인 사무소에서는 기각 가능성이 매우 높다고 판단한 고위험 사건이었습니다.
+          울산에 거주하는 30대 중반의 영업직 직장인 A씨는 어린 딸을 홀로 양육하는 한부모 가장이었습니다. 생활비 부담을 덜고자 시작한 주식과 코인 선물 투자가 손실로 이어졌고, 이를메우기 위해 연 20%가 넘는 카드론과 대부업 고금리 대출에 손을 대면서 불과 1년 만에 채무가 1억 2천만 원까지 급증했습니다. 최근 발생한 대출 비중이 전체의 85%에 달해 일반적인 대리인 사무소에서는 기각 가능성이 매우 높다고 판단한 고위험 사건이었습니다.
         </p>
       </div>
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           울산지방법원은 주식/사행성 채무 및 최근 채무 비율이 높은 사건에 대해 매우 엄격한 보정 명령을 내립니다. 본 사건의 가장 큰 걸림돌은 두 가지였습니다.<br/>
@@ -48,8 +43,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           저희 사무소는 14년 법원 실무 경력의 노하우를 바탕으로, 단순 실패가 아닌 배우자와의 이혼 과정에서 발생한 위자료 및 자녀 양육비 지출 내역을 세부 통장 내역 거래를 통해 1원 단위까지 분리 입증했습니다. 코인 손실금 중 실제 소비로 사라진 부분과 투자 실패로 소멸한 실질 자산을 소명 도표로 정리하여 법원이 요구하는 '최근 채무 소명 자료'를 완벽히 메웠습니다. 또한, 1인 생계비 외에 한부모 가정으로서의 '추가 생계비(자녀 치료비 및 교육비)' 필요성을 강력하게 소명하여 월 소득 대비 가용소득을 최소화하는 데 성공했습니다.
@@ -58,8 +52,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -96,13 +89,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -112,8 +101,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           이미 폐업한 사업장과 관련하여 다수의 카드사 및 대부업체로부터 유치권 행사와 통장 압류가 예고되어 있어 생계 자체가 마비될 지경이었습니다. 또한 배우자와 이혼하여 두 자녀의 양육비로 매달 고정적으로 80만 원을 지급해야 했기에, 가용소득 산정 시 생계비 추가 인정 여부가 생존을 결정짓는 핵심이었습니다.
@@ -122,8 +110,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           우선 압류 및 추심을 전격 차단하기 위한 금지·중지명령의 소명 자료를 신속히 구성하여 법원 접수와 동시에 처리되도록 대응했습니다. 나아가 이혼 합의서 상의 양육비 판결문과 실제 송금 약정 내역을 근거로 최저생계비 외에 추가 양육비 지출액 80만 원 전액을 추가 생계비로 공제하도록 설득력 있는 계획안을 작성하여 인정을 이끌어냈습니다.
@@ -132,8 +119,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -170,13 +156,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -186,28 +168,25 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+        <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           일용직 특성상 고정적인 급여명세서가 존재하지 않고 기후나 현장 상황에 따라 월 소득 편차가 너무 컸습니다. 울산지방법원 재판부는 일용직의 소득 불투명성을 근거로 최근 고소득 구간을 기준으로 변제금을 올릴 것을 엄격하게 명령하는 등 소명 난이도가 극도로 높았습니다.
         </p>
       </div>
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+        <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           과거 1년 치의 통장 거래 입출금 내역을 세부 항목으로 분석하여 공장 발주처로부터 직접 수령한 일당을 엑셀로 시각화해 냈습니다. 최근 3개월의 고소득 구간이 비정상적인 잔업 수당에 기반했음을 법률 논리로 변호하여 1년 평균 월 실질소득 기준을 적용함으로써 월 변제 금액을 대폭 하향 조정하는 방어 전략을 성공적으로 완수했습니다.
         </p>
       </div>
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -244,13 +223,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -260,8 +235,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           주식 리딩 투자 손실은 일반적인 개인회생 실무에서 사행성 도박 및 무리한 투자 실패로 취급받기 쉽습니다. 법원은 투자 원금을 전액 채무자의 청산가치에 과도하게 편입시켜 사실상 변제율을 100% 가까이 맞추라고 압박하는 사안이었습니다.
@@ -270,8 +244,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           단순한 투자 실패 진술이 아닌, 경찰서에 접수한 형사 고소장 사본, 사기 수법이 담긴 모바일 메신저 대화 캡처, 금전 이체 경로를 시간순 도표로 구성하여 악의적인 사기 사범의 불법 행위 피해자임을 강력히 소명했습니다. 피해 금액의 사용처가 본인의 사치나 유흥이 아님을 회계적으로 명확히 분리 증명해 냈습니다.
@@ -280,8 +253,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -318,13 +290,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -334,8 +302,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           연대보증 채무의 경우, 본인이 직접 빌리지 않았음에도 법적 효력이 강제되므로 보증 책임을 피해 갈 길이 막막합니다. 특히 의뢰인이 상대방의 대출 범죄 혐의에 대해 구체적인 필적 대조 자료와 공인인증서 도용 경위를 논리적으로 증명하지 못하면 기각 위기에 놓이게 됩니다.
@@ -344,8 +311,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           우선 채권자들의 무단 압류 조치를 철저히 무력화하는 한편, 전배우자를 상대로 형사 고소한 사실원 사본 및 과거 혼인 기간 중 금융 계좌가 전배우자에 의해 단독 통제되었음을 보여주는 금융 대사표를 증거로 확보했습니다. 또한 자녀 1인을 포함한 2인 가구 최저생계비를 적극 고수하고 변제안을 제출하여 채권단 협의를 성공으로 유도했습니다.
@@ -354,8 +320,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -392,13 +357,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -408,8 +369,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           학원 강사는 매달 수수료 3.3% 정산 형태로 급여를 수령하는 프리랜서 신분이라 소득의 불규칙성이 매우 심했습니다. 울산법원 보정 위원은 지속 가능한 소득 수준을 객관적으로 입증하지 못하면 신청 자격 자체가 미달이라는 입장을 밝혀 상당한 애로사항이 있었습니다.
@@ -418,8 +378,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           최근 2년간의 학원 거래 정산서 및 입금증을 일자별로 세밀하게 분석하고 정형화된 평균 소득 대조 자료를 준비했습니다. 한부모 가정으로서의 불가피한 추가 양육비 지출과 요양 병원 간병비 소명 내역서 등을 법정 논거하여 추가 제출함으로써 인정 소득 수준을 채무자의 한계 변제력 안으로 정밀 설계하였습니다.
@@ -428,8 +387,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -466,24 +424,19 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           울산 울주군에서 2.5톤 개별화물 트럭을 활용해 평생 영업을 이어오던 60대 G씨는 경기 불황과 차량 수리비 폭탄, 캐피탈 채무 지출 연체가 겹치며 파산 문턱에 섰습니다. 차량 압류로 생계 수단마저 위협받으며, 고령의 배우자 만성 질환 약값까지 밀려 총채무가 5,800만 원으로 치달았습니다.
         </p>
       </div>
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           가장 거대한 난제는 의뢰인의 유일한 생계 도구인 영업용 화물 트럭이 본인의 '재산 가치(청산가치)'에 그대로 산입되어 청산가치 보장 원칙에 따라 월 변제 예정액이 터무니없이 높게 산정되는 모순이었습니다. 차량이 처분되면 소득 활동 자체가 완전 소멸하는 기로에 서 있었습니다.
@@ -492,8 +445,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           저희 사무소는 민사집행법상의 '생업 유지에 필수적인 도구' 예외 조항을 적극 인용하여 차량 담보 대출의 대환 상쇄 구조를 법정 진술서와 실사 보고서로 정리해 소명했습니다. 화물 트럭의 실제 감가상각 가치를 증명하여 재산 가치를 최대한 깎아내리고 부양가족 질환 소명비 공제를 성공시켰습니다.
@@ -502,8 +454,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -540,13 +491,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -556,8 +503,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           맞벌이 부부의 경우 공동 합산 소득이 다소 높게 잡히는 경향이 있어 법원에서 1인 가구 최저생계비 기준만을 엄격하게 고수하려 했습니다. 부양가족의 적정한 분배와 부부 공동명의 임차 보증금의 청산가치 제외 소명이 중대한 쟁점이었습니다.
@@ -566,8 +512,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           부부 각자의 근로 계약 형태와 원천징수 실소득 영수증을 완전히 별도 구분하여 산정했고, 주거용 임차보증금의 소액 보증금 최우선변제 권리 한도를 적용받도록 방어했습니다. 아이들의 어린이집 등원 증명, 의료비 약정 거래 증빙 자료를 정밀하게 제출하여 부양가족 추가 생계비 인정을 이뤄내 가용소득을 크게 억제했습니다.
@@ -576,8 +521,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -614,13 +558,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -630,8 +570,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           과거 고소득 시기의 대출 이력이 발목을 잡았습니다. 재직 당시에는 이자를 충분히 감당했으나 권고사직 후 재취업한 아파트 경비직의 소득이 종전의 절반에 불과하자, 법원에서는 '고의적으로 저임금 직무로 이직하여 변제금을 적게 내려는 편법이 아닌가' 하는 무리한 의심과 조사가 걸림돌이 되었습니다.
@@ -640,8 +579,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           의뢰인의 실직 원인이 하청 구조조정에 기인한 불가피한 사유였음을 입증하고자 당시 조선업 고용 동향 통계청 자료와 고용보험 피보험자격 상실 확인원을 면밀히 대조 제출했습니다. 연령과 만성 관절 질환 등으로 용접 업무 복귀가 불가능하다는 진단 증빙을 피력하여, 경비직 급여를 정상적 소득 기반으로 확정 짓고 가용소득을 최소 범주로 방어하는 전략을 이끌어냈습니다.
@@ -650,8 +588,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -688,13 +625,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -704,8 +637,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           자영업자는 근로소득자와 달리 매출액 대비 '실질 순소득'의 회계적 증명이 매우 험난합니다. 매출 전표 상의 경비 중 법인이 임의로 분류한 공제 항목들에 대해 울산 회생위원이 '가공 경비(가짜 지출)' 혐의를 제기하여 실제 수입보다 변제금을 터무니없이 무리하게 책정시키려는 경향이 난제였습니다.
@@ -714,8 +646,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           저희 사무소는 포스(POS) 단말기 상의 매출 원장과 카드 세무 신고 세부 내역, 재료 소모 매입 세금계산서, 월세 송금 내역을 바탕으로 일목요연한 6개월 통합 수지대조 도표를 작성했습니다. 매장에 사용되는 고정 임대료와 제세공과금 지출이 사업 유지를 위한 정당한 '필수 운영 경비'임을 세무서 공인인증 자료로 강력 소명하여 인정을 이끌어냈습니다.
@@ -724,8 +655,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -762,13 +692,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -778,8 +704,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           정식 직장의 4대 보험 적용 근로자가 아니라 학과 내 위탁 프로젝트 연구 보조 수당(학연생 인건비)을 받는 신분이라, 법적으로 '계속적이고 반복적인 수입 확보' 요건을 입증하기 대단히 어려운 지점에 서 있었습니다. 법원에서는 소득 불량 및 단기 편법 신청으로 간주할 가능성이 매우 컸습니다.
@@ -788,8 +713,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           대학 산학협력단으로부터 직접 J씨 연구원으로 입금된 연구 위탁 협약서와 급여 지급 원장을 취합하여, 비록 계약직 성격이나 과제 지속성을 증명하는 행정 서류를 빈틈없이 제출했습니다. 졸업 후 동 분야 연구원으로 고용이 내정되어 있음을 지도교수 확인서 등으로 증명하여 계속성 소득 요건을 완전히 정당화시켰습니다.
@@ -798,8 +722,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -836,13 +759,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
@@ -852,8 +771,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           울산지방법원은 도박 및 불법 배팅 성격의 채무에 대해 극도로 무거운 시선을 던집니다. 원칙적으로 이러한 사행성 부채액 전액을 본인의 청산가치에 반영하여 월 변제 비율을 90% 이상으로 책정하도록 강력한 보정 권고를 하므로 탕감율 방어가 매우 까다로운 건이었습니다.
@@ -862,8 +780,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           단순한 선처 호소 전략에서 탈피하여 의뢰인이 도박 중독 치유 상담 센터를 이수 중임을 증명하는 공인 이수 서류, 중독 치료 병원 정신의학과 진단서, 매월 작성한 정밀 자필 소명 조서를 함께 제출했습니다. 낭비벽이 치유되고 있으며 향후 성실 변제 의지를 입증하여 청산가치 의무 편입 수위를 극적으로 낮췄습니다.
@@ -872,8 +789,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -910,13 +826,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -926,8 +838,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           소득이 법정 최저생계비(1인 가구 기준)에 거의 턱걸이하는 수준이라 채무자가 매달 법원에 변제 가능한 최소 가용소득인 10만~20만 원 범위조차 산출하기가 위태로웠습니다. 일반적인 사무실에서는 파산 요건으로 넘기려 했으나 고령의 나이에도 근로 의욕이 매우 높았습니다.
@@ -936,8 +847,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           파산 절차를 밟을 경우 의뢰인의 주거용 임차 소액 보증금까지 위협받을 소지가 크다고 진단, 회생으로 안전 장치를 걸었습니다. 의뢰인의 월 130만 원 급여에서 만성 투병 진단 의료 영수증과 보장 약값을 합산해 필수 요양비를 소명하고 1인 가구 가용소득을 딱 37만 원으로 칼같이 설계해 재판부를 설득했습니다.
@@ -946,8 +856,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -984,13 +893,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -1000,8 +905,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           법원 재판부는 본인 과실에 기반한 보이스피싱 송금액에 대해 엄격히 면책 요건을 강화하려는 성향이 강했습니다. 채무의 고의적 은닉이나 증발이 아닌 실제 범죄 피해를 겪었음을 법적인 증거력으로 철저히 소명해 내야 기각을 모면하는 고난도 사안이었습니다.
@@ -1010,8 +914,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           경찰서의 사건사고사실확인원, 피싱 집단에 유출된 신분증 및 단말기 원격 조종 악성 앱 로그 분석 기록, 사기 송금증 사본을 수합해 피해 전말서를 명확히 구비했습니다. 피해자의 무과실 및 사회적 사기 피해자로서의 상황을 재판부에 강력 소명하여 인정을 이뤄내 가용소득을 최소화하는 데 성공했습니다.
@@ -1020,8 +923,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -1058,13 +960,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -1074,8 +972,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           공장 내 잔여 기계 설비와 잔존 미수금 채권이 청산가치에 과대 산정되는 과정이 중대한 걸림돌이었습니다. 잔여 채권을 실제 현금화하기 어려운 현 상태임에도 법원이 자산 가치를 높게 잡으면 변제액이 감당 불가능한 수준으로 불어날 위기였습니다.
@@ -1084,8 +981,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           공장 기계 설비들의 감가상각 평가서와 고장 진단서, 거래처 부도 증빙 서류를 정밀하게 수집해 기계의 실질적 잔존 처분 가치가 0원에 수렴함을 증명했습니다. 거래처 미수 채권이 회수 불능의 채무 불이행 채권임을 명명백백히 밝혀내 청산가치를 90% 이상 절감시키는 쾌거를 거뒀습니다.
@@ -1094,8 +990,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -1132,24 +1027,19 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
-          울산 중구에 거주하며 두 자녀를 양육하는 40대 싱글맘 O씨는 전배우자의 양육비 송금 두절과 간호조무사 초임 연봉 한계로 생계형 적자가 빚으로 불어났습니다. 연체 이자와 생계 비용으로 빌려 쓰기 시작한 2금융 카드 대출이 순식간에 7,800만 원까지 악화되어 주거지 보증금 압류 고지서를 마주하게 되었습니다.
+          울산 중구에 거주하며 두 자녀를 양육하는 40대 싱글맘 O씨는 전배우자의 양육비 송금 두절과 간호조무사 초임 연봉 한계로 생계형 적자가 빚으로 불어났습니다. 연체 이자와 생계 비용으로 빌려 쓰기시작한 2금융 카드 대출이 순식간에 7,800만 원까지 악화되어 주거지 보증금 압류 고지서를 마주하게 되었습니다.
         </p>
       </div>
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           두 아이를 부양하는 싱글맘의 가구 형태를 감안할 때 3인 가구 최저생계비를 온전히 인정받는 것이 변제 예정액 수위를 낮추는 핵심 키였습니다. 법원은 전남편의 부양 의무 소홀 사항을 회피한 채, 형식상 공동 부양가족 의무 책임을 주장하며 생계비를 대폭 삭감하라는 무리한 보정을 권고했습니다.
@@ -1158,8 +1048,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           과거 3년간의 양육비 계좌 거래 확인서를 통해 전배우자로부터 양육비가 단 1원도 입금되지 않았음을 투명하게 증명했습니다. 아이들의 긴급 치료 진단 의료비와 한부모 수급 증명서를 행정 논거로 수립하여 법원의 보정 압박을 완벽히 퇴치하고 3인 가구의 높은 생계비를 원안대로 사수했습니다.
@@ -1168,8 +1057,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -1206,13 +1094,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -1222,8 +1106,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           대리 대출 피해액이 대부업체와 다수 카드사에 걸쳐 있어 금융기관들이 피해 주장을 전면 부인하며 변제 기각 항고를 무수히 쏟아냈습니다. 본인이 승인한 형식상 대출 거래라 할지라도 금융 범죄에 연계된 불법 부채임을 법리적으로 증명하는 데 큰 곤경이 따랐습니다.
@@ -1232,8 +1115,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           경찰 수사 개시 결정서와 악성 금융 악용 바이러스 포렌식 이력 보고서, 당일 자금 이체 기록을 입수해 제출하였습니다. 24시간 3교대 간호 근무를 하는 의뢰인의 신체적/심리적 취약점을 이용한 범죄 수법을 법률 대리인 진술서로 철저히 논증하여 법원 회생위원의 피해 면책 승인을 이뤄냈습니다.
@@ -1242,8 +1124,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -1280,13 +1161,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -1296,8 +1173,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           카페 내 집기들과 남은 가맹 임차 권리금 등의 자산 평가 가치가 높게 산정되어 월 변제금이 높게 책정될 위험이 거대한 장벽이었습니다. 실제로는 처분이 거의 불가능한 수준임에도 법원이 자산 가치를 기계적으로 높이 평가하려는 태도를 방어해야 했습니다.
@@ -1306,8 +1182,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           카페 인테리어 감가상각 가치를 정밀 대조하고 매장의 임대료 연체 상태로 인해 상가 권리금의 실 가치가 0원임을 회계 증명서로 밝혀냈습니다. 동업자의 배임 혐의에 대한 민사 소송 조서와 인감 도용 증거를 법원에 함께 피력하여 무단 연대보증 책임의 상쇄 혜택을 획득시켰습니다.
@@ -1316,8 +1191,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -1354,13 +1228,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -1370,8 +1240,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           미혼 단독 1인 가구 소득 기준으로는 최저생계비가 한정되어 있어 아버지의 표적 항암제 비용과 고정적인 의료 지출비 내역을 추가적으로 공제받지 못한다면 회생 납입금 자체를 중도 포기해야만 하는 벼랑 끝에 서 있었습니다.
@@ -1380,8 +1249,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           가족들의 실제 거주 형태와 암 투병 진단서 및 병원 장기 입원 명세 도표를 명확히 작성하여, 미혼 세대주임에도 아버지를 '실질적 추가 부양가족' 및 '특별 추가 의료 생계비' 대상자로 소명하는 변론을 성공시켰습니다. 매달 수반되는 항암 약값을 가용소득 공제 항목으로 완벽하게 반영시켰습니다.
@@ -1390,8 +1258,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
@@ -1428,13 +1295,9 @@ const seedArticles = [
   </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
-    <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
-    
     <div class="space-y-4">
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
           1. 사실관계
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
@@ -1444,8 +1307,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          2. 핵심 쟁점
+          2. 핵심쟁점
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
           동업 보증 채무는 법률상 본인의 동의 필적 날인이 형식적으로 존재하므로, 채무자가 악의적으로 면책을 신청한 것이 아니라는 무고함을 명확히 소명해야 기각을 모면할 수 있는 고난도 쟁점이 있었습니다.
@@ -1454,8 +1316,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          3. 여환동 법무사의 전략
+          3. 신청전략
         </h4>
         <p class="text-xs sm:text-[13.5px] text-slate-655 pl-3 mt-1 leading-relaxed">
           명의 도용 사기 친지에 대한 경찰서 정식 사기 고소장 접수원, 법인 설립 등기부상의 기만적 대리 도장 대조서, 해당 도용 대출이 전적으로 도주한 친지의 개인 계좌로 직행한 거래 내역을 증거화했습니다. 의뢰인이 실질 수혜자가 아님을 입증하여 가용소득을 최소 수준으로 성공리에 정밀 방어시켰습니다.
@@ -1464,8 +1325,7 @@ const seedArticles = [
 
       <div>
         <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-          4. 인가 결과 및 법률적 교훈
+          4. 인가결정
         </h4>
         <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
           <ul class="list-disc list-inside space-y-1">
