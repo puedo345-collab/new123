@@ -31,13 +31,13 @@ export default function App() {
     setExitModalOpen(false);
     (window as any).bypassExitBlock = true;
     
-    // Go back 2 steps in history at once to exit past our preventExit and homeBase states
+    // 1. Try going back to their previous search portal/ad-referrer
     window.history.go(-2);
     
-    // Safety fallback in case go(-2) behaves differently on some mobile WebView engines
+    // 2. If history is empty (e.g., opened in a new tab directly), redirect to Naver to guarantee instant exit!
     setTimeout(() => {
-      window.history.back();
-    }, 100);
+      window.location.href = "https://m.naver.com";
+    }, 150);
   };
 
   // Push history state to intercept accidental exits on landing page (Mobile ONLY)
