@@ -41,6 +41,18 @@ interface SuccessColumnPageProps {
   initialArticleId?: string | null;
 }
 
+// Real-time content sanitizer and font size booster for rich prose read
+const getEnhancedContent = (htmlContent: string) => {
+  if (!htmlContent) return '';
+  return htmlContent
+    .replace(/text-xs sm:text-\[14.5px\] text-left/g, 'text-[16px] sm:text-[18.5px] text-justify break-all leading-relaxed sm:leading-loose font-medium')
+    .replace(/text-xs sm:text-\[13.5px\] text-slate-650/g, 'text-[15.5px] sm:text-[17.5px] text-slate-700 leading-relaxed sm:leading-loose')
+    .replace(/text-xs sm:text-\[13.5px\] text-slate-655/g, 'text-[15.5px] sm:text-[17.5px] text-slate-700 leading-relaxed sm:leading-loose')
+    .replace(/text-xs sm:text-\[13.5px\]/g, 'text-[15.5px] sm:text-[17.5px] leading-relaxed')
+    .replace(/text-slate-650/g, 'text-slate-700')
+    .replace(/text-left/g, 'text-justify break-all');
+};
+
 export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = 'matcher', initialArticleId = null }: SuccessColumnPageProps) {
   const [activeSubTab, setActiveSubTab] = useState<'matcher' | 'columns'>(initialTab);
   const [articles, setArticles] = useState<Article[]>([]);
@@ -462,8 +474,8 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
 
                 {/* HTML prose content */}
                 <div 
-                  className="text-slate-700 font-semibold text-xs sm:text-[14.5px] leading-loose space-y-4 prose max-w-none prose-slate"
-                  dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
+                  className="text-slate-750 font-medium text-[16px] sm:text-[18.5px] leading-relaxed sm:leading-loose space-y-5 prose max-w-none prose-slate text-justify break-all"
+                  dangerouslySetInnerHTML={{ __html: getEnhancedContent(selectedArticle.content) }}
                 />
               </div>
 
