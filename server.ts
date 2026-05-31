@@ -108,6 +108,7 @@ interface Article {
   createdAt: string;
   updatedAt: string;
   views?: number;
+  status?: string;
 }
 
 function initArticlesDatabase() {
@@ -1051,6 +1052,14 @@ async function startServer() {
   // API: Get List of Articles (Public)
   app.get("/api/articles", (req, res) => {
     const list = readArticles();
+    // Only return articles that are not drafts (published or undefined status for backward compatibility)
+    const publishedList = list.filter(art => art.status !== "draft");
+    res.json(publishedList);
+  });
+
+  // API: Get List of All Articles including Drafts (Protected for Admin)
+  app.get("/api/admin/articles", verifyAdmin, (req, res) => {
+    const list = readArticles();
     res.json(list);
   });
 
@@ -1071,7 +1080,7 @@ async function startServer() {
 
   // API: Create Article (Protected)
   app.post("/api/articles", verifyAdmin, (req, res) => {
-    const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content } = req.body;
+    const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content, status, createdAt } = req.body;
     if (!category || !title || !content) {
       res.status(400).json({ error: "카테고리, 제목, 본문 내용은 필수 항목입니다." });
       return;
@@ -1090,7 +1099,8 @@ async function startServer() {
       monthlyPayment: monthlyPayment ? sanitizeInput(monthlyPayment) : undefined,
       reductionRate: reductionRate ? Number(reductionRate) : undefined,
       content: content, // HTML content containing Base64 images - DO NOT escape HTML tags to support custom blogs
-      createdAt: new Date().toISOString(),
+      status: status ? sanitizeInput(status) : "published",
+      createdAt: createdAt ? new Date(createdAt).toISOString() : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       views: 0
     };
@@ -1103,7 +1113,7 @@ async function startServer() {
   // API: Update Article (Protected)
   app.patch("/api/articles/:id", verifyAdmin, (req, res) => {
     const { id } = req.params;
-    const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content } = req.body;
+    const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content, status, createdAt } = req.body;
 
     const list = readArticles();
     const index = list.findIndex(art => art.id === id);
@@ -1123,6 +1133,8 @@ async function startServer() {
       ...(monthlyPayment !== undefined && { monthlyPayment: sanitizeInput(monthlyPayment) }),
       ...(reductionRate !== undefined && { reductionRate: Number(reductionRate) }),
       ...(content !== undefined && { content: content }),
+      ...(status !== undefined && { status: sanitizeInput(status) }),
+      ...(createdAt !== undefined && { createdAt: new Date(createdAt).toISOString() }),
       updatedAt: new Date().toISOString()
     };
 

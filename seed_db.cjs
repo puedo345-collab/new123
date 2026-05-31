@@ -1348,5 +1348,6 @@ const seedArticles = [
   }
 ];
 
-fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(seedArticles, null, 2), 'utf8');
+const finalArticles = seedArticles.map(art => ({ ...art, status: "published" }));
+fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(finalArticles, null, 2), 'utf8');
 console.log("Database successfully seeded with 20 premium legal reports!");

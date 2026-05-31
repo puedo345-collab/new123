@@ -98,6 +98,9 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   const [editorReductionRate, setEditorReductionRate] = useState("");
   const [editorError, setEditorError] = useState("");
   const [editorSuccess, setEditorSuccess] = useState("");
+  const [editorCreatedAt, setEditorCreatedAt] = useState("");
+  const [editorStatus, setEditorStatus] = useState("draft");
+  const [statusFilterArticles, setStatusFilterArticles] = useState<string>("all");
 
   const [isArticleDeleteConfirmOpen, setIsArticleDeleteConfirmOpen] = useState(false);
   const [deleteArticleId, setDeleteArticleId] = useState("");
@@ -402,7 +405,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setToken(savedToken);
       setIsAuthenticated(true);
       fetchSubmissions(savedToken);
-      fetchArticles();
+      fetchArticles(savedToken);
     }
   }, []);
 
@@ -421,7 +424,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         setToken(data.token);
         setIsAuthenticated(true);
         fetchSubmissions(data.token);
-        fetchArticles();
+        fetchArticles(data.token);
       } else {
         setAuthError(data.message || "비밀번호가 올바르지 않습니다.");
       }
@@ -458,10 +461,14 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     }
   };
 
-  const fetchArticles = async () => {
+  const fetchArticles = async (authToken?: string) => {
+    const currentToken = authToken || token;
+    if (!currentToken) return;
     setArticlesLoading(true);
     try {
-      const res = await fetch("/api/articles");
+      const res = await fetch("/api/admin/articles", {
+        headers: { "Authorization": `Bearer ${currentToken}` }
+      });
       if (res.ok) {
         const data = await res.json();
         setArticles(data);
@@ -560,6 +567,8 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setEditorReducedDebt(article.reducedDebt || "");
       setEditorMonthlyPayment(article.monthlyPayment || "");
       setEditorReductionRate(article.reductionRate ? String(article.reductionRate) : "");
+      setEditorCreatedAt(article.createdAt ? new Date(article.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]);
+      setEditorStatus(article.status || "published");
     } else {
       setEditorTitle("");
       setEditorCategory("성공사례");
@@ -622,12 +631,14 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setEditorReducedDebt("");
       setEditorMonthlyPayment("");
       setEditorReductionRate("");
+      setEditorCreatedAt(new Date().toISOString().split("T")[0]);
+      setEditorStatus("draft");
     }
     setIsEditorModalOpen(true);
   };
 
-  const handleSaveArticle = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSaveArticle = async (statusVal: "draft" | "published", e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setEditorError("");
     setEditorSuccess("");
 
@@ -646,6 +657,8 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       reducedDebt: editorReducedDebt.trim() || undefined,
       monthlyPayment: editorMonthlyPayment.trim() || undefined,
       reductionRate: editorReductionRate.trim() ? Number(editorReductionRate) : undefined,
+      status: statusVal,
+      createdAt: editorCreatedAt ? new Date(editorCreatedAt).toISOString() : new Date().toISOString()
     };
 
     try {
@@ -661,7 +674,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       });
       const data = await res.json();
       if (res.ok) {
-        setEditorSuccess(selectedArticle ? "글이 안전하게 수정되었습니다!" : "새 글이 등록되었습니다!");
+        setEditorSuccess(statusVal === "draft" ? "글이 임시저장함에 보존되었습니다!" : "성공사례 글이 실시간 등록/배포되었습니다!");
         fetchArticles();
         setTimeout(() => {
           setIsEditorModalOpen(false);
@@ -1455,22 +1468,45 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                 <div className="space-y-6">
                   {/* Action Bar */}
                   <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs flex flex-col md:flex-row gap-4 items-center justify-between">
-                    <div className="relative w-full md:max-w-xs">
-                      <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
-                      <input
-                        type="text"
-                        placeholder="글 제목 혹은 내용 검색"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      />
+                    <div className="flex flex-wrap gap-4 items-center w-full md:w-auto">
+                      <div className="relative w-full md:w-60">
+                        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                        <input
+                          type="text"
+                          placeholder="글 제목 혹은 내용 검색"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        />
+                      </div>
+                      
+                      {/* Draft Status Filters */}
+                      <div className="flex gap-1 bg-slate-50 p-1 rounded-xl border border-slate-200/60">
+                        {[
+                          { key: "all", label: "전체" },
+                          { key: "published", label: "등록완료" },
+                          { key: "draft", label: "임시저장" }
+                        ].map((btn) => (
+                          <button
+                            key={btn.key}
+                            onClick={() => setStatusFilterArticles(btn.key)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                              statusFilterArticles === btn.key
+                                ? "bg-slate-900 text-white shadow-3xs"
+                                : "text-slate-650 hover:bg-slate-200/50"
+                            }`}
+                          >
+                            {btn.label}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                     
                     <button
                       onClick={() => handleOpenEditor(null)}
-                    className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
-                  >
-                    ✍ 새 성공사례 작성하기
+                      className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                    >
+                      ✍ 새 성공사례 작성하기
                     </button>
                   </div>
 
@@ -1487,18 +1523,35 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       </div>
                     ) : (
                       articles
-                        .filter(art => art.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .filter(art => {
+                          const matchesSearch = art.title.toLowerCase().includes(searchQuery.toLowerCase());
+                          const matchesStatus = statusFilterArticles === "all" || 
+                                                (statusFilterArticles === "published" && art.status !== "draft") ||
+                                                (statusFilterArticles === "draft" && art.status === "draft");
+                          return matchesSearch && matchesStatus;
+                        })
                         .map((art) => {
                           const isCase = art.category !== "칼럼";
+                          const isDraft = art.status === "draft";
                           return (
-                            <div key={art.id} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-3xs flex flex-col justify-between hover:shadow-xs transition-all">
+                            <div key={art.id} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-3xs flex flex-col justify-between hover:shadow-xs transition-all relative overflow-hidden">
                               <div className="space-y-4">
                                 <div className="flex justify-between items-start">
-                                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-black tracking-wide border ${
-                                    isCase ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-blue-50 border-blue-200 text-blue-700"
-                                  }`}>
-                                    {art.category}
-                                  </span>
+                                  <div className="flex gap-1.5 items-center">
+                                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-black tracking-wide border ${
+                                      isCase ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-blue-50 border-blue-200 text-blue-700"
+                                    }`}>
+                                      {art.category}
+                                    </span>
+                                    {/* Status Badge */}
+                                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold border ${
+                                      isDraft 
+                                        ? "bg-slate-50 border-slate-200 text-slate-450 text-slate-500" 
+                                        : "bg-emerald-50 border-emerald-200 text-emerald-700"
+                                    }`}>
+                                      {isDraft ? "임시저장" : "등록완료"}
+                                    </span>
+                                  </div>
                                   <span className="text-[10px] text-slate-400 font-semibold">
                                     조회수: {art.views || 0}회 | {new Date(art.createdAt).toLocaleDateString()}
                                   </span>
@@ -2202,7 +2255,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                         </div>
 
                         <form onSubmit={handleSaveArticle} className="space-y-4 pt-2">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div>
                               <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
                                 구분 (카테고리)
@@ -2232,6 +2285,19 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                 onChange={(e) => setEditorTitle(e.target.value)}
                                 placeholder="예: 코인 투자 실패로 인한 채무 급증 해결 사례"
                                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-semibold text-slate-900 outline-none"
+                                required
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                                작성일 지정 (날짜 선택)
+                              </label>
+                              <input
+                                type="date"
+                                value={editorCreatedAt}
+                                onChange={(e) => setEditorCreatedAt(e.target.value)}
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-semibold text-slate-900 outline-none cursor-pointer"
                                 required
                               />
                             </div>
@@ -2440,22 +2506,30 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             </div>
                           )}
 
-                          <div className="pt-2 flex gap-2.5">
+                          <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
                             <button
                               type="button"
                               onClick={() => {
                                 setIsEditorModalOpen(false);
                                 setSelectedArticle(null);
                               }}
-                              className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer text-center"
+                              className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors cursor-pointer text-center order-3 sm:order-1"
                             >
                               작성 취소
                             </button>
                             <button
-                              type="submit"
-                              className="flex-1 py-3.5 bg-gradient-to-r from-amber-600 to-yellow-500 bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center"
+                              type="button"
+                              onClick={(e) => handleSaveArticle("draft", e)}
+                              className="flex-1 py-3.5 bg-white hover:bg-slate-50 text-slate-700 font-extrabold border border-slate-300 rounded-xl text-xs transition-colors cursor-pointer text-center order-2"
                             >
-                              {selectedArticle ? "글 수정 완료하기" : "새 글 등록 완료"}
+                              임시저장으로 보존 (Draft)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => handleSaveArticle("published", e)}
+                              className="flex-1 py-3.5 bg-gradient-to-r from-amber-600 to-yellow-500 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-xl text-xs shadow-md transition-colors cursor-pointer text-center order-1 sm:order-3"
+                            >
+                              {selectedArticle ? "성공사례 바로 수정등록" : "성공사례 바로 게시 (Publish)"}
                             </button>
                           </div>
                         </form>
