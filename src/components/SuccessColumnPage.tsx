@@ -6,7 +6,6 @@ import {
   Search, 
   Filter, 
   ArrowRight, 
-  Award, 
   ChevronLeft, 
   ChevronDown,
   ShieldCheck, 
@@ -438,41 +437,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                   </div>
                 </div>
 
-                {/* If article is success story match */}
-                {selectedArticle.category !== "칼럼" && (
-                  <div className="bg-amber-50/30 p-5 rounded-2xl border border-[#FAF4E5] space-y-3">
-                    <h4 className="text-xs font-black text-amber-800 uppercase tracking-wide flex items-center gap-1">
-                      <Award className="w-4 h-4 text-amber-600" />
-                      이 사건의 주요 회생 인가 사양
-                    </h4>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-center text-xs">
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-100">
-                        <span className="block text-[9px] text-slate-400 font-black mb-0.5">의뢰인 나이대</span>
-                        <span className="font-extrabold text-slate-700">{selectedArticle.age || "-"}</span>
-                      </div>
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-100">
-                        <span className="block text-[9px] text-slate-400 font-black mb-0.5">의뢰인 직종유형</span>
-                        <span className="font-extrabold text-slate-700">{selectedArticle.job || "-"}</span>
-                      </div>
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-100">
-                        <span className="block text-[9px] text-slate-400 font-black mb-0.5">기존 총 부채</span>
-                        <span className="font-extrabold text-slate-700">{selectedArticle.originalDebt || "-"}</span>
-                      </div>
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-100">
-                        <span className="block text-[9px] text-slate-400 font-black mb-0.5">조정 후 변제총액</span>
-                        <span className="font-extrabold text-[#A16207]">{selectedArticle.reducedDebt || "-"}</span>
-                      </div>
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-100">
-                        <span className="block text-[9px] text-slate-400 font-black mb-0.5">실제 매월 변제율</span>
-                        <span className="font-extrabold text-slate-700">{selectedArticle.monthlyPayment || "-"}</span>
-                      </div>
-                      <div className="bg-white p-2.5 rounded-xl border border-slate-100 bg-emerald-500/[0.02]">
-                        <span className="block text-[9px] text-emerald-600 font-black mb-0.5">실제 원금 탕감률</span>
-                        <span className="font-extrabold text-emerald-700">{selectedArticle.reductionRate || 0}% 면책</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+
 
                 {/* HTML prose content */}
                 <div 
