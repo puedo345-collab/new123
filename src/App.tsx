@@ -85,6 +85,10 @@ export default function App() {
         (window as any).isProgrammaticBack = false;
         return;
       }
+      if ((window as any).isArticleOpen) {
+        (window as any).isArticleOpen = false;
+        return;
+      }
       if (privacyModalOpen) {
         setPrivacyModalOpen(false);
         setConsultationOpen(true);

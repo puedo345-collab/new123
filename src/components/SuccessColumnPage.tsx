@@ -102,6 +102,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
     const handlePopState = () => {
       if (selectedArticle) {
         setSelectedArticle(null);
+        (window as any).isArticleOpen = false;
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -109,6 +110,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
   }, [selectedArticle]);
 
   const handleOpenArticle = (art: Article) => {
+    (window as any).isArticleOpen = true;
     window.history.pushState({ type: 'articleView' }, '');
     
     // Fetch individual article to trigger view count increment
@@ -124,7 +126,9 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
 
   const handleCloseArticle = () => {
     setSelectedArticle(null);
+    (window as any).isArticleOpen = false;
     if (window.history.state?.type === 'articleView') {
+      (window as any).isProgrammaticBack = true;
       window.history.back();
     }
   };
@@ -472,25 +476,13 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
               </div>
 
               {/* Footer action button */}
-              <div className="p-5 border-t border-slate-100 bg-slate-50 flex gap-2">
+              <div className="p-5 border-t border-slate-100 bg-slate-50">
                 <button
                   onClick={handleCloseArticle}
-                  className="flex-1 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black rounded-xl text-xs sm:text-sm text-center cursor-pointer"
+                  className="w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black rounded-xl text-xs sm:text-sm text-center cursor-pointer"
                 >
                   본문 닫기
                 </button>
-                {selectedArticle.category !== "칼럼" && (
-                  <button
-                    onClick={() => {
-                      handleCloseArticle();
-                      handleApplyMatch(selectedArticle);
-                    }}
-                    className="flex-1 py-3 bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl text-xs sm:text-sm text-center cursor-pointer flex justify-center items-center gap-1 group shadow-3xs"
-                  >
-                    <span>이 조건으로 자격진단 시작</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
-                )}
               </div>
             </motion.div>
           </div>
