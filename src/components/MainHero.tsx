@@ -14,31 +14,71 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
     const el = scrollContainerRef.current;
     if (!el || window.innerWidth >= 768) return;
 
-    let hasTriggered = false;
+    let direction = 1;
+    let currentLeft = 0;
+    const maxScroll = 55;
+    let intervalId: any = null;
+    let isUserInteracted = false;
+
+    const stopAutoScroll = () => {
+      if (isUserInteracted) return;
+      isUserInteracted = true;
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    el.addEventListener('touchstart', stopAutoScroll, { passive: true });
+    el.addEventListener('mousedown', stopAutoScroll);
+    el.addEventListener('wheel', stopAutoScroll, { passive: true });
+
+    const startAutoScroll = () => {
+      intervalId = setInterval(() => {
+        if (isUserInteracted) return;
+        
+        if (direction === 1) {
+          currentLeft += 0.8;
+          if (currentLeft >= maxScroll) {
+            direction = -1;
+          }
+        } else {
+          currentLeft -= 0.8;
+          if (currentLeft <= 0) {
+            direction = 1;
+          }
+        }
+        el.scrollLeft = currentLeft;
+      }, 25);
+    };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasTriggered) {
-          hasTriggered = true;
-          // Wait 300ms after entering viewport for smooth focus transition
+        if (entry.isIntersecting && !isUserInteracted && !intervalId) {
           setTimeout(() => {
-            el.scrollTo({ left: 55, behavior: 'smooth' });
-            setTimeout(() => {
-              el.scrollTo({ left: 0, behavior: 'smooth' });
-            }, 1000);
+            if (!isUserInteracted) {
+              startAutoScroll();
+            }
           }, 300);
-          
-          observer.unobserve(el);
+        } else if (!entry.isIntersecting && intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
         }
       },
       {
-        threshold: 0.35 // Triggers when 35% of the element is visible
+        threshold: 0.2
       }
     );
 
     observer.observe(el);
     return () => {
-      if (el) observer.unobserve(el);
+      if (el) {
+        el.removeEventListener('touchstart', stopAutoScroll);
+        el.removeEventListener('mousedown', stopAutoScroll);
+        el.removeEventListener('wheel', stopAutoScroll);
+        observer.unobserve(el);
+      }
+      if (intervalId) clearInterval(intervalId);
     };
   }, []);
 
