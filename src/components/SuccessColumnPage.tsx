@@ -311,10 +311,16 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                              </h4>
                            </div>
       
-                           {/* Right Action Indicator */}
-                           <div className="flex items-center justify-end shrink-0 ml-4">
-                             <span className="text-[11px] font-black text-amber-700 group-hover:text-amber-800 underline underline-offset-2 whitespace-nowrap transition-colors">
-                               🔍 리포트 상세 분석 보기
+                           {/* Right Action Indicator: PC version shows date (yyyy.mm.dd), Mobile version hides it entirely */}
+                           <div className="hidden sm:flex items-center justify-end shrink-0 ml-4">
+                             <span className="text-[12px] font-bold text-slate-400 group-hover:text-amber-700 transition-colors">
+                               {(() => {
+                                 const d = new Date(story.createdAt);
+                                 const yyyy = d.getFullYear();
+                                 const mm = String(d.getMonth() + 1).padStart(2, '0');
+                                 const dd = String(d.getDate()).padStart(2, '0');
+                                 return `${yyyy}.${mm}.${dd}`;
+                               })()}
                              </span>
                            </div>
                          </div>
