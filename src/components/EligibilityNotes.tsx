@@ -41,7 +41,7 @@ export default function EligibilityNotes() {
         </div>
 
         {/* 3 Core Eligibility Rule cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-20 md:mb-28 lg:mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-28 lg:mb-32">
           <div className="p-6 sm:p-8 rounded-3xl bg-white/80 backdrop-blur-xs border border-[#FAF4E5] flex flex-col justify-start space-y-5 md:min-h-[260px] shadow-xs hover:shadow-md hover:border-amber-300 transition-all duration-300">
             <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-black text-lg border border-amber-100">
               01
@@ -80,7 +80,7 @@ export default function EligibilityNotes() {
         </div>
 
         {/* 개인회생 원스톱 신속 절차 */}
-        <div id="our-spirit" className="scroll-mt-24 md:scroll-mt-28 mt-16 md:mt-24 lg:mt-32 pt-16 md:pt-24 lg:pt-32 border-t border-slate-200/50">
+        <div id="our-spirit" className="scroll-mt-24 md:scroll-mt-28 mt-8 md:mt-24 lg:mt-32 pt-8 md:pt-24 lg:pt-32 border-t border-slate-200/50">
           <div className="text-center">
             <div className="space-y-4 sm:space-y-6">
               <span className="text-emerald-700 font-extrabold text-sm sm:text-base md:text-xl tracking-wider uppercase block">
@@ -217,7 +217,7 @@ export default function EligibilityNotes() {
         </div>
 
         {/* Accordion FAQ Area ("세상의 이야기") */}
-        <div id="faq" className="scroll-mt-16 sm:scroll-mt-28 mt-4 md:mt-24 lg:mt-32 pt-4 md:pt-24 lg:pt-32 border-t border-[#FAF4E5]">
+        <div id="faq" className="scroll-mt-16 sm:scroll-mt-28 mt-12 md:mt-24 lg:mt-32 pt-12 md:pt-24 lg:pt-32 border-t border-[#FAF4E5]">
           <div className="text-center">
             <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.12]">자주 묻는 질문</h3>
           </div>
