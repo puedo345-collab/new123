@@ -101,7 +101,11 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
             >
               {!logoLoading && (
                 logoImg ? (
-                  <img src={logoImg} alt="여환동 법률 로고" className="w-full h-full object-contain" />
+                  <img 
+                    src={logoImg} 
+                    alt="여환동 법률 로고" 
+                    className="w-full h-full object-contain mix-blend-multiply filter grayscale-[100%] brightness-[0.22] contrast-[1.25] opacity-95 transition-all duration-300" 
+                  />
                 ) : (
                   <Scale className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
                 )
