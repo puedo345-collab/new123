@@ -38,9 +38,10 @@ interface SuccessColumnPageProps {
   onBack: () => void;
   onSelectPlan: (answers: { occupation: string; debtAmount: string }) => void;
   initialTab?: 'matcher' | 'columns';
+  initialArticleId?: string | null;
 }
 
-export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = 'matcher' }: SuccessColumnPageProps) {
+export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = 'matcher', initialArticleId = null }: SuccessColumnPageProps) {
   const [activeSubTab, setActiveSubTab] = useState<'matcher' | 'columns'>(initialTab);
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,11 +86,25 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
       .then(data => {
         if (Array.isArray(data)) {
           setArticles(data);
+          
+          if (initialArticleId) {
+            const matched = data.find((a: Article) => a.id === initialArticleId);
+            if (matched) {
+              (window as any).isArticleOpen = true;
+              fetch(`/api/articles/${matched.id}`)
+                .then(res => res.json())
+                .then(updated => {
+                  setSelectedArticle(updated);
+                  setArticles(prev => prev.map(a => a.id === matched.id ? { ...a, views: (a.views || 0) + 1 } : a));
+                })
+                .catch(() => setSelectedArticle(matched));
+            }
+          }
         }
       })
       .catch(err => console.error("Error loading articles:", err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [initialArticleId]);
 
   // Sync tab with initialTab props if provided
   useEffect(() => {
@@ -99,6 +114,9 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
   // Handle popstate for overlays
   useEffect(() => {
     const handlePopState = () => {
+      if ((window as any).isProgrammaticBack) {
+        return;
+      }
       if (selectedArticle) {
         setSelectedArticle(null);
         (window as any).isArticleOpen = false;
@@ -110,7 +128,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
 
   const handleOpenArticle = (art: Article) => {
     (window as any).isArticleOpen = true;
-    window.history.pushState({ type: 'articleView' }, '');
+    window.history.pushState({ type: 'articleView', id: art.id }, '', `/success/${art.id}`);
     
     // Fetch individual article to trigger view count increment
     fetch(`/api/articles/${art.id}`)
@@ -129,6 +147,8 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
     if (window.history.state?.type === 'articleView') {
       (window as any).isProgrammaticBack = true;
       window.history.back();
+    } else {
+      window.history.pushState({ type: 'successColumns' }, '', '/success');
     }
   };
 

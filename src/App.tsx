@@ -28,6 +28,8 @@ export default function App() {
   const [bankruptcyPageActive, setBankruptcyPageActive] = useState(false);
   const [successColumnsActive, setSuccessColumnsActive] = useState(false);
   const [successColumnTabMode, setSuccessColumnTabMode] = useState<'matcher' | 'columns'>('matcher');
+  const [initialArticleId, setInitialArticleId] = useState<string | null>(null);
+  const isInitialRouteSetup = React.useRef(false);
 
   const getTodayDateString = () => {
     const today = new Date();
@@ -76,6 +78,59 @@ export default function App() {
         }
       })
       .catch(err => console.error("Error loading config:", err));
+  }, []);
+
+  // URL path routing parser on initial mount
+  React.useEffect(() => {
+    const rawPath = window.location.pathname;
+    const path = rawPath.length > 1 && rawPath.endsWith('/') ? rawPath.slice(0, -1) : rawPath;
+
+    // Clear admin session on load unless we are specifically on /admin
+    if (path !== '/admin') {
+      clearAdminSession();
+    }
+
+    if (path === '/brand') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'brand' }, '', '/brand');
+      setBrandPageActive(true);
+    } else if (path === '/bankruptcy') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'bankruptcyPage' }, '', '/bankruptcy');
+      setBankruptcyPageActive(true);
+    } else if (path === '/success') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'successColumns' }, '', '/success');
+      setSuccessColumnsActive(true);
+      setSuccessColumnTabMode('columns');
+    } else if (path.startsWith('/success/')) {
+      const artId = path.substring('/success/'.length);
+      if (artId) {
+        window.history.replaceState({ type: 'hero' }, '', '/');
+        window.history.pushState({ type: 'successColumns' }, '', '/success');
+        window.history.pushState({ type: 'articleView', id: artId }, '', `/success/${artId}`);
+        setSuccessColumnsActive(true);
+        setSuccessColumnTabMode('columns');
+        setInitialArticleId(artId);
+      }
+    } else if (path === '/check') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'survey' }, '', '/check');
+      setSurveyActive(true);
+      setSurveyMode('general');
+    } else if (path === '/repayment-plan') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'planBuilder' }, '', '/repayment-plan');
+      setPlanSimulatorActive(true);
+    } else if (path === '/admin') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'admin' }, '', '/admin');
+      setAdminPageActive(true);
+    }
+
+    setTimeout(() => {
+      isInitialRouteSetup.current = true;
+    }, 100);
   }, []);
 
   // Handle browser back button (popstate) for overlay screens and modals
@@ -158,6 +213,7 @@ export default function App() {
         setTimeout(forceScrollTop, 250);
       } else if (successColumnsActive) {
         setSuccessColumnsActive(false);
+        setInitialArticleId(null);
         setBrandPageActive(false);
         setBankruptcyPageActive(false);
         setSurveyActive(false);
@@ -186,64 +242,99 @@ export default function App() {
 
   // Push history state when opening overlays/modals/pages to prevent site exit on back button
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (successColumnsActive && window.history.state?.type !== 'successColumns') {
-      window.history.pushState({ type: 'successColumns' }, '');
+      window.history.pushState({ type: 'successColumns' }, '', '/success');
     }
   }, [successColumnsActive]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (bankruptcyPageActive && window.history.state?.type !== 'bankruptcyPage') {
-      window.history.pushState({ type: 'bankruptcyPage' }, '');
+      window.history.pushState({ type: 'bankruptcyPage' }, '', '/bankruptcy');
     }
   }, [bankruptcyPageActive]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
+    if (adminPageActive && window.history.state?.type !== 'admin') {
+      window.history.pushState({ type: 'admin' }, '', '/admin');
+    }
+  }, [adminPageActive]);
+
+  React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (consultationOpen && window.history.state?.type !== 'consultation') {
       window.history.pushState({ type: 'consultation' }, '');
     }
   }, [consultationOpen]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (privacyModalOpen && window.history.state?.type !== 'privacy') {
       window.history.pushState({ type: 'privacy' }, '');
     }
   }, [privacyModalOpen]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (caseMatcherActive && window.history.state?.type !== 'caseMatcher') {
       window.history.pushState({ type: 'caseMatcher' }, '');
     }
   }, [caseMatcherActive]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (surveyActive && window.history.state?.type !== 'survey') {
-      window.history.pushState({ type: 'survey' }, '');
+      window.history.pushState({ type: 'survey' }, '', '/check');
     }
   }, [surveyActive]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (planSimulatorActive && window.history.state?.type !== 'planBuilder') {
-      window.history.pushState({ type: 'planBuilder' }, '');
+      window.history.pushState({ type: 'planBuilder' }, '', '/repayment-plan');
     }
   }, [planSimulatorActive]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (userResponses && window.history.state?.type !== 'results') {
-      window.history.pushState({ type: 'results' }, '');
+      window.history.pushState({ type: 'results' }, '', '/check-result');
     }
   }, [userResponses]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (brandPageActive && window.history.state?.type !== 'brand') {
-      window.history.pushState({ type: 'brand' }, '');
+      window.history.pushState({ type: 'brand' }, '', '/brand');
     }
   }, [brandPageActive]);
 
   React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
     if (currentSection && window.history.state?.type !== 'section') {
-      window.history.pushState({ type: 'section', section: currentSection }, '');
+      window.history.pushState({ type: 'section', section: currentSection }, '', `/${currentSection}`);
     }
   }, [currentSection]);
+
+  // Fallback to home path '/' when all subpaths are inactive
+  React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
+    const isAnyActive = 
+      adminPageActive || 
+      successColumnsActive || 
+      bankruptcyPageActive || 
+      brandPageActive || 
+      surveyActive || 
+      planSimulatorActive || 
+      userResponses ||
+      caseMatcherActive;
+
+    if (!isAnyActive && window.location.pathname !== '/' && window.history.state?.type !== 'hero') {
+      window.history.pushState({ type: 'hero' }, '', '/');
+    }
+  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, caseMatcherActive]);
 
   // Reset reservation date & time to today & default when opening the card
   React.useEffect(() => {
@@ -476,6 +567,7 @@ export default function App() {
     }
     if (sectionId !== 'success_columns') {
       setSuccessColumnsActive(false);
+      setInitialArticleId(null);
     }
 
     if (sectionId === 'hero') {
@@ -722,6 +814,7 @@ export default function App() {
                     }, 100);
                   }}
                   initialTab={successColumnTabMode}
+                  initialArticleId={initialArticleId}
                 />
               </motion.div>
             ) : bankruptcyPageActive ? (
