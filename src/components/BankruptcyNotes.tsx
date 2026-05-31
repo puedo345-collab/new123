@@ -70,7 +70,7 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
         <div className="text-center mb-12 md:mb-16">
           <div className="space-y-4 sm:space-y-6">
             <span className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-emerald-500/10 backdrop-blur-xs border border-emerald-550/20 rounded-full text-[15px] sm:text-[17px] font-bold text-emerald-800 tracking-wider uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-slow-spin-pulse" />
               개인파산 가이드
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight px-1 text-center leading-[1.15] font-sans">
