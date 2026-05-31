@@ -1320,51 +1320,32 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.4 }}
-              className="relative w-full max-w-sm bg-white rounded-[32px] border border-slate-250 shadow-2xl p-6 sm:p-7 text-center overflow-hidden z-10"
+              className="relative w-full max-w-xs bg-white rounded-[28px] border border-slate-200 shadow-2xl p-6 text-center overflow-hidden z-10"
             >
               {/* Gold Top Light Gradient Bar */}
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-600 to-amber-700" />
-              
-              {/* Warm Alert Icon */}
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
-                <Sparkles className="w-6 h-6 animate-pulse" />
-              </div>
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-amber-600 to-amber-700" />
               
               {/* Header */}
-              <h3 className="text-xl font-black text-slate-900 tracking-tight leading-snug">
-                잠깐만요! 그냥 가시게요?
+              <h3 className="text-lg font-black text-slate-900 tracking-tight leading-snug mt-2">
+                홈페이지를 종료하시겠습니까?
               </h3>
               
-              {/* Body */}
-              <p className="mt-3 text-sm font-bold text-slate-500 leading-relaxed text-justify px-1 sm:text-center">
-                울산지방법원 맞춤 진행으로 <span className="text-amber-700 font-extrabold">원금 최대 90% 상당 감면</span>이 가능합니다. 
-                비용 없이 딱 1분만 투자해서 자격을 조회해 보세요.
-              </p>
-              
               {/* Action Buttons */}
-              <div className="mt-6 flex flex-col gap-2.5">
+              <div className="mt-5 flex flex-col gap-2">
                 <button
-                  onClick={() => {
-                    setExitModalOpen(false);
-                    handleStartSurvey('general');
-                  }}
-                  className="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-650 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold rounded-2xl shadow-md tracking-wide cursor-pointer transform hover:scale-[1.01] transition-all duration-150 text-xs flex items-center justify-center gap-2"
+                  onClick={() => setExitModalOpen(false)}
+                  className="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl shadow-xs cursor-pointer active:scale-[0.99] transition-all duration-150 text-xs flex items-center justify-center"
                 >
-                  👉 1분 무료 자격진단 시작하기
+                  홈페이지 돌아가기
                 </button>
                 
                 <button
                   onClick={handleConfirmExit}
-                  className="w-full py-3.5 bg-slate-100 hover:bg-slate-200 active:bg-slate-250 text-slate-500 font-bold rounded-2xl cursor-pointer transition-colors duration-150 text-xs tracking-wide"
+                  className="w-full py-3 bg-slate-100 hover:bg-slate-200 active:bg-slate-250 text-slate-500 font-bold rounded-xl cursor-pointer active:scale-[0.99] transition-all duration-150 text-xs"
                 >
                   홈페이지 종료하기
                 </button>
               </div>
-              
-              {/* Subtitle */}
-              <p className="mt-4 text-[10px] text-slate-400 font-medium leading-none font-sans">
-                ※ 법무사 직접 검토 및 철저한 개인정보 보호 보장
-              </p>
             </motion.div>
           </div>
         )}
