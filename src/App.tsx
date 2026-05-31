@@ -97,10 +97,58 @@ export default function App() {
         setUserResponses(null);
       } else if (brandPageActive) {
         setBrandPageActive(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setBankruptcyPageActive(false);
+        setSurveyActive(false);
+        setCaseMatcherActive(false);
+        setPlanSimulatorActive(false);
+        setUserResponses(null);
+        setCurrentSection(null);
+        
+        const forceScrollTop = () => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          
+          const mainWrap = document.getElementById('main-landing-wrap');
+          if (mainWrap) {
+            mainWrap.scrollTop = 0;
+          }
+          const mainStage = document.getElementById('landing-main-stage');
+          if (mainStage) {
+            mainStage.scrollTop = 0;
+          }
+        };
+        forceScrollTop();
+        setTimeout(forceScrollTop, 30);
+        setTimeout(forceScrollTop, 100);
+        setTimeout(forceScrollTop, 250);
       } else if (bankruptcyPageActive) {
         setBankruptcyPageActive(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setBrandPageActive(false);
+        setSurveyActive(false);
+        setCaseMatcherActive(false);
+        setPlanSimulatorActive(false);
+        setUserResponses(null);
+        setCurrentSection(null);
+        
+        const forceScrollTop = () => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          
+          const mainWrap = document.getElementById('main-landing-wrap');
+          if (mainWrap) {
+            mainWrap.scrollTop = 0;
+          }
+          const mainStage = document.getElementById('landing-main-stage');
+          if (mainStage) {
+            mainStage.scrollTop = 0;
+          }
+        };
+        forceScrollTop();
+        setTimeout(forceScrollTop, 30);
+        setTimeout(forceScrollTop, 100);
+        setTimeout(forceScrollTop, 250);
       } else if (currentSection) {
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
