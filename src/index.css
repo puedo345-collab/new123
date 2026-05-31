@@ -89,6 +89,47 @@ html, body {
   animation: custom-gentle-glow 2.5s infinite ease-in-out;
 }
 
+/* Premium floating card breathing glow */
+@keyframes luxury-card-glow {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 15px -3px rgba(59, 130, 246, 0.05), 0 0 10px 1px rgba(99, 102, 241, 0.1);
+    border-color: rgba(147, 197, 253, 0.45);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.015);
+    box-shadow: 0 12px 30px -5px rgba(59, 130, 246, 0.15), 0 0 20px 4px rgba(99, 102, 241, 0.25);
+    border-color: rgba(99, 102, 241, 0.7);
+  }
+}
+
+.animate-luxury-card {
+  animation: luxury-card-glow 4s infinite ease-in-out;
+}
+
+/* Elegant metallic shimmer sweep */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-glass-card {
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 5s infinite linear;
+}
+
 @keyframes luxury-pulse-glow {
   0%, 100% {
     transform: scale(1);

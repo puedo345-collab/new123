@@ -132,13 +132,16 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
               key={idx}
               onClick={() => onStartSurvey(card.actionKey)}
               className={`p-6 sm:p-8 md:p-10 rounded-3xl bg-gradient-to-br ${card.color} border ${
-                idx === 0 ? 'border-blue-300 animate-gentle-glow' : 'border-slate-200/45'
-              } shadow-3xs cursor-pointer transition-all duration-200 flex items-center gap-4 hover:shadow-sm relative group`}
+                idx === 0 ? 'border-blue-300 animate-luxury-card' : 'border-slate-200/45'
+              } shadow-3xs cursor-pointer transition-all duration-200 flex items-center gap-4 hover:shadow-sm relative overflow-hidden group`}
             >
-              <div className="p-4 bg-white rounded-2xl shadow-3xs shrink-0 group-hover:scale-110 transition-transform">
+              {idx === 0 && (
+                <div className="absolute inset-0 shimmer-glass-card pointer-events-none opacity-40 mix-blend-overlay" />
+              )}
+              <div className="p-4 bg-white rounded-2xl shadow-3xs shrink-0 group-hover:scale-110 transition-transform relative z-10">
                 {card.icon}
               </div>
-              <div className="space-y-1 flex-1 min-w-0">
+              <div className="space-y-1 flex-1 min-w-0 relative z-10">
                 <h4 className="font-extrabold text-slate-800 text-[13px] min-[360px]:text-[15.5px] min-[390px]:text-[17.15px] sm:text-[19px] flex flex-col items-start gap-1">
                   <span className={`whitespace-nowrap ${idx === 0 ? "text-blue-800 font-black tracking-tight" : ""}`}>
                     {card.title}
@@ -157,7 +160,7 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
                   <p className="text-sm text-slate-500 font-bold leading-normal">{card.subtitle}</p>
                 )}
               </div>
-              <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-slate-800 group-hover:translate-x-1 shrink-0 transition-all hidden min-[360px]:block" />
+              <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-slate-800 group-hover:translate-x-1 shrink-0 transition-all hidden min-[360px]:block relative z-10" />
             </motion.div>
           ))}
         </div>
