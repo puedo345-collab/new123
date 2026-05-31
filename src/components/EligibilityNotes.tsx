@@ -243,7 +243,7 @@ export default function EligibilityNotes() {
                   </button>
 
                   {isSelected && (
-                    <div className="px-6 pb-6 pt-3 text-[14px] sm:text-[16px] md:text-[18px] text-slate-500 font-medium leading-relaxed border-t border-slate-100/50 bg-slate-50/30 text-justify break-all w-full">
+                    <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-500 font-medium leading-relaxed border-t border-slate-100/50 bg-slate-50/30 text-justify break-all w-full">
                       {faq.answer}
                     </div>
                   )}
