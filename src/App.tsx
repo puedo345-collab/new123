@@ -126,6 +126,54 @@ export default function App() {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'admin' }, '', '/admin');
       setAdminPageActive(true);
+    } else if (path === '/faq') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+      setBrandPageActive(false);
+      setSurveyActive(false);
+      setCaseMatcherActive(false);
+      setPlanSimulatorActive(false);
+      setUserResponses(null);
+      setCurrentSection('faq');
+      
+      setTimeout(() => {
+        const faqEl = document.getElementById('faq');
+        if (faqEl) {
+          faqEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    } else if (path.startsWith('/faq/')) {
+      const faqId = path.substring('/faq/'.length);
+      if (faqId) {
+        window.history.replaceState({ type: 'hero' }, '', '/');
+        window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+        window.history.pushState({ type: 'faq', faqId: faqId }, '', `/faq/${faqId}`);
+        
+        setBrandPageActive(false);
+        setSurveyActive(false);
+        setCaseMatcherActive(false);
+        setPlanSimulatorActive(false);
+        setUserResponses(null);
+        setCurrentSection('faq');
+        
+        const numId = parseInt(faqId, 10);
+        const parsedId = isNaN(numId) ? faqId : numId;
+        
+        setTimeout(() => {
+          const event = new CustomEvent('expand-faq', { detail: { faqId: parsedId } });
+          window.dispatchEvent(event);
+          
+          const faqItem = document.getElementById(`faq-item-${parsedId}`);
+          if (faqItem) {
+            faqItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            const faqEl = document.getElementById('faq');
+            if (faqEl) {
+              faqEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        }, 300);
+      }
     }
 
     setTimeout(() => {
@@ -636,6 +684,11 @@ export default function App() {
       setPlanSimulatorActive(false);
       setUserResponses(null);
       setCurrentSection('faq');
+      
+      // Reset FAQ state & URL
+      window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+      window.dispatchEvent(new CustomEvent('expand-faq', { detail: { faqId: null } }));
+      
       scrollWithLayoutSafety(
         () => document.getElementById('faq') || document.getElementById('brand'),
         eligibilityRef

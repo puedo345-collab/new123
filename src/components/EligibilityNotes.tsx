@@ -21,6 +21,25 @@ export default function EligibilityNotes() {
     };
   }, []);
 
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path.startsWith('/faq/')) {
+        const id = path.substring('/faq/'.length);
+        if (id) {
+          const numId = parseInt(id, 10);
+          setActiveFaq(isNaN(numId) ? id : numId);
+        }
+      } else {
+        setActiveFaq(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   return (
     <section className="pt-3 md:pt-24 lg:pt-32 pb-16 md:pb-24 lg:pb-32 bg-transparent border-b border-[#FAF4E5] break-keep">
       <div className="max-w-5xl md:max-w-6xl mx-auto px-4 sm:px-8">
@@ -232,7 +251,15 @@ export default function EligibilityNotes() {
                   className="rounded-3xl border border-slate-200 bg-white overflow-hidden transition-all duration-200 scroll-mt-24 md:scroll-mt-28"
                 >
                   <button
-                    onClick={() => setActiveFaq(isSelected ? null : faq.id)}
+                    onClick={() => {
+                      const nextFaq = isSelected ? null : faq.id;
+                      setActiveFaq(nextFaq);
+                      if (nextFaq) {
+                        window.history.pushState({ type: 'faq', faqId: nextFaq }, '', `/faq/${nextFaq}`);
+                      } else {
+                        window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+                      }
+                    }}
                     className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
                   >
                     <span className="flex items-start gap-2.5 w-full text-justify flex-1">
