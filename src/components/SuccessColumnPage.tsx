@@ -317,6 +317,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                         key={story.id}
                         onClick={() => handleOpenArticle(story)}
                         className="rounded-2xl border border-[#FAF4E5] shadow-3xs hover:border-amber-400 hover:shadow-md transition-all duration-200 overflow-hidden bg-white select-none cursor-pointer group"
+                        aria-label={`${story.title} 상세 보기`}
                       >
                          {/* Card Header */}
                          <div 
@@ -433,6 +434,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                 <button
                   onClick={handleCloseArticle}
                   className="text-slate-400 hover:text-white transition-colors cursor-pointer p-1"
+                  aria-label="성공사례 상세 보기 닫기"
                 >
                   <X className="w-5 h-5" />
                 </button>

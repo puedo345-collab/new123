@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /check-result
+
+Sitemap: https://www.law-office.co.kr/sitemap.xml

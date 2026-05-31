@@ -27,7 +27,7 @@ const processLogoImage = (base64Str: string): Promise<string> => {
           const gray = 0.299 * r + 0.587 * g + 0.114 * b;
           
           // If the pixel is close to pure white, make it transparent
-          if (r > 240 && g > 240 && b > 240) {
+          if (r > 235 && g > 235 && b > 235) {
             data[i + 3] = 0;
           } else {
             // Otherwise, color the non-white emblem to deep slate (#0F172A = RGB 15, 23, 42)
@@ -35,9 +35,10 @@ const processLogoImage = (base64Str: string): Promise<string> => {
             data[i + 1] = 23;
             data[i + 2] = 42;
             
-            // Adjust transparency to preserve anti-aliasing smooth edges
-            const factor = Math.max(0, 255 - gray) / 255;
-            data[i + 3] = Math.round(a * factor);
+            // Adjust transparency and boost contrast to make the emblem sharp, solid and rich deep color
+            const normalized = (255 - gray) / 255;
+            const boostedFactor = Math.min(1.0, normalized * 3.5); 
+            data[i + 3] = Math.round(a * boostedFactor);
           }
         }
         ctx.putImageData(imgData, 0, 0);
@@ -145,11 +146,18 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Logo Brand area */}
-          <div className="flex items-center gap-1.5 sm:gap-[7.2px] select-none h-full min-w-0">
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavClick('hero');
+            }}
+            className="flex items-center gap-1.5 sm:gap-[7.2px] select-none h-full min-w-0 cursor-pointer"
+            aria-label="법무사 여환동 사무소 홈으로 이동"
+          >
             <div 
               id="header-logo-container"
-              onClick={() => onNavClick('hero')}
-              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer overflow-hidden shrink-0 bg-transparent`}
+              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden shrink-0 bg-transparent`}
             >
               {!logoLoading && (
                 logoImg ? (
@@ -164,48 +172,57 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
               )}
             </div>
  
-            <div 
-              className="flex flex-col cursor-pointer justify-center min-w-0" 
-              onClick={() => onNavClick('hero')}
-            >
+            <div className="flex flex-col justify-center min-w-0">
               <span className="text-[13.5px] min-[360px]:text-[15.5px] min-[390px]:text-[19px] sm:text-[22px] font-black tracking-tight text-[#0F172A] block leading-tight pt-0.5 whitespace-nowrap break-keep">
                 법무사 여환동 사무소
               </span>
             </div>
-          </div>
+          </a>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center space-x-8 break-keep h-full">
             {navItems.map((item) => (
-              <button
+              <a
                 key={item.id}
-                onClick={() => onNavClick(item.id)}
+                href={item.id === 'success_columns' ? '/success' : `/${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavClick(item.id);
+                }}
                 className="text-lg font-bold text-slate-600 hover:text-amber-600 transition-colors duration-200 cursor-pointer py-2 flex items-center h-full"
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </nav>
 
           {/* Action Button Area */}
           <div className="hidden md:flex items-center gap-4 h-full">
-            <button
-              onClick={onStartSurvey}
+            <a
+              href="/check"
+              onClick={(e) => {
+                e.preventDefault();
+                onStartSurvey();
+              }}
               className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-sm tracking-tight shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex items-center justify-center"
             >
               1분 자격진단 시작
-            </button>
+            </a>
           </div>
 
           {/* Mobile hamburger icon */}
           <div className="md:hidden flex items-center gap-1 sm:gap-2">
-            <button
-              onClick={onStartSurvey}
-              className="px-2 py-1.5 min-[360px]:px-3 min-[360px]:py-2 text-[10.5px] min-[360px]:text-xs font-black text-white bg-amber-600 hover:bg-amber-700 active:scale-95 rounded-lg sm:rounded-xl transition-all cursor-pointer shadow-xs duration-100 whitespace-nowrap shrink-0"
+            <a
+              href="/check"
+              onClick={(e) => {
+                e.preventDefault();
+                onStartSurvey();
+              }}
+              className="px-2 py-1.5 min-[360px]:px-3 min-[360px]:py-2 text-[10.5px] min-[360px]:text-xs font-black text-white bg-amber-600 hover:bg-amber-700 active:scale-95 rounded-lg sm:rounded-xl transition-all cursor-pointer shadow-xs duration-100 whitespace-nowrap shrink-0 flex items-center justify-center"
               id="mobile-header-accent-btn"
             >
               1분 자격진단
-            </button>
+            </a>
             <button
               onClick={() => {
                 if (isOpen) {
@@ -232,9 +249,11 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
         <nav className="md:hidden border-t border-[#FAF4E5] bg-[#FAF9F5] shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="px-4 pt-4 pb-6 space-y-3">
             {navItems.map((item) => (
-              <button
+              <a
                 key={item.id}
-                onClick={() => {
+                href={item.id === 'success_columns' ? '/success' : `/${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
                   setIsOpen(false);
                   if (window.history.state?.type === 'mobileMenu') {
                     (window as any).isProgrammaticBack = true;
@@ -249,11 +268,13 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                 className="block w-full text-left px-4 py-3 rounded-xl text-base font-bold text-slate-700 hover:bg-amber-500/10 hover:text-amber-700 transition-all cursor-pointer"
               >
                 {item.label}
-              </button>
+              </a>
             ))}
             <div className="border-t border-slate-100 pt-4 mt-2">
-              <button
-                onClick={() => {
+              <a
+                href="/check"
+                onClick={(e) => {
+                  e.preventDefault();
                   setIsOpen(false);
                   if (window.history.state?.type === 'mobileMenu') {
                     (window as any).isProgrammaticBack = true;
@@ -268,7 +289,7 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                 className="w-full py-3.5 text-center bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl shadow-md tracking-wide cursor-pointer flex justify-center items-center gap-2"
               >
                 신청자격 무료 알아보기 (약 1분)
-              </button>
+              </a>
             </div>
             <p className="text-center text-[11px] text-slate-400 font-medium">
               ※ 법무사 여환동 직접 검토 및 철저한 개인정보 보호 보장

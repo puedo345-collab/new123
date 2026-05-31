@@ -181,6 +181,44 @@ export default function App() {
     }, 100);
   }, []);
 
+  // Real-time Client-side Document Title and Description Meta Tag synchronization for SEO
+  React.useEffect(() => {
+    let title = "울산 개인회생 법무사 여환동 | 울산개인파산 | 울산채무탕감 신청자격 조회| 울산신용회복위원회";
+    let description = "울산 전담 개인회생 13년 경력, 1,000건 이상 성공의 법무사 여환동 사무소입니다. 투자 실패, 보이스피싱 사기, 일용직/프리랜서 채무도 높은 탕감률로 밀착 조력합니다. 실시간으로 월 변제금과 탕감률을 직접 조회해 보세요.";
+
+    if (adminPageActive) {
+      title = "관리자 시스템 | 법무사 여환동 사무소";
+      description = "법무사 여환동 사무소 개인회생/개인파산 상담 신청 관리자 관리 대시보드 시스템입니다.";
+    } else if (successColumnsActive) {
+      title = "개인회생 성공사례 & 법률 칼럼 | 법무사 여환동 사무소";
+      description = "코인/주식 투자 실패, 일용직, 자영업 폐업 등 다양한 채무 조건의 의뢰인들이 법무사 여환동의 밀착 조력으로 높은 탕감율을 이끌어 낸 생생한 성공 사례와 칼럼을 만나보세요.";
+    } else if (bankruptcyPageActive) {
+      title = "울산 개인파산 신청 자격 및 절차 가이드 | 법무사 여환동 사무소";
+      description = "소득이 전혀 없거나 최저생계비 미만인 취약 계층을 위한 울산 개인파산 면책 제도 신청 자격, 부양가족 기준, 재산 한도 및 필수 소명 절차를 상세히 안내해 드립니다.";
+    } else if (brandPageActive) {
+      title = "여환동 대표 법무사 소개 및 철학 | 법무사 여환동 사무소";
+      description = "울산 전담 13년 경력, 1,000건 이상의 법원 인가 선례를 지닌 대표 법무사 여환동의 1:1 영업 비밀 수임 보장 정책과 채무 해방을 향한 진심 어린 조력 철학을 소개합니다.";
+    } else if (surveyActive) {
+      title = "실시간 개인회생 신청 자격 1분 진단 | 법무사 여환동 사무소";
+      description = "2026년 최신 소득 및 부양가족 생계비 기준을 완벽 적용하여, 나의 개인회생 신청 자격 충족 여부와 예상 원금 탕감 한도를 단 1분 만에 실시간 진단해 드립니다.";
+    } else if (planSimulatorActive) {
+      title = "1:1 월 변제금 및 탕감률 시뮬레이션 계산기 | 법무사 여환동 사무소";
+      description = "채무액과 월 소득, 부양가족 수를 대입하여 울산지방법원 실무 기준에 맞춤화된 실질 변제율과 매월 법원에 납부할 변제 예정액을 정확히 산출해 봅니다.";
+    } else if (userResponses) {
+      title = "나의 개인회생 자격 진단 결과 리포트 | 법무사 여환동 사무소";
+      description = "입력하신 소득, 재산, 채무 조건에 의거하여 정밀 분석된 탕감 혜택 및 월 예상 납입금을 포함한 여환동 법무사의 1:1 실시간 맞춤 분석 리포트입니다.";
+    } else if (currentSection === 'faq') {
+      title = "개인회생 자주 묻는 질문(FAQ) | 법무사 여환동 사무소";
+      description = "최근 대출 비율이 높은 경우, 집에 압류가 개시된 경우, 코인 및 주식 채무 탕감 여부 등 개인회생 실무에서 가장 빈번하게 묻는 핵심 질문들에 여환동 법무사가 직접 답해 드립니다.";
+    }
+
+    document.title = title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", description);
+    }
+  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, currentSection]);
+
   // Handle browser back button (popstate) for overlay screens and modals
   React.useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
@@ -1084,6 +1122,7 @@ export default function App() {
                     }
                   }}
                   className="text-zinc-400 hover:text-white transition-colors cursor-pointer p-1"
+                  aria-label="실시간 상담 예약 창 닫기"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1346,6 +1385,7 @@ export default function App() {
               : 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800 animate-luxury-pulse'
           }`}
           title="여환동 법무사 실시간 1:1 상담신청 예약"
+          aria-label="여환동 법무사 실시간 1:1 상담신청 예약 열기"
         >
           <div className="relative">
             <MessageSquare className={`w-5 h-5 stroke-[2.3] group-hover:rotate-12 transition-transform duration-300 ${
@@ -1404,6 +1444,7 @@ export default function App() {
                     }
                   }}
                   className="text-slate-400 hover:text-white transition-colors cursor-pointer p-1"
+                  aria-label="개인정보 수집 및 이용 동의 창 닫기"
                 >
                   <X className="w-5 h-5" />
                 </button>
