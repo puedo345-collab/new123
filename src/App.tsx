@@ -619,6 +619,12 @@ export default function App() {
                 <BankruptcyNotes
                   onBack={() => {
                     setBankruptcyPageActive(false);
+                    setBrandPageActive(false);
+                    setSurveyActive(false);
+                    setCaseMatcherActive(false);
+                    setPlanSimulatorActive(false);
+                    setUserResponses(null);
+                    setCurrentSection(null);
                     if (window.history.state?.type === 'bankruptcyPage') {
                       window.history.back();
                     }
@@ -638,6 +644,12 @@ export default function App() {
                 <LawyerIntroduction
                   onBack={() => {
                     setBrandPageActive(false);
+                    setBankruptcyPageActive(false);
+                    setSurveyActive(false);
+                    setCaseMatcherActive(false);
+                    setPlanSimulatorActive(false);
+                    setUserResponses(null);
+                    setCurrentSection(null);
                     if (window.history.state?.type === 'brand') {
                       window.history.back();
                     }
