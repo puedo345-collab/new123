@@ -589,7 +589,7 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
                   개인회생 요건 보완 필요성
                 </span>
               </div>
-              <div className="text-[15.2px] sm:text-[16.5px] font-bold leading-relaxed text-slate-200">
+              <div className="text-[15.2px] sm:text-[16.5px] font-bold leading-relaxed text-slate-200 text-justify break-all">
                 {est.warningMsg}
               </div>
             </div>
