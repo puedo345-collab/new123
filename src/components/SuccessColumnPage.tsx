@@ -290,71 +290,30 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
               ) : (
                 <>
                   {paginatedStories.map((story) => {
-                    const isExpanded = expandedStoryId === story.id;
                     return (
                       <div
                         key={story.id}
-                        className={`rounded-2xl border transition-all duration-250 overflow-hidden bg-white ${
-                          isExpanded 
-                            ? 'border-amber-400 shadow-md ring-1 ring-amber-400/20' 
-                            : 'border-[#FAF4E5] shadow-3xs hover:border-amber-300 hover:shadow-xs'
-                        }`}
+                        onClick={() => handleOpenArticle(story)}
+                        className="rounded-2xl border border-[#FAF4E5] shadow-3xs hover:border-amber-400 hover:shadow-md transition-all duration-200 overflow-hidden bg-white select-none cursor-pointer group"
                       >
-                         {/* Card Header (Click to toggle) */}
+                         {/* Card Header */}
                          <div 
-                           className="p-4 sm:p-5 flex justify-between items-center select-none cursor-pointer"
-                           onClick={() => setExpandedStoryId(isExpanded ? null : story.id)}
+                           className="p-4 sm:p-5 flex justify-between items-center"
                          >
-                           {/* Left Title: Full width minus chevron */}
+                           {/* Left Title: Full width minus action indicator */}
                            <div className="flex-1 min-w-0 text-left">
-                             <h4 className="font-black text-slate-800 text-sm sm:text-base truncate leading-snug w-full" title={story.title}>
+                             <h4 className="font-black text-slate-800 text-sm sm:text-base truncate leading-snug w-full group-hover:text-amber-800 transition-colors" title={story.title}>
                                {story.title}
                              </h4>
                            </div>
       
-                           {/* Right Chevron Down: shrink-0 */}
+                           {/* Right Action Indicator */}
                            <div className="flex items-center justify-end shrink-0 ml-4">
-                             <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-slate-100 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 bg-amber-100 text-amber-700' : ''}`}>
-                               <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
-                             </div>
+                             <span className="text-[11px] font-black text-amber-700 group-hover:text-amber-800 underline underline-offset-2 whitespace-nowrap transition-colors">
+                               🔍 리포트 상세 분석 보기
+                             </span>
                            </div>
                          </div>
-
-                        {/* Expanded Content (Details & Actions) */}
-                        <AnimatePresence initial={false}>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: 'auto', opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.2, ease: "easeInOut" }}
-                            >
-                              <div 
-                                className="px-4 pb-4 sm:px-5 sm:pb-5 pt-1 border-t border-dashed border-slate-150 space-y-4 text-left"
-                              >
-                                <p className="text-xs sm:text-[13.5px] text-slate-600 font-semibold leading-relaxed pt-2">
-                                  "{story.content.replace(/<[^>]*>/g, '')}"
-                                </p>
-                                
-                                <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2.5 pt-3 border-t border-dashed border-slate-100">
-                                  <button
-                                    onClick={() => handleOpenArticle(story)}
-                                    className="text-xs text-[#AA8010] hover:text-amber-800 font-black cursor-pointer underline underline-offset-4 text-left py-1"
-                                  >
-                                    🔍 대표법무사 상세 분석글 보기
-                                  </button>
-                                  <button
-                                    onClick={() => handleApplyMatch(story)}
-                                    className="px-4 py-2 bg-amber-600 text-white font-extrabold text-xs rounded-xl hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
-                                  >
-                                    <span>이 조건으로 자격진단 개시</span>
-                                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                                  </button>
-                                </div>
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
                       </div>
                     );
                   })}
