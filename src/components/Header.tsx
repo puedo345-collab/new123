@@ -183,8 +183,12 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                   if (window.history.state?.type === 'mobileMenu') {
                     (window as any).isProgrammaticBack = true;
                     window.history.back();
+                    setTimeout(() => {
+                      onNavClick(item.id);
+                    }, 100);
+                  } else {
+                    onNavClick(item.id);
                   }
-                  onNavClick(item.id);
                 }}
                 className="block w-full text-left px-4 py-3 rounded-xl text-base font-bold text-slate-700 hover:bg-amber-500/10 hover:text-amber-700 transition-all cursor-pointer"
               >
@@ -198,8 +202,12 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                   if (window.history.state?.type === 'mobileMenu') {
                     (window as any).isProgrammaticBack = true;
                     window.history.back();
+                    setTimeout(() => {
+                      onStartSurvey();
+                    }, 100);
+                  } else {
+                    onStartSurvey();
                   }
-                  onStartSurvey();
                 }}
                 className="w-full py-3.5 text-center bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl shadow-md tracking-wide cursor-pointer flex justify-center items-center gap-2"
               >
