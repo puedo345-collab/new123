@@ -74,10 +74,10 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
               개인파산 가이드
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight px-1 text-center leading-[1.12] font-sans">
-              울산 개인파산 신청자격 3가지 요건 가이드
+              울산 개인파산 신청자격 3가지 요건
             </h1>
           </div>
-          <p className="mt-6 sm:mt-10 text-base sm:text-lg md:text-xl text-slate-650 font-bold max-w-3xl mx-auto leading-relaxed px-2 text-justify md:text-center">
+          <p className="mt-6 sm:mt-10 text-base sm:text-lg md:text-xl text-slate-650 font-bold max-w-3xl mx-auto leading-relaxed px-2 text-center">
             법원이 파산선고를 한 후 채무자 소유의 재산을 환가해 배당한 다음 그래도 남은 채무에 대해 100% 탕감 처리를 해주는 법원의 구제 수단입니다.
           </p>
         </div>
