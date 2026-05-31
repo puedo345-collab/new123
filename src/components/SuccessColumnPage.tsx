@@ -253,44 +253,21 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
           {/* Dynamic Success Stories Matcher */}
           <div className="space-y-4">
             
-            {/* Search filters */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-500/[0.03] p-4 sm:p-5 rounded-2xl border border-[#FAF4E5] text-left">
-              <div className="space-y-2">
-                <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">1단계: 본인의 현재 직업</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {jobs.map((job) => (
-                    <button
-                      key={job.value}
-                      onClick={() => setSelectedJob(job.value)}
-                      className={`py-2 px-2.5 rounded-xl border font-black text-xs sm:text-[13px] tracking-tight transition-all cursor-pointer ${
-                        selectedJob === job.value
-                          ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
-                          : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
-                      }`}
-                    >
-                      {job.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-black text-slate-600 uppercase tracking-wider block">2단계: 부채 규모 수준</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {debts.map((debt) => (
-                    <button
-                      key={debt.value}
-                      onClick={() => setSelectedDebt(debt.value)}
-                      className={`py-2 px-2.5 rounded-xl border font-black text-xs sm:text-[13px] tracking-tight transition-all cursor-pointer ${
-                        selectedDebt === debt.value
-                          ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
-                          : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
-                      }`}
-                    >
-                      {debt.label}
-                    </button>
-                  ))}
-                </div>
+            {/* Search bar: highly visible & cohesive */}
+            <div className="space-y-1.5 text-left bg-amber-500/[0.03] p-4 sm:p-5 rounded-2xl border border-[#FAF4E5]">
+              <label className="text-xs font-black text-amber-700 uppercase tracking-wider flex items-center gap-1 mb-1">
+                <span>💡 울산 성공사례 검색</span>
+                <span className="text-[10px] text-slate-400 font-normal normal-case">(찾으시는 직업, 채무 종류, 사유 등을 입력하세요)</span>
+              </label>
+              <div className="relative w-full max-w-xl">
+                <Search className="w-4 h-4 text-amber-600 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  placeholder="예: 직장인, 프리랜서, 개인사업자, 5천만원, 코인, 주식, 1억 등 키워드 검색"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-white border-2 border-amber-600/30 rounded-2xl text-xs sm:text-[13px] font-bold text-slate-800 placeholder-slate-455 focus:outline-hidden focus:border-amber-600 focus:ring-4 focus:ring-amber-500/10 transition-all shadow-xs"
+                />
               </div>
             </div>
 
@@ -298,7 +275,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
             <div className="space-y-4 text-left pt-2">
               <h3 id="success-stories-list-anchor" className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
                 <Filter className="w-4 h-4 text-amber-600" />
-                <span>필터 검색된 울산 사건 성공사례 ({filteredStories.length}건)</span>
+                <span>울산 사건 성공사례 ({filteredStories.length}건)</span>
               </h3>
 
               {loading ? (
