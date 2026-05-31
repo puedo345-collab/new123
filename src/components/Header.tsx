@@ -152,12 +152,12 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
               e.preventDefault();
               onNavClick('hero');
             }}
-            className="flex items-center gap-1.5 sm:gap-[7.2px] select-none h-full min-w-0 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-[7.2px] select-none h-full min-w-0 cursor-pointer"
             aria-label="법무사 여환동 사무소 홈으로 이동"
           >
             <div 
               id="header-logo-container"
-              className={`relative w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden shrink-0 bg-transparent`}
+              className={`relative w-[37px] h-[37px] sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden shrink-0 bg-transparent`}
             >
               {!logoLoading && (
                 logoImg ? (
@@ -173,7 +173,7 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
             </div>
  
             <div className="flex flex-col justify-center min-w-0">
-              <span className="text-[13.5px] min-[360px]:text-[15.5px] min-[390px]:text-[19px] sm:text-[22px] font-black tracking-tight text-[#0F172A] block leading-tight pt-0.5 whitespace-nowrap break-keep">
+              <span className="text-[16.5px] min-[360px]:text-[18px] min-[390px]:text-[20px] sm:text-[22px] font-black tracking-tight text-[#0F172A] block leading-tight pt-0.5 whitespace-nowrap break-keep">
                 법무사 여환동 사무소
               </span>
             </div>
