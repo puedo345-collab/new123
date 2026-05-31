@@ -183,15 +183,6 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
           </div>
         </div>
 
-        {/* CTA Area */}
-        <div className="mt-16 md:mt-24 lg:mt-32 text-center">
-          <button
-            onClick={onStartSurvey}
-            className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-slate-900 text-white font-black text-[17px] tracking-tight hover:bg-slate-850 active:scale-95 transition-all duration-150 cursor-pointer shadow-lg hover:shadow-xl border border-slate-800"
-          >
-            실시간 자격 진단 시작하기
-          </button>
-        </div>
 
       </div>
     </motion.div>
