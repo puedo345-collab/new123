@@ -104,7 +104,9 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
     '전부 최근 대출이에요.',
     '전화 독촉 스트레스!',
     '코인 및 주식 투자손실',
-    '배우자 몰래 진행하기!'
+    '배우자 몰래 진행하기!',
+    '집에 빨간딱지가!',
+    '부동산경매 절차개시!'
   ];
 
   return (
