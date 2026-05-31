@@ -25,34 +25,6 @@ export default function App() {
   const [isOverFooter, setIsOverFooter] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const [bankruptcyPageActive, setBankruptcyPageActive] = useState(false);
-  const [exitModalOpen, setExitModalOpen] = useState(false);
-
-  const handleConfirmExit = () => {
-    setExitModalOpen(false);
-    (window as any).bypassExitBlock = true;
-    
-    // 1. Try going back to their previous search portal/ad-referrer
-    window.history.go(-2);
-    
-    // 2. If history is empty (e.g., opened in a new tab directly), redirect to Naver to guarantee instant exit!
-    setTimeout(() => {
-      window.location.href = "https://m.naver.com";
-    }, 150);
-  };
-
-  // Push history state to intercept accidental exits on landing page (Mobile ONLY)
-  React.useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (!isMobile) return; // Completely disabled on PC
-
-    const initHistory = () => {
-      if (window.history.state?.type !== 'homeBase' && window.history.state?.type !== 'preventExit') {
-        window.history.replaceState({ type: 'homeBase' }, '');
-        window.history.pushState({ type: 'preventExit' }, '');
-      }
-    };
-    initHistory();
-  }, []);
 
   const getTodayDateString = () => {
     const today = new Date();
@@ -108,9 +80,6 @@ export default function App() {
     const handlePopState = (e: PopStateEvent) => {
       if ((window as any).isProgrammaticBack) {
         (window as any).isProgrammaticBack = false;
-        return;
-      }
-      if ((window as any).bypassExitBlock) {
         return;
       }
       if (privacyModalOpen) {
@@ -183,13 +152,6 @@ export default function App() {
       } else if (currentSection) {
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        const isMobile = window.innerWidth < 768;
-        if (!isMobile) return;
-
-        // Intercept exit intent on homepage, show exit modal, and push state back to preserve history
-        window.history.pushState({ type: 'preventExit' }, '');
-        setExitModalOpen(true);
       }
     };
 
@@ -197,7 +159,7 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, currentSection, exitModalOpen]);
+  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, currentSection]);
 
   // Push history state when opening overlays/modals/pages to prevent site exit on back button
   React.useEffect(() => {
@@ -1292,58 +1254,6 @@ export default function App() {
                   className="w-36 py-3 bg-[#3F4E65] hover:bg-slate-800 text-white font-black text-xs sm:text-sm rounded-md shadow-md transition-all text-center cursor-pointer tracking-wider"
                 >
                   확인
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* Premium Exit Confirmation Modal for Mobile */}
-      <AnimatePresence>
-        {exitModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            {/* Backdrop */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => {
-                setExitModalOpen(false);
-              }}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"
-            />
-            
-            {/* Modal Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: "spring", duration: 0.4 }}
-              className="relative w-full max-w-xs bg-white rounded-[28px] border border-slate-200 shadow-2xl p-6 text-center overflow-hidden z-10"
-            >
-              {/* Gold Top Light Gradient Bar */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-amber-600 to-amber-700" />
-              
-              {/* Header */}
-              <h3 className="text-lg font-black text-slate-900 tracking-tight leading-snug mt-2">
-                홈페이지를 종료하시겠습니까?
-              </h3>
-              
-              {/* Action Buttons */}
-              <div className="mt-5 flex flex-col gap-2">
-                <button
-                  onClick={() => setExitModalOpen(false)}
-                  className="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl shadow-xs cursor-pointer active:scale-[0.99] transition-all duration-150 text-xs flex items-center justify-center"
-                >
-                  홈페이지 돌아가기
-                </button>
-                
-                <button
-                  onClick={handleConfirmExit}
-                  className="w-full py-3 bg-slate-100 hover:bg-slate-200 active:bg-slate-250 text-slate-500 font-bold rounded-xl cursor-pointer active:scale-[0.99] transition-all duration-150 text-xs"
-                >
-                  홈페이지 종료하기
                 </button>
               </div>
             </motion.div>
