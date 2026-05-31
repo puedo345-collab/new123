@@ -805,7 +805,11 @@ export default function App() {
                         window.history.back();
                       }
                     }}
-                    className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-extrabold rounded-xl text-xs transition-colors cursor-pointer text-center"
+                    className={`w-full py-2.5 font-extrabold rounded-xl text-xs transition-colors cursor-pointer text-center ${
+                      reserveTab === 'phone'
+                        ? 'bg-slate-900 text-white hover:bg-slate-800'
+                        : 'bg-amber-600 hover:bg-amber-700 text-white'
+                    }`}
                   >
                     확인
                   </button>
@@ -819,7 +823,7 @@ export default function App() {
                       onClick={() => setReserveTab('phone')}
                       className={`py-2 px-1 rounded-lg text-sm sm:text-base font-black transition-all cursor-pointer ${
                         reserveTab === 'phone'
-                          ? 'bg-amber-600 text-white shadow-3xs'
+                          ? 'bg-slate-900 text-white shadow-3xs'
                           : 'text-slate-500 hover:text-slate-900'
                       }`}
                     >
@@ -857,7 +861,7 @@ export default function App() {
                         }}
                         placeholder="010-1234-5678"
                         className={`w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden font-bold transition-all ${
-                          reserveTab === 'phone' ? 'focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30' : 'focus:border-[#FEE500] focus:ring-1 focus:ring-[#FEE500]/30'
+                          reserveTab === 'phone' ? 'focus:border-slate-800 focus:ring-1 focus:ring-slate-800/30' : 'focus:border-[#FEE500] focus:ring-1 focus:ring-[#FEE500]/30'
                         }`}
                       />
                     </div>
@@ -902,8 +906,12 @@ export default function App() {
 
                   {/* Grid: Date & Time selector */}
                   {isAsap ? (
-                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-[11px] sm:text-xs font-black text-amber-800 flex items-center gap-2">
-                      <span className="text-amber-500 text-xs shrink-0">✔</span>
+                    <div className={`p-3 border rounded-xl text-[11px] sm:text-xs font-black flex items-center gap-2 ${
+                      reserveTab === 'phone'
+                        ? 'bg-slate-900/5 border-slate-900/10 text-slate-800'
+                        : 'bg-amber-500/10 border border-amber-500/20 text-amber-800'
+                    }`}>
+                      <span className={`text-xs shrink-0 ${reserveTab === 'phone' ? 'text-slate-850' : 'text-amber-500'}`}>✔</span>
                       <span>확인 즉시 빠른 시간내에 연락드립니다!</span>
                     </div>
                   ) : (
@@ -921,7 +929,7 @@ export default function App() {
                             min={getTodayDateString()}
                             onChange={(e) => setReserveDate(e.target.value)}
                             className={`w-full pl-9 pr-2 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden font-bold transition-all ${
-                              reserveTab === 'phone' ? 'focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30' : 'focus:border-[#FEE500] focus:ring-1 focus:ring-[#FEE500]/30'
+                              reserveTab === 'phone' ? 'focus:border-slate-800 focus:ring-1 focus:ring-slate-800/30' : 'focus:border-[#FEE500] focus:ring-1 focus:ring-[#FEE500]/30'
                             }`}
                           />
                         </div>
@@ -937,7 +945,7 @@ export default function App() {
                             value={reserveTime}
                             onChange={(e) => setReserveTime(e.target.value)}
                             className={`w-full pl-9 pr-2 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden font-bold appearance-none cursor-pointer transition-all ${
-                              reserveTab === 'phone' ? 'focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30' : 'focus:border-[#FEE500] focus:ring-1 focus:ring-[#FEE500]/30'
+                              reserveTab === 'phone' ? 'focus:border-slate-800 focus:ring-1 focus:ring-slate-800/30' : 'focus:border-[#FEE500] focus:ring-1 focus:ring-[#FEE500]/30'
                             }`}
                           >
                             <option value="09:00">오전 09:00</option>
@@ -969,7 +977,7 @@ export default function App() {
                           checked={reserveAgree}
                           onChange={(e) => setReserveAgree(e.target.checked)}
                           className={`w-4 h-4 rounded-md border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer ${
-                            reserveTab === 'phone' ? 'accent-amber-600' : 'accent-[#FEE500]'
+                            reserveTab === 'phone' ? 'accent-slate-900' : 'accent-[#FEE500]'
                           }`}
                         />
                         <label
@@ -1004,7 +1012,7 @@ export default function App() {
                       disabled={isSubmitting}
                       className={`w-full py-3 rounded-xl text-sm sm:text-base font-black text-center transition-all cursor-pointer shadow-md select-none ${
                         reserveTab === 'phone'
-                          ? 'bg-amber-600 text-white hover:bg-amber-700 shadow-amber-900/10'
+                          ? 'bg-slate-900 text-white hover:bg-slate-800 shadow-slate-950/15'
                           : 'bg-[#FEE500] text-slate-900 hover:bg-[#FADA0A]'
                       } disabled:opacity-50`}
                     >
