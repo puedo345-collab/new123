@@ -115,14 +115,14 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
           {/* Filters section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-amber-50/20 p-4 rounded-xl border border-[#FAF4E5]">
             {/* Job Filter */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">1단계: 본인의 현재 직업</label>
-              <div className="grid grid-cols-2 gap-1.5">
+            <div className="space-y-2">
+              <label className="text-xs sm:text-[13px] font-black text-slate-600 uppercase tracking-wider block">1단계: 본인의 현재 직업</label>
+              <div className="grid grid-cols-2 gap-2">
                 {jobs.map((job) => (
                   <button
                     key={job.value}
                     onClick={() => setSelectedJob(job.value)}
-                    className={`py-2 px-1 rounded-lg border font-black text-[11px] tracking-tight transition-all cursor-pointer ${
+                    className={`py-2.5 px-2 rounded-xl border font-black text-xs sm:text-[13.5px] tracking-tight transition-all cursor-pointer ${
                       selectedJob === job.value
                         ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
                         : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
@@ -135,14 +135,14 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
             </div>
 
             {/* Debt Filter */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">2단계: 부채 수준</label>
-              <div className="grid grid-cols-2 gap-1.5">
+            <div className="space-y-2">
+              <label className="text-xs sm:text-[13px] font-black text-slate-600 uppercase tracking-wider block">2단계: 부채 수준</label>
+              <div className="grid grid-cols-2 gap-2">
                 {debts.map((debt) => (
                   <button
                     key={debt.value}
                     onClick={() => setSelectedDebt(debt.value)}
-                    className={`py-2 px-1 rounded-lg border font-black text-[11px] tracking-tight transition-all cursor-pointer ${
+                    className={`py-2.5 px-2 rounded-xl border font-black text-xs sm:text-[13.5px] tracking-tight transition-all cursor-pointer ${
                       selectedDebt === debt.value
                         ? 'bg-amber-600 border-amber-600 text-white shadow-xs'
                         : 'bg-white border-slate-200 text-slate-600 hover:bg-amber-500/10 hover:text-amber-750'
@@ -157,8 +157,8 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
 
           {/* Story List Section */}
           <div className="space-y-3.5">
-            <h3 className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5">
-              <Filter className="w-3.5 h-3.5 text-amber-600" />
+            <h3 className="text-sm sm:text-base font-black text-slate-800 flex items-center gap-1.5">
+              <Filter className="w-4 h-4 text-amber-600" />
               <span>조건 충족 맞춤 성공 선례 ({filteredStories.length}건 검색됨)</span>
             </h3>
 
@@ -171,41 +171,41 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-[#FAF4E5] bg-white shadow-3xs hover:border-amber-300 hover:shadow-xs transition-all duration-200 space-y-3.5 text-left"
+                      className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-[#FAF4E5] bg-white shadow-3xs hover:border-amber-300 hover:shadow-xs transition-all duration-200 space-y-4 text-left"
                     >
                       <div className="flex justify-between items-start flex-wrap gap-2 pb-2.5 border-b border-slate-150">
                         <div>
-                          <h4 className="font-extrabold text-slate-800 text-sm sm:text-base inline-block">
+                          <h4 className="font-black text-slate-900 text-base sm:text-lg inline-block">
                             {story.title}
                           </h4>
                         </div>
-                        <span className="text-[10px] sm:text-xs text-slate-400 font-bold">{story.age} • {story.job}</span>
+                        <span className="text-xs sm:text-[13px] text-slate-500 font-bold">{story.age} • {story.job}</span>
                       </div>
 
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 text-center">
-                        <div className="p-2 bg-amber-50/10 rounded-lg border border-amber-100/35">
-                          <span className="text-[9px] text-slate-400 font-bold block leading-tight">기존 총 부채</span>
-                          <span className="text-[11px] sm:text-xs font-black text-slate-705">{story.originalDebt}</span>
+                        <div className="p-2.5 bg-amber-50/10 rounded-lg border border-amber-100/35">
+                          <span className="text-[10.5px] sm:text-xs text-slate-500 font-black block leading-tight mb-1">기존 총 부채</span>
+                          <span className="text-[13px] sm:text-sm md:text-base font-black text-slate-700">{story.originalDebt}</span>
                         </div>
-                        <div className="p-2 bg-amber-50/15 rounded-lg border border-amber-100/35">
-                          <span className="text-[9px] text-slate-400 font-bold block leading-tight">조정 후 변제총액</span>
-                          <span className="text-[11px] sm:text-xs font-black text-[#A16207]">{story.reducedDebt}</span>
+                        <div className="p-2.5 bg-amber-50/15 rounded-lg border border-amber-100/35">
+                          <span className="text-[10.5px] sm:text-xs text-slate-500 font-black block leading-tight mb-1">조정 후 변제총액</span>
+                          <span className="text-[13px] sm:text-sm md:text-base font-black text-[#A16207]">{story.reducedDebt}</span>
                         </div>
-                        <div className="col-span-2 md:col-span-1 p-2 bg-emerald-500/5 rounded-lg border border-emerald-500/15">
-                          <span className="text-[9px] text-emerald-600 font-black block leading-tight">실제 탕감 비율</span>
-                          <span className="text-[11px] sm:text-xs font-black text-emerald-700">{story.reductionRate}% 탕감 면책</span>
+                        <div className="col-span-2 md:col-span-1 p-2.5 bg-emerald-500/5 rounded-lg border border-emerald-500/15">
+                          <span className="text-[10.5px] sm:text-xs text-emerald-600 font-black block leading-tight mb-1">실제 탕감 비율</span>
+                          <span className="text-[13px] sm:text-sm md:text-base font-black text-emerald-700">{story.reductionRate}% 탕감 면책</span>
                         </div>
                       </div>
 
-                      <div className="space-y-2.5 pt-0.5">
-                        <p className="text-[11px] sm:text-xs text-slate-650 font-semibold leading-normal">
+                      <div className="space-y-3 pt-0.5">
+                        <p className="text-xs sm:text-[13.8px] text-slate-700 font-medium leading-relaxed">
                           "{story.description}"
                         </p>
                         
                         <div className="flex flex-col sm:flex-row justify-end items-stretch sm:items-center gap-2 pt-1.5">
                           <button
                             onClick={() => handleApplyMatch(story)}
-                            className="px-3.5 py-1.5 bg-amber-600 text-white font-extrabold text-[10px] sm:text-xs rounded-lg hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
+                            className="px-4.5 py-2.5 bg-amber-600 text-white font-extrabold text-xs sm:text-sm rounded-lg hover:bg-amber-700 transition-colors cursor-pointer flex items-center justify-center gap-0.5 group shadow-3xs"
                           >
                             <span>이 조건으로 플랜 진단하기</span>
                             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
