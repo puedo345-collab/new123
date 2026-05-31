@@ -91,7 +91,7 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
         </div>
 
         {/* Bankruptcy Step-by-Step Procedure Timeline */}
-        <div className="border-t border-slate-200/50 pt-20 md:pt-28 mb-20 md:mb-28 lg:mb-32">
+        <div className="mt-16 md:mt-24 lg:mt-32 pt-16 md:pt-24 lg:pt-32 border-t border-slate-200/50">
           <div className="text-center mb-12 md:mb-16">
             <div className="space-y-4 sm:space-y-6">
               <span className="text-amber-800 font-extrabold text-sm sm:text-base md:text-xl tracking-wider uppercase block">진행 단계</span>
@@ -142,7 +142,7 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
         </div>
 
         {/* Cross Comparison Section: 회생 vs 파산 */}
-        <div className="border-t border-slate-200/50 pt-20 max-w-4xl mx-auto">
+        <div className="mt-16 md:mt-24 lg:mt-32 pt-16 md:pt-24 lg:pt-32 border-t border-slate-200/50 max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h4 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight">개인회생 vs 개인파산</h4>
             <p className="mt-6 sm:mt-10 text-base sm:text-lg md:text-xl text-slate-500 font-bold max-w-xl mx-auto">어떤 제도가 나에게 더 유리할까? 정확히 구분해야 합니다.</p>
@@ -184,7 +184,7 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
         </div>
 
         {/* CTA Area */}
-        <div className="mt-16 md:mt-24 text-center">
+        <div className="mt-16 md:mt-24 lg:mt-32 text-center">
           <button
             onClick={onStartSurvey}
             className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-slate-900 text-white font-black text-[17px] tracking-tight hover:bg-slate-850 active:scale-95 transition-all duration-150 cursor-pointer shadow-lg hover:shadow-xl border border-slate-800"
