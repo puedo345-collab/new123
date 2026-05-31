@@ -8,6 +8,21 @@ interface MainHeroProps {
 }
 
 export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroProps) {
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      const el = scrollContainerRef.current;
+      if (el && window.innerWidth < 768) {
+        el.scrollTo({ left: 45, behavior: 'smooth' });
+        setTimeout(() => {
+          el.scrollTo({ left: 0, behavior: 'smooth' });
+        }, 550);
+      }
+    }, 1400);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Config for the 2 interactive entry cards (combined from 3 original cards)
   const entranceCards = [
     {
@@ -95,7 +110,10 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
         </motion.div>
 
         {/* Worry chips area */}
-        <div className="mt-12 flex flex-row md:flex-wrap justify-start md:justify-center gap-2.5 max-w-2xl mx-auto px-4 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-none select-none scroll-smooth pb-2 md:pb-0 w-full">
+        <div 
+          ref={scrollContainerRef}
+          className="mt-12 flex flex-row md:flex-wrap justify-start md:justify-center gap-2.5 max-w-2xl mx-auto px-4 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-none select-none scroll-smooth pb-2 md:pb-0 w-full"
+        >
           {worrychips.map((chip, index) => (
             <span
               key={index}
