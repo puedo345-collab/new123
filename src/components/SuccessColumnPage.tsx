@@ -46,9 +46,11 @@ const getEnhancedContent = (htmlContent: string) => {
   if (!htmlContent) return '';
   return htmlContent
     .replace(/text-xs sm:text-\[14.5px\] text-left/g, 'text-[16px] sm:text-[18.5px] text-justify break-all leading-relaxed sm:leading-loose font-medium')
-    .replace(/text-xs sm:text-\[13.5px\] text-slate-650/g, 'text-[15.5px] sm:text-[17.5px] text-slate-700 leading-relaxed sm:leading-loose')
-    .replace(/text-xs sm:text-\[13.5px\] text-slate-655/g, 'text-[15.5px] sm:text-[17.5px] text-slate-700 leading-relaxed sm:leading-loose')
-    .replace(/text-xs sm:text-\[13.5px\]/g, 'text-[15.5px] sm:text-[17.5px] leading-relaxed')
+    .replace(/text-xs sm:text-\[13.5px\] text-slate-650/g, 'text-[16px] sm:text-[18.5px] text-slate-700 leading-relaxed sm:leading-loose')
+    .replace(/text-xs sm:text-\[13.5px\] text-slate-655/g, 'text-[16px] sm:text-[18.5px] text-slate-700 leading-relaxed sm:leading-loose')
+    .replace(/text-xs sm:text-\[13.5px\]/g, 'text-[16px] sm:text-[18.5px] leading-relaxed')
+    .replace(/text-sm font-black text-slate-900/g, 'text-[17.5px] sm:text-[20.5px] font-black text-slate-950 block mb-2')
+    .replace(/text-sm sm:text-base font-black text-slate-900/g, 'text-[18.5px] sm:text-[22px] font-black text-slate-950 block mb-3')
     .replace(/text-slate-650/g, 'text-slate-700')
     .replace(/text-left/g, 'text-justify break-all');
 };
