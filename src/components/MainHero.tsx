@@ -38,18 +38,18 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
         if (isUserInteracted) return;
         
         if (direction === 1) {
-          currentLeft += 0.8;
+          currentLeft += 1;
           if (currentLeft >= maxScroll) {
             direction = -1;
           }
         } else {
-          currentLeft -= 0.8;
+          currentLeft -= 1;
           if (currentLeft <= 0) {
             direction = 1;
           }
         }
         el.scrollLeft = currentLeft;
-      }, 25);
+      }, 30);
     };
 
     const observer = new IntersectionObserver(
@@ -171,7 +171,7 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
         {/* Worry chips area */}
         <div 
           ref={scrollContainerRef}
-          className="mt-12 flex flex-row md:flex-wrap justify-start md:justify-center gap-2.5 max-w-2xl mx-auto px-4 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-none select-none scroll-smooth pb-2 md:pb-0 w-full"
+          className="mt-12 flex flex-row md:flex-wrap justify-start md:justify-center gap-2.5 max-w-2xl mx-auto px-4 overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-none select-none pb-2 md:pb-0 w-full"
         >
           {worrychips.map((chip, index) => (
             <span
