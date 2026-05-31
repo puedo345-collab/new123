@@ -16,7 +16,7 @@ const seedArticles = [
     reductionRate: 82,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -86,7 +86,7 @@ const seedArticles = [
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -154,7 +154,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -222,7 +222,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -290,7 +290,7 @@ const seedArticles = [
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -358,7 +358,7 @@ const seedArticles = [
     reductionRate: 65,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -426,7 +426,7 @@ const seedArticles = [
     reductionRate: 65,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -494,7 +494,7 @@ const seedArticles = [
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -562,7 +562,7 @@ const seedArticles = [
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -630,7 +630,7 @@ const seedArticles = [
     reductionRate: 65,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -698,7 +698,7 @@ const seedArticles = [
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -766,7 +766,7 @@ const seedArticles = [
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -834,7 +834,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -902,7 +902,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -970,7 +970,7 @@ const seedArticles = [
     reductionRate: 70,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -1038,7 +1038,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -1106,7 +1106,7 @@ const seedArticles = [
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -1174,7 +1174,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -1242,7 +1242,7 @@ const seedArticles = [
     reductionRate: 75,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
@@ -1310,7 +1310,7 @@ const seedArticles = [
     reductionRate: 80,
     content: `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
   <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 법무사 여환동의 정밀 사건 분석 보고서</span>
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
   
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
