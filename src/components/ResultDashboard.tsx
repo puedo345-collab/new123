@@ -221,7 +221,7 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
       ringColor = 'ring-slate-200';
     } else if (responses.hasMoreDebtThanAssets === 'no') {
       reductionRate = 0; // Asset greater than debt is legally blocked
-      warningMsg = '※ 신청 불가 우려: 보유하신 순 재산의 합산액이 총 채무액보다 많을 경우, 채무초과를 인정받지 못해 법원으로부터 기각 결정을 받게 됩니다. 다만, 일반 개인이 재산을 산정할 때 범하기 쉬운 계산 착오(부동산에서 담보 채무를 공제하지 않는 착오, 임차보증금에서 소액보증금을 공제하지 않는 착오 등)를 재 검토하면 재산 평가 가액이 낮아져 회생 진행이 가능해지는 사례가 매우 빈번하므로, 재산가액을 정확히 산정할 수 없는 분은 법무사와 개별 상담을 통해 재산 재평가를 받아보시길 강력 추천합니다.';
+      warningMsg = '신청 불가 우려: 보유하신 순 재산의 합산액이 총 채무액보다 많을 경우, 채무초과를 인정받지 못해 신청 자체가 불가합니다. 다만, 전문가가 아닌 일반인이 재산을 산정할 때 범하기 쉬운 계산 착오(부동산에서 담보 채무를 공제하지 않는 착오, 임차보증금에서 소액보증금을 공제하지 않는 착오 등)을 면밀히 검토하면 순재산 가액이 낮아져 회생 신청이 가능해지는 사례가 매우 빈번하게 있으므로, 재산가액을 정확히 산정할 수 없는 분은 혼자 고민하지 마시고 법무사와 개별 상담을 받아보시길 강력 추천합니다.';
       eligibilityGrade = '기각 확률 높음 (재산 분석 요망)';
       progressColor = 'bg-amber-500';
       textColor = 'text-amber-700';
