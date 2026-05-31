@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import SuccessCaseMatcher from './components/SuccessCaseMatcher';
 import RepaymentPlanBuilder from './components/RepaymentPlanBuilder';
 import LawyerIntroduction from './components/LawyerIntroduction';
+import BankruptcyNotes from './components/BankruptcyNotes';
 import AdminDashboard from './components/AdminDashboard';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scale, HeartHandshake, ShieldCheck, Info, X, Sparkles, MessageCircle, Phone, Calendar, Clock, ChevronDown, Check, MessageSquare } from 'lucide-react';
@@ -23,6 +24,7 @@ export default function App() {
   const [adminPageActive, setAdminPageActive] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
   const [currentSection, setCurrentSection] = useState<string | null>(null);
+  const [bankruptcyPageActive, setBankruptcyPageActive] = useState(false);
 
   const getTodayDateString = () => {
     const today = new Date();
@@ -96,6 +98,9 @@ export default function App() {
       } else if (brandPageActive) {
         setBrandPageActive(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (bankruptcyPageActive) {
+        setBankruptcyPageActive(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (currentSection) {
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -106,9 +111,15 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, currentSection]);
+  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, currentSection]);
 
   // Push history state when opening overlays/modals/pages to prevent site exit on back button
+  React.useEffect(() => {
+    if (bankruptcyPageActive && window.history.state?.type !== 'bankruptcyPage') {
+      window.history.pushState({ type: 'bankruptcyPage' }, '');
+    }
+  }, [bankruptcyPageActive]);
+
   React.useEffect(() => {
     if (consultationOpen && window.history.state?.type !== 'consultation') {
       window.history.pushState({ type: 'consultation' }, '');
@@ -383,6 +394,9 @@ export default function App() {
       clearAdminSession();
       setAdminPageActive(false);
     }
+    if (sectionId !== 'bankruptcy') {
+      setBankruptcyPageActive(false);
+    }
 
     if (sectionId === 'hero') {
       setSurveyActive(false);
@@ -410,27 +424,19 @@ export default function App() {
       setPlanSimulatorActive(false);
       setUserResponses(null);
       setCurrentSection('stories');
-      setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('set-eligibility-tab', { detail: { tab: 'rehabilitation' } }));
-      }, 50);
       scrollWithLayoutSafety(
         () => document.getElementById('brand'),
         eligibilityRef
       );
     } else if (sectionId === 'bankruptcy') {
+      setBankruptcyPageActive(true);
       setBrandPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
       setUserResponses(null);
-      setCurrentSection('bankruptcy');
-      setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('set-eligibility-tab', { detail: { tab: 'bankruptcy' } }));
-      }, 50);
-      scrollWithLayoutSafety(
-        () => document.getElementById('brand'),
-        eligibilityRef
-      );
+      setCurrentSection(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'our-spirit') {
       setBrandPageActive(false);
       setSurveyActive(false);
@@ -598,6 +604,25 @@ export default function App() {
                   onBack={() => setAdminPageActive(false)}
                 />
               </motion.div>
+            ) : bankruptcyPageActive ? (
+              <motion.div
+                key="bankruptcy-notes-page"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="w-full"
+              >
+                <BankruptcyNotes
+                  onBack={() => {
+                    setBankruptcyPageActive(false);
+                    if (window.history.state?.type === 'bankruptcyPage') {
+                      window.history.back();
+                    }
+                    window.scrollTo(0, 0);
+                  }}
+                  onStartSurvey={() => handleStartSurvey('general')}
+                />
+              </motion.div>
             ) : brandPageActive ? (
               <motion.div
                 key="brand-intro-page"
@@ -735,7 +760,7 @@ export default function App() {
         </div>
 
         {/* Permanent Premium Guidelines and Stories (Scroll Trigger Point) */}
-        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && (
+        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && (
           <div ref={eligibilityRef} className="scroll-mt-24 sm:scroll-mt-28" id="brand">
             <EligibilityNotes />
           </div>
