@@ -11,16 +11,35 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      const el = scrollContainerRef.current;
-      if (el && window.innerWidth < 768) {
-        el.scrollTo({ left: 45, behavior: 'smooth' });
-        setTimeout(() => {
-          el.scrollTo({ left: 0, behavior: 'smooth' });
-        }, 550);
+    const el = scrollContainerRef.current;
+    if (!el || window.innerWidth >= 768) return;
+
+    let hasTriggered = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTriggered) {
+          hasTriggered = true;
+          // Wait 300ms after entering viewport for smooth focus transition
+          setTimeout(() => {
+            el.scrollTo({ left: 45, behavior: 'smooth' });
+            setTimeout(() => {
+              el.scrollTo({ left: 0, behavior: 'smooth' });
+            }, 550);
+          }, 300);
+          
+          observer.unobserve(el);
+        }
+      },
+      {
+        threshold: 0.35 // Triggers when 35% of the element is visible
       }
-    }, 1400);
-    return () => clearTimeout(timer);
+    );
+
+    observer.observe(el);
+    return () => {
+      if (el) observer.unobserve(el);
+    };
   }, []);
 
   // Config for the 2 interactive entry cards (combined from 3 original cards)
