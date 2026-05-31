@@ -1305,6 +1305,71 @@ async function startServer() {
     res.json({ success: true, message: "성공사례/칼럼 글이 안전하게 영구 삭제되었습니다." });
   });
 
+  // Dynamic XML Sitemap for Naver, Google, and Daum search engines
+  app.get("/sitemap.xml", (req, res) => {
+    try {
+      const baseUrl = "https://www.law-office.co.kr";
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+      xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+      
+      // Core pages
+      const corePages = ["", "/brand", "/bankruptcy", "/success", "/check", "/repayment-plan", "/faq"];
+      corePages.forEach(p => {
+        xml += `  <url>\n`;
+        xml += `    <loc>${baseUrl}${p}</loc>\n`;
+        xml += `    <changefreq>daily</changefreq>\n`;
+        xml += `    <priority>${p === "" ? "1.0" : "0.8"}</priority>\n`;
+        xml += `  </url>\n`;
+      });
+      
+      // Add all success story individual articles dynamically from DB!
+      if (fs.existsSync(ARTICLES_FILE_PATH)) {
+        const articles: Article[] = JSON.parse(fs.readFileSync(ARTICLES_FILE_PATH, "utf-8"));
+        articles.forEach(art => {
+          if (art.status !== "private" && art.category !== "칼럼") {
+            xml += `  <url>\n`;
+            xml += `    <loc>${baseUrl}/success/${art.id}</loc>\n`;
+            xml += `    <changefreq>weekly</changefreq>\n`;
+            xml += `    <priority>0.7</priority>\n`;
+            xml += `  </url>\n`;
+          }
+        });
+      }
+      
+      // Add all FAQs dynamically!
+      if (fs.existsSync(FAQS_FILE_PATH)) {
+        const faqs: FAQItem[] = JSON.parse(fs.readFileSync(FAQS_FILE_PATH, "utf-8"));
+        faqs.forEach(faq => {
+          xml += `  <url>\n`;
+          xml += `    <loc>${baseUrl}/faq/${faq.id}</loc>\n`;
+          xml += `    <changefreq>monthly</changefreq>\n`;
+          xml += `    <priority>0.5</priority>\n`;
+          xml += `  </url>\n`;
+        });
+      }
+      
+      xml += `</urlset>\n`;
+      
+      res.setHeader("Content-Type", "application/xml; charset=utf-8");
+      res.send(xml);
+    } catch (e) {
+      console.error("[Sitemap] Error generating dynamic sitemap:", e);
+      res.status(500).send("Error generating sitemap");
+    }
+  });
+
+  // robots.txt rule definition
+  app.get("/robots.txt", (req, res) => {
+    let robots = `User-agent: *\n`;
+    robots += `Allow: /\n`;
+    robots += `Disallow: /admin\n`;
+    robots += `Disallow: /api/\n`;
+    robots += `Sitemap: https://www.law-office.co.kr/sitemap.xml\n`;
+    
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.send(robots);
+  });
+
   // Use Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
