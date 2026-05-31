@@ -327,8 +327,8 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                        className="p-4 sm:p-5 flex flex-col md:grid md:grid-cols-12 md:gap-4 md:items-center select-none cursor-pointer"
                        onClick={() => setExpandedStoryId(isExpanded ? null : story.id)}
                      >
-                       {/* Left Title: col-span-5 */}
-                       <div className="col-span-12 md:col-span-5 min-w-0 text-left flex items-center gap-2">
+                       {/* Left Title: col-span-4 */}
+                       <div className="col-span-12 md:col-span-4 min-w-0 text-left flex items-center gap-2">
                          <span className="text-[11px] text-slate-400 font-bold sm:hidden">
                            {story.age || "-"} • {story.job || "-"}
                          </span>
@@ -337,16 +337,16 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
                          </h4>
                        </div>
  
-                       {/* Middle Metrics Box: col-span-4 */}
-                       <div className="col-span-12 md:col-span-4 flex md:justify-start items-center">
-                         <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1 w-full md:w-auto justify-between md:justify-start">
-                           <div className="flex items-center gap-1.5">
-                             <span className="text-slate-400 font-medium">기존</span>
-                             <span className="font-black text-slate-700">{story.originalDebt}</span>
-                             <span className="text-slate-355">➔</span>
-                             <span className="text-amber-800 font-black">{story.reducedDebt}</span>
+                       {/* Middle Metrics Box: col-span-5 */}
+                       <div className="col-span-12 md:col-span-5 flex md:justify-start items-center">
+                         <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-slate-50 border border-slate-100 rounded-lg px-2.5 py-1 w-full md:w-auto justify-between md:justify-start whitespace-nowrap">
+                           <div className="flex items-center gap-1.5 whitespace-nowrap">
+                             <span className="text-slate-400 font-medium whitespace-nowrap">기존</span>
+                             <span className="font-black text-slate-700 whitespace-nowrap">{story.originalDebt}</span>
+                             <span className="text-slate-350 whitespace-nowrap">➔</span>
+                             <span className="text-amber-800 font-black whitespace-nowrap">{story.reducedDebt}</span>
                            </div>
-                           <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded text-[10px] ml-0.5 shrink-0">
+                           <span className="text-emerald-700 font-black bg-emerald-50 px-1 py-0.5 rounded text-[10px] ml-0.5 shrink-0 whitespace-nowrap">
                              {story.reductionRate}% 탕감
                            </span>
                          </div>
