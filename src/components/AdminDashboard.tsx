@@ -63,6 +63,7 @@ interface Article {
   createdAt: string;
   updatedAt: string;
   views?: number;
+  status?: string;
 }
 
 interface AdminDashboardProps {

@@ -247,7 +247,7 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
               성공사례
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 font-semibold leading-relaxed">
-              울산지방법원 14년 실무 경력의 여환동 법무사가 전하는 실제 면책 및 탕감사례.
+              여환동 법무사가 전하는 실제 인가 및 면책결정 사례.
             </p>
           </div>
         </div>
@@ -260,7 +260,6 @@ export default function SuccessColumnPage({ onBack, onSelectPlan, initialTab = '
             <div className="space-y-1.5 text-left bg-amber-500/[0.03] p-4 sm:p-5 rounded-2xl border border-[#FAF4E5]">
               <label className="text-[14px] font-black text-amber-700 flex items-center gap-1.5 mb-1.5">
                 <span>성공 사례 검색</span>
-                <span className="text-[12px] text-slate-400 font-semibold normal-case">(직업, 채무 종류, 사유 등을 입력하세요)</span>
               </label>
               <div className="relative w-full max-w-xl">
                 <Search className="w-4 h-4 text-amber-600 absolute left-3.5 top-3" />
