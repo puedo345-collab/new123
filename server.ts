@@ -1387,6 +1387,61 @@ async function startServer() {
           let html = fs.readFileSync(indexPath, "utf-8");
           const proto = req.headers["x-forwarded-proto"] || "https";
           const host = req.headers.host || "localhost";
+          const originalUrl = req.originalUrl || "/";
+          
+          let pageTitle = "울산 개인회생 법무사 여환동 | 울산개인파산 | 울산채무탕감 신청자격 조회| 울산신용회복위원회| 새도약기금 새출발기금 채무조정";
+          let pageDescription = "울산 전담 개인회생 13년 경력, 1,000건 이상 성공의 법무사 여환동 사무소입니다. 투자 실패, 보이스피싱 사기, 일용직/프리랜서 채무도 높은 탕감률로 밀착 조력합니다. 실시간으로 월 변제금과 탕감률을 직접 조회해 보세요.";
+          
+          // Detect specific routes and customize metadata
+          if (originalUrl === "/brand") {
+            pageTitle = "대표 법무사 여환동 소개 | 울산 개인회생·개인파산 법무사";
+            pageDescription = "울산지방법원 14년 경력의 대표 법무사 여환동을 소개합니다. 사무장 대행 없이 모든 실무를 직접 소행하여 보정 권고를 최소화하고 높은 인가율을 보장합니다.";
+          } else if (originalUrl === "/bankruptcy") {
+            pageTitle = "울산 개인파산 신청자격 요건 가이드 | 법무사 여환동";
+            pageDescription = "울산 개인파산 신청을 위해 필요한 3가지 핵심 신청 자격(최저생계비 미달, 면책불허가 사유 유무, 보유 재산 요건)을 14년 경력 법무사가 정밀 분석해 드립니다.";
+          } else if (originalUrl === "/success") {
+            pageTitle = "울산 개인회생·파산 성공사례 리포트 | 법무사 여환동";
+            pageDescription = "울산지방법원에서 인가 및 면책결정을 받아낸 실제 성공 사례를 확인하세요. 직장인, 프리랜서, 자영업자의 고금리 대환 및 사행성 채무 탕감 실적을 제공합니다.";
+          } else if (originalUrl.startsWith("/success/")) {
+            const artId = originalUrl.substring("/success/".length);
+            if (artId && fs.existsSync(ARTICLES_FILE_PATH)) {
+              const articles: Article[] = JSON.parse(fs.readFileSync(ARTICLES_FILE_PATH, "utf-8"));
+              const matched = articles.find(a => a.id === artId);
+              if (matched) {
+                pageTitle = `${matched.title} | 법무사 여환동 성공사례`;
+                // Clean HTML tags from content for description
+                const cleanDesc = matched.content
+                  .replace(/<[^>]*>/g, " ")
+                  .replace(/\s+/g, " ")
+                  .trim()
+                  .substring(0, 150);
+                pageDescription = `${cleanDesc}... 법무사 여환동의 성공사례 분석 보고서입니다.`;
+              }
+            }
+          } else if (originalUrl === "/check") {
+            pageTitle = "개인회생 신청자격 1분 자격진단 | 법무사 여환동";
+            pageDescription = "2026년 최신 소득 및 최저생계비 기준을 적용해 나의 개인회생 신청 자격 가능 여부와 예상 원금 탕감률을 1분 만에 실시간으로 진단해 드립니다.";
+          } else if (originalUrl === "/repayment-plan") {
+            pageTitle = "1:1 실시간 변제금 시뮬레이션 계산기 | 법무사 여환동";
+            pageDescription = "소득과 재산, 부양가족 수 등을 기입해 월 예상 변제액과 총 탕감 비율을 실시간으로 산출해 주는 고성능 계산기입니다.";
+          } else if (originalUrl.startsWith("/faq/")) {
+            const faqId = originalUrl.substring("/faq/".length);
+            if (faqId && fs.existsSync(FAQS_FILE_PATH)) {
+              const faqs: FAQItem[] = JSON.parse(fs.readFileSync(FAQS_FILE_PATH, "utf-8"));
+              const matched = faqs.find(f => f.id === faqId);
+              if (matched) {
+                pageTitle = `${matched.question} | 법무사 여환동 자주 묻는 질문`;
+                pageDescription = `${matched.answer.substring(0, 150)}... 울산 개인회생 파산 법률 해결안입니다.`;
+              }
+            }
+          }
+
+          // Apply meta tags replacements
+          html = html.replace(/<title>[^<]*<\/title>/, `<title>${pageTitle}</title>`);
+          html = html.replace(
+            /<meta name="description" content="[^"]*" \/>/,
+            `<meta name="description" content="${pageDescription}" />`
+          );
           
           // Check if custom og_image.png is in dist, public, or root
           const hasCustomOg = fs.existsSync(path.join(process.cwd(), "public", "og_image.png")) || 
@@ -1405,6 +1460,14 @@ async function startServer() {
           html = html.replace(
             /<meta property="og:url" content="[^"]+" \/>/,
             `<meta property="og:url" content="${proto}://${host}${req.originalUrl || '/'}" />`
+          );
+          html = html.replace(
+            /<meta property="og:title" content="[^"]+" \/>/,
+            `<meta property="og:title" content="${pageTitle}" />`
+          );
+          html = html.replace(
+            /<meta property="og:description" content="[^"]+" \/>/,
+            `<meta property="og:description" content="${pageDescription}" />`
           );
 
           res.setHeader("Content-Type", "text/html");

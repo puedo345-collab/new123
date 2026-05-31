@@ -58,10 +58,10 @@ export default function LawyerIntroduction({ onBack, onStartSurvey }: LawyerIntr
         <div className="bg-white rounded-3xl p-6 sm:p-8 text-slate-800 border border-amber-500/20 shadow-xs relative overflow-hidden mb-6">
           <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-amber-500/5 blur-2xl pointer-events-none" />
           <div className="relative z-10 space-y-2.5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-amber-500/10 backdrop-blur-xs border border-amber-500/20 rounded-full text-[15px] sm:text-[17px] font-bold text-amber-700 tracking-wider uppercase">
+            <h1 className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-amber-500/10 backdrop-blur-xs border border-amber-500/20 rounded-full text-[15px] sm:text-[17px] font-bold text-amber-700 tracking-wider uppercase font-sans">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              신뢰의 법무 파트너
-            </span>
+              울산 개인회생·파산 전문 법무사 여환동 소개
+            </h1>
             <p className="text-[15px] sm:text-[17px] text-slate-600 font-bold max-w-[104%] w-full leading-relaxed text-justify break-all">
               울산지방법원 맞춤 개인회생 진행 14년의 압도적 결정력.<br className="hidden md:inline" /> 사무장 대행 없이 대표 법무사가 모든 실무를 직접 소행하여 신속하고 정밀한 보정 권고 대응으로 인가율을 극대화 합니다.
             </p>
