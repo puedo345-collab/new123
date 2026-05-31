@@ -563,7 +563,59 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     } else {
       setEditorTitle("");
       setEditorCategory("성공사례");
-      setEditorContent("");
+      setEditorContent(`<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
+  </div>
+
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          1. 사실관계
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+          [이곳에 의뢰인의 구체적인 나이대, 직종, 채무 급증 경위 등 사실관계를 작성해 주세요]
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          2. 핵심쟁점
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+          [이곳에 법원의 엄격한 보정 권고 및 소명 난이도 등의 핵심쟁점을 작성해 주세요]
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          3. 신청전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+          저희 사무소는 14년 법원 실무 경력의 노하우를 바탕으로, 단순 실패가 아닌 배우자와의 이혼 과정에서 발생한 위자료 및 자녀 양육비 지출 내역을 세부 통장 내역 거래를 통해 1원 단위까지 분리 입증했습니다. 코인 손실금 중 실제 소비로 사라진 부분과 투자 실패로 소멸한 실질 자산을 소명 도표로 정리하여 법원이 요구하는 '최근 채무 소명 자료'를 완벽히 메웠습니다. 또한, 1인 생계비 외에 한부모 가정으로서의 '추가 생계비(자녀 치료비 및 교육비)' 필요성을 강력하게 소명하여 월 소득 대비 가용소득을 최소화하는 데 성공했습니다.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          4. 인가결정
+        </h4>
+        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-none space-y-1.5 pl-1">
+            <li><strong>총 채무액:</strong> 1억 2,000만 원</li>
+            <li><strong>조정 후 총변제액:</strong> 2,160만 원 (원금의 18%만 변제)</li>
+            <li><strong>탕감율:</strong> 82% 면책 결정</li>
+            <li><strong>월 변제금:</strong> 60만 원 (36개월 납입)</li>
+          </ul>
+        </div>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          [이곳에 인가결정의 의의 또는 채무자의 갱생 소회를 작성해 주세요]
+        </p>
+      </div>
+    </div>
+  </div>
+</div>`);
       setEditorAge("");
       setEditorJob("");
       setEditorOriginalDebt("");
