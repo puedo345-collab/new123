@@ -581,23 +581,15 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className={`p-5 sm:p-6 rounded-2xl border ${
-              responses.occupation === 'no_income' 
-                ? 'bg-slate-900 border-slate-800 shadow-[0_8px_30px_rgba(15,23,42,0.15)] text-slate-100' 
-                : 'bg-amber-50/95 border-amber-200/80 shadow-[0_4px_20px_rgba(245,158,11,0.06)]'
-            } flex flex-row items-start gap-4 transition-all hover:scale-[1.005]`}
+            className="p-5 sm:p-6 rounded-2xl border bg-slate-900 border-slate-800 shadow-[0_8px_30px_rgba(15,23,42,0.15)] text-slate-100 flex flex-row items-start gap-4 transition-all hover:scale-[1.005]"
           >
             <div className="space-y-2 flex-1">
               <div className="flex items-center gap-2">
-                <span className={`text-[15.2px] sm:text-[16.7px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md ${
-                  responses.occupation === 'no_income' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-amber-200/60 text-amber-800'
-                }`}>
+                <span className="text-[15.2px] sm:text-[16.7px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">
                   개인회생 요건 보완 필요성
                 </span>
               </div>
-              <div className={`text-[15.2px] sm:text-[16.5px] font-bold leading-relaxed ${
-                responses.occupation === 'no_income' ? 'text-slate-200' : 'text-amber-900/90'
-              }`}>
+              <div className="text-[15.2px] sm:text-[16.5px] font-bold leading-relaxed text-slate-200">
                 {est.warningMsg}
               </div>
             </div>
