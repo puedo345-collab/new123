@@ -23,10 +23,6 @@ const seedArticles = [
     울산에 거주하는 30대 중반의 영업직 직장인 A씨는 어린 딸을 홀로 양육하는 한부모 가장이었습니다. 생활비 부담을 덜고자 시작한 주식과 코인 선물 투자가 손실로 이어졌고, 이를 메우기 위해 연 20%가 넘는 카드론과 대부업 고금리 대출에 손을 대면서 불과 1년 만에 채무가 1억 2천만 원까지 급증했습니다. 최근 발생한 대출 비중이 전체의 85%에 달해 일반적인 대리인 사무소에서는 기각 가능성이 매우 높다고 판단한 고위험 사건이었습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -97,10 +93,6 @@ const seedArticles = [
     울산 북구에서 식자재 대리점을 운영하던 40대 중반의 B씨는 무리하게 사업을 확장하던 중 원자재 가격 급등과 거래처 부도로 인해 폐업 절차를 밟게 되었습니다. 가게 보증금마저 압류되고 두 자녀의 양육비 지출마저 감당할 수 없게 되자 생계형 채무가 1억 6,500만 원까지 불어나 심각한 독촉에 시달리게 되었습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -168,10 +160,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산의 선박 블록 공장에서 일용직으로 종사하던 50대 초반 C씨는 불규칙한 건설 경기와 겨울철 일감 감소로 생활고를 겪게 되었습니다. 부양해야 할 노부모의 치매 병원비와 요양원 분담금을 내기 위해 카드 돌려막기와 소액 대부업체를 이용하게 되었고, 부채는 7,200만 원에 육박하여 채무 불이행 위험에 직면했습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -241,10 +229,6 @@ const seedArticles = [
     대학을 갓 졸업한 후 울산 중소기업의 계약직 사무원으로 입사한 20대 여성 D씨는 원금 보장을 약속하는 허위 주식투자 리딩방의 감언이설에 속아 2금융권 카드 대출과 신용대출을 무리하게 빌렸습니다. 결국 리딩 사기 일당은 자취를 감추었고, D씨에게는 고스란히 4,800만 원이라는 독촉장만 남게 되어 첫 단추부터 파산 위기에 봉착했습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -312,10 +296,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     30대 후반 여성인 E씨는 이혼한 배우자가 결혼 생활 도중 본인의 인감증명서와 명의를 몰래 도용해 진행한 고금리 연대보증 부채에 시달려왔습니다. 자녀 양육비조차 제대로 받지 못하며 홀로 딸을 부양하던 중 금융사로부터 주거지 가압류 및 급여 채권 압류 통지서를 받아 큰 심리적 공포를 안고 저희를 찾아오셨습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -385,10 +365,6 @@ const seedArticles = [
     울산 남구 삼산동 학원 밀집가에서 수학 전문 강사로 일하던 40대 F씨는 코로나 사태 장기화로 학원 휴원과 정원 축소 조치에 따라 정산 소득이 급감했습니다. 모친의 당뇨 투병 병원비와 한부모 가정으로서의 육아 생활비를 고금리 대출로 충당하다 보니, 누적된 채무가 8,500만 원에 이르게 되어 채무 불이행 위험에 내몰렸습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -456,10 +432,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산 울주군에서 2.5톤 개별화물 트럭을 활용해 평생 영업을 이어오던 60대 G씨는 경기 불황과 차량 수리비 폭탄, 캐피탈 채무 지출 연체가 겹치며 파산 문턱에 섰습니다. 차량 압류로 생계 수단마저 위협받으며, 고령의 배우자 만성 질환 약값까지 밀려 총채무가 5,800만 원으로 치달았습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -529,10 +501,6 @@ const seedArticles = [
     울산 동구에 거주하는 30대 후반 맞벌이 부부는 아이 둘의 보육비와 전세자금 대출 변동금리가 폭등하며 매달 적자를 피할 수 없었습니다. 부족한 생활비를 메우기 위해 2금융권 신용대출과 카드론에 점차 기대게 되었고, 불과 2년 사이에 부채가 9,000만 원까지 불어나 가정 존립의 한계선에 부딪히게 되었습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -600,10 +568,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산 동구의 조선소 하청업체에서 오랜 기간 용접공으로 성실히 일했던 50대 H씨는 조선업 불황으로 인한 강제 구조조정 여파로 갑작스럽게 권고사직을 당했습니다. 재취업 기간 동안 가족의 생계를 유지하기 위해 제2금융권 신용대출과 카드 연체 돌려막기를 하던 중 이자가 겉잡을 수 없이 증폭되어 총부채 1억 3,000만 원에 도달하게 되었습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -673,10 +637,6 @@ const seedArticles = [
     울산 중구 학성동 인근에서 작은 1인 헤어숍을 운영하던 40대 I씨는 창업 초기 권리금 대출과 점포 인테리어 할부 비용, 프랜차이즈 수수료 적자가 쌓이며 파산 직전의 지경에 도달했습니다. 가게 월세 납입마저 지속적으로 밀리며 상가 강제 명도 처분에 직면했고, 누적된 빚은 8,500만 원에 육박하여 채무 조정을 위해 법률 전문가의 조력이 절박해졌습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -744,10 +704,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     20대 중반의 대학원생 J씨는 학자금 전세 대출 한도 초과분과 모친의 급격한 건강 악화로 발생한 다중 대부업 카드 대출 3,800만 원의 연체 위기에 내몰렸습니다. 조교 수당과 아르바이트로 생계를 이어가며 매일 빚 독촉 전화를 견뎌내던 중, 법적인 구제책을 찾아 여환동 법무사를 방문하게 되었습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -817,10 +773,6 @@ const seedArticles = [
     울산 대기업 생산직 공장에서 교대 근무를 하는 30대 중반 K씨는 직장 생활의 스트레스를 해소하고자 호기심에 모바일 스포츠 배팅과 불법 사행성 사이트에 손을 댔습니다. 초기 손실을 만회하려 고금리 카드론과 고액 직장인 신용대출을 무단으로 받아 탕진하였고, 급기야 채무액이 1억 500만 원에 육박해 정상적인 월급 압류 위기에 내몰렸습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -888,10 +840,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산 남구의 마트 반찬 코너에서 일하던 50대 후반 여성 L씨는 수년 전 사별한 배우자의 병원 치료비 연대보증과 본인의 급성 무릎 관절염 수술비가 누적되며 한계 상황에 도달했습니다. 월 130만 원 남짓의 식당 파트타임 소득만으로는 한 달 수수료와 이자도 막아낼 수 없어 총 5,400만 원 부채 독촉에 눈물을 흘려야 했습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -961,10 +909,6 @@ const seedArticles = [
     울산의 30대 대리 직장인 M씨는 검사를 사칭한 불법 보이스피싱 금융 범죄 사기 집단에 철저히 기만당했습니다. '범죄 계좌에 연루되었으니 기존 예금 보호를 위해 신용대출을 최대한 일으켜 예치하라'는 위조 공문에 속아 6,500만 원을 이체하고 사기 조직이 증발하며 막대한 빚 독촉에 빠졌습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -1032,10 +976,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산 울주군에서 조선소 선박 배관 정밀 부품 납품 공장을 홀로 일구던 50대 N씨는 원청 업체의 연쇄 부도 사태와 납품 단가 폭락의 풍파를 맞았습니다. 공장 설비 담보 대출과 직원들의 급여, 하청 거래 미수 대금을 막기 위해 무리하게 대표이사 보증 대출을 빌려 쓰다 총 부채 1억 8,000만 원의 채무 폭탄을 지게 되었습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -1105,10 +1045,6 @@ const seedArticles = [
     울산 중구에 거주하며 두 자녀를 양육하는 40대 싱글맘 O씨는 전배우자의 양육비 송금 두절과 간호조무사 초임 연봉 한계로 생계형 적자가 빚으로 불어났습니다. 연체 이자와 생계 비용으로 빌려 쓰기 시작한 2금융 카드 대출이 순식간에 7,800만 원까지 악화되어 주거지 보증금 압류 고지서를 마주하게 되었습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -1176,10 +1112,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산의 20대 후반 간호사 P씨는 '정부 지원 초저금리 대환 대출을 받기 위해서는 기존 고금리 대출을 먼저 상환해야 한다'는 지능형 대환 보이스피싱 금융 사기 집단에 사기를 당했습니다. 사기 일당의 원격 제어 앱 요구에 의해 본인 명의로 8,800만 원이 대출 이체되어 극심한 신용불량 상태로 내몰렸습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
@@ -1249,10 +1181,6 @@ const seedArticles = [
     50대 초반인 Q씨는 울산 동구 테라스파크 인근에서 카페를 무리하게 운영하던 중 임대료 상승과 프랜차이즈 재료 납품가 폭등의 풍파를 만났습니다. 동업자의 공동대표 명의 도용 대출 보증 피해가 겹쳐 매장 가압류 통지를 받았고 부채가 1억 1,000만 원까지 치솟아 자식들에게 빚 대물림이 될 파탄 위기에 직면했습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -1321,10 +1249,6 @@ const seedArticles = [
     울산 남구 무거동의 중소기업에 근무하는 30대 미혼 사원 R씨는 아버지가 갑작스러운 간암 진단을 받아 거액의 수술비와 만성 표적 항암제 간병비 부담을 홀로 짊어지게 되었습니다. 수수료와 신용카드 돌려막기 끝에 다중 채무가 4,200만 원으로 치솟아 급여에 압류 독촉장이 도착하며 막장에 치달았습니다.
   </p>
 
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
-
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
     <div class="h-0.5 bg-gradient-to-r from-amber-500 to-transparent w-24 mb-4"></div>
@@ -1392,10 +1316,6 @@ const seedArticles = [
   <p class="font-bold text-slate-800 leading-relaxed text-sm sm:text-[15px] border-b border-dashed border-slate-200 pb-4">
     울산 울주군 제조업체 공장에 재직 중인 40대 성실한 가장 S씨는 가까운 친지의 '동업 법인 공동 창업' 명의 대리 요구에 휘말렸습니다. 친지는 S씨의 인감도장과 신분 서류를 도용해 거액의 2금융 신용 연쇄 대출을 무단으로 실행한 뒤 야반도주하여, S씨에게 총 9,200만 원의 보증 채무 독촉장이 몰려와 집안이 파탄 위기에 놓였습니다.
   </p>
-
-  <div class="my-6">
-    <img src="/rehab_success_infographic.png" alt="개인회생 성공 리포트" class="w-full rounded-2xl shadow-md border border-slate-200/50" />
-  </div>
 
   <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
     <div class="text-amber-800 font-black text-sm sm:text-base mb-2">🏆 개인회생 성공 리포트</div>
