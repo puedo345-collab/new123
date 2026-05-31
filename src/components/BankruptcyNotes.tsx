@@ -15,6 +15,37 @@ interface BankruptcyNotesProps {
 }
 
 export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNotesProps) {
+  React.useEffect(() => {
+    const forceScrollTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
+      const mainWrap = document.getElementById('main-landing-wrap');
+      if (mainWrap) {
+        mainWrap.scrollTop = 0;
+      }
+      const mainStage = document.getElementById('landing-main-stage');
+      if (mainStage) {
+        mainStage.scrollTop = 0;
+      }
+    };
+    
+    // Immediate scroll
+    forceScrollTop();
+    
+    // Staggered scrolls to guarantee resetting on mobile browsers after menu transitions
+    const t1 = setTimeout(forceScrollTop, 30);
+    const t2 = setTimeout(forceScrollTop, 100);
+    const t3 = setTimeout(forceScrollTop, 250);
+    
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
