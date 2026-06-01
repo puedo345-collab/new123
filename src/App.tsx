@@ -34,6 +34,7 @@ export default function App() {
   const [successColumnTabMode, setSuccessColumnTabMode] = useState<'matcher' | 'columns'>('matcher');
   const [initialArticleId, setInitialArticleId] = useState<string | null>(null);
   const isInitialRouteSetup = React.useRef(false);
+  const [surveyResetKey, setSurveyResetKey] = useState(0);
 
   const getTodayDateString = () => {
     const today = new Date();
@@ -898,6 +899,7 @@ export default function App() {
     if (mode === 'case') {
       handleNavClick('success_columns');
     } else {
+      setSurveyResetKey(prev => prev + 1);
       setSurveyActive(true);
       setSurveyMode(mode === 'plan' ? 'general' : (mode || 'general'));
       setCaseMatcherActive(false);
@@ -927,6 +929,7 @@ export default function App() {
     setBrandPageActive(false);
     setAdminPageActive(false);
     setBankruptcyPageActive(false);
+    setSurveyResetKey(prev => prev + 1);
     setSurveyActive(true);
     setSurveyMode('general');
     setCaseMatcherActive(false);
@@ -1216,6 +1219,7 @@ export default function App() {
                   </p>
                 </div>
                 <QualificationCheck
+                  key={surveyResetKey}
                   mode={surveyMode}
                   onComplete={handleSurveyComplete}
                   onCancel={handleCancelSurvey}

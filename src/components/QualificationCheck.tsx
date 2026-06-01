@@ -52,6 +52,9 @@ export default function QualificationCheck({ onComplete, onCancel, mode = 'gener
       if (isProgrammaticBackInProgress) {
         return;
       }
+      if ((window as any).pendingNavigation) {
+        return;
+      }
       // The back button was pressed, which popped our { inSurvey: true } state.
       if (currentStepRef.current > 0) {
         // Put the state back into the browser history so we can catch the next back button click
