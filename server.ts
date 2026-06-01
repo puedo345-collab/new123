@@ -1263,6 +1263,55 @@ async function startServer() {
     res.json(list[index]);
   });
 
+  // API: Upload Article Image to Physical File (Protected - standard portal standard)
+  app.post("/api/admin/upload-image", verifyAdmin, (req, res) => {
+    try {
+      const { base64 } = req.body;
+      if (!base64) {
+        res.status(400).json({ error: "이미지 데이터가 제공되지 않았습니다." });
+        return;
+      }
+
+      // Parse base64 header
+      const matches = base64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      if (!matches || matches.length !== 3) {
+        res.status(400).json({ error: "올바르지 않은 이미지 형식입니다." });
+        return;
+      }
+
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      const buffer = Buffer.from(base64Data, "base64");
+
+      let ext = "png";
+      if (mimeType.includes("jpeg") || mimeType.includes("jpg")) {
+        ext = "jpg";
+      } else if (mimeType.includes("gif")) {
+        ext = "gif";
+      } else if (mimeType.includes("webp")) {
+        ext = "webp";
+      }
+
+      // Create uploads directory
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+
+      const fileHash = crypto.randomBytes(4).toString("hex");
+      const cleanFileName = `yhd_success_${Date.now()}_${fileHash}.${ext}`;
+      const filePath = path.join(uploadsDir, cleanFileName);
+
+      fs.writeFileSync(filePath, buffer);
+      
+      const fileUrl = `/uploads/${cleanFileName}`;
+      res.json({ success: true, url: fileUrl });
+    } catch (err: any) {
+      console.error("[ImageUpload] Error saving physical file:", err);
+      res.status(500).json({ error: "이미지를 서버 디스크에 보존하는 도중 오류가 발생했습니다: " + err.message });
+    }
+  });
+
   // API: Create Article (Protected)
   app.post("/api/articles", verifyAdmin, (req, res) => {
     const { category, title, age, job, originalDebt, reducedDebt, monthlyPayment, reductionRate, content, status, createdAt } = req.body;
@@ -1410,6 +1459,9 @@ async function startServer() {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.send(robots);
   });
+
+  // Serve uploaded images statically in both dev and production
+  app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
 
   // Use Vite middleware for development
   if (process.env.NODE_ENV !== "production") {

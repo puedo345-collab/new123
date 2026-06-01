@@ -768,12 +768,18 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     return { textContent, images };
   };
 
-  const compileTextAndImagesToHtml = (text: string, images: string[], category: string) => {
+  const compileTextAndImagesToHtml = (text: string, images: string[], category: string, title: string) => {
     let bodyHtml = text.trim().replace(/\n/g, '<br/>');
 
     images.forEach((imgSrc, idx) => {
       const placeholder = `[사진${idx + 1}]`;
-      const imgHtml = `<div class="my-4"><img src="${imgSrc}" alt="첨부사진" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>`;
+      
+      // Auto-couple descriptive alt text for SEO bots!
+      // Format: "여환동 법무사 성공사례 - [글제목] (사진 [번호])"
+      const cleanTitle = title.trim().replace(/"/g, '&quot;');
+      const altText = `법무사 여환동 성공사례 - ${cleanTitle} (첨부 이미지 ${idx + 1})`;
+      
+      const imgHtml = `<div class="my-4"><img src="${imgSrc}" alt="${altText}" title="${altText}" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>`;
       bodyHtml = bodyHtml.split(placeholder).join(imgHtml);
     });
 
@@ -862,7 +868,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       return;
     }
 
-    const finalContent = compileTextAndImagesToHtml(editorTextContent, editorUploadedImages, editorCategory);
+    const finalContent = compileTextAndImagesToHtml(editorTextContent, editorUploadedImages, editorCategory, editorTitle);
 
     const payload = {
       title: editorTitle.trim(),
@@ -2817,34 +2823,55 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                       return;
                                     }
                                     const reader = new FileReader();
-                                    reader.onloadend = () => {
+                                    reader.onloadend = async () => {
                                       const base64 = reader.result as string;
-                                      setEditorUploadedImages(prev => {
-                                        const newImages = [...prev, base64];
-                                        const nextIndex = newImages.length;
-                                        
-                                        // Insert placeholder at current cursor position in textarea
-                                        const textarea = document.getElementById("editor-body-textarea") as HTMLTextAreaElement;
-                                        if (textarea) {
-                                          const start = textarea.selectionStart;
-                                          const end = textarea.selectionEnd;
-                                          const text = textarea.value;
-                                          const before = text.substring(0, start);
-                                          const after = text.substring(end);
-                                          const placeholder = `\n\n[사진${nextIndex}]\n\n`;
-                                          
-                                          setEditorTextContent(before + placeholder + after);
-                                          
-                                          // Focus back and set cursor position after placeholder
-                                          setTimeout(() => {
-                                            textarea.focus();
-                                            textarea.selectionStart = textarea.selectionEnd = start + placeholder.length;
-                                          }, 55);
-                                        } else {
-                                          setEditorTextContent(prevText => prevText + `\n\n[사진${nextIndex}]\n\n`);
+                                      try {
+                                        setEditorError("");
+                                        const res = await fetch("/api/admin/upload-image", {
+                                          method: "POST",
+                                          headers: {
+                                            "Content-Type": "application/json",
+                                            "Authorization": `Bearer ${token}`
+                                          },
+                                          body: JSON.stringify({ base64 })
+                                        });
+                                        const data = await res.json();
+                                        if (!res.ok) {
+                                          setEditorError(data.error || "사진 서버 업로드 중 에러가 발생했습니다.");
+                                          return;
                                         }
-                                        return newImages;
-                                      });
+                                        
+                                        const serverImageUrl = data.url;
+                                        setEditorUploadedImages(prev => {
+                                          const newImages = [...prev, serverImageUrl];
+                                          const nextIndex = newImages.length;
+                                          
+                                          // Insert placeholder at current cursor position in textarea
+                                          const textarea = document.getElementById("editor-body-textarea") as HTMLTextAreaElement;
+                                          if (textarea) {
+                                            const start = textarea.selectionStart;
+                                            const end = textarea.selectionEnd;
+                                            const text = textarea.value;
+                                            const before = text.substring(0, start);
+                                            const after = text.substring(end);
+                                            const placeholder = `\n\n[사진${nextIndex}]\n\n`;
+                                            
+                                            setEditorTextContent(before + placeholder + after);
+                                            
+                                            // Focus back and set cursor position after placeholder
+                                            setTimeout(() => {
+                                              textarea.focus();
+                                              textarea.selectionStart = textarea.selectionEnd = start + placeholder.length;
+                                            }, 55);
+                                          } else {
+                                            setEditorTextContent(prevText => prevText + `\n\n[사진${nextIndex}]\n\n`);
+                                          }
+                                          return newImages;
+                                        });
+                                      } catch (err) {
+                                        console.error("Failed to upload image:", err);
+                                        setEditorError("서버와의 통신에 실패하여 이미지를 업로드할 수 없습니다.");
+                                      }
                                     };
                                     reader.readAsDataURL(file);
                                     e.target.value = "";
