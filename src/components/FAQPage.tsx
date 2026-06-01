@@ -14,7 +14,14 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'eligibility' | 'harassment' | 'investment' | 'etc'>('all');
   const [activeFaq, setActiveFaq] = useState<string | number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Reset page on search or category filter change
+  useEffect(() => {
+    setCurrentPage(1);
+    setActiveFaq(null);
+  }, [searchQuery, selectedCategory]);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -125,6 +132,13 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
     return matchesCategory && matchesSearch;
   });
 
+  const ITEMS_PER_PAGE = 10;
+  const totalPages = Math.ceil(filteredFaqs.length / ITEMS_PER_PAGE);
+  const paginatedFaqs = filteredFaqs.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   const handleFaqClick = (id: number) => {
     const isSelected = activeFaq === id;
     const nextFaq = isSelected ? null : id;
@@ -225,8 +239,8 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
         {/* Dynamic FAQ list */}
         <div className="max-w-3xl mx-auto space-y-4 min-h-[300px]">
           <AnimatePresence mode="popLayout">
-            {filteredFaqs.length > 0 ? (
-              filteredFaqs.map((faq) => {
+            {paginatedFaqs.length > 0 ? (
+              paginatedFaqs.map((faq) => {
                 const isSelected = activeFaq === faq.id;
 
                 return (
@@ -293,6 +307,50 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Dynamic Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-10 mb-6 font-sans">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => {
+                setCurrentPage((prev) => Math.max(1, prev - 1));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-extrabold text-xs disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer shadow-3xs"
+            >
+              이전
+            </button>
+            <div className="flex gap-1.5">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  onClick={() => {
+                    setCurrentPage(pageNum);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`w-9 h-9 rounded-xl font-black text-xs transition-all cursor-pointer border ${
+                    currentPage === pageNum
+                      ? 'bg-slate-900 border-slate-900 text-white shadow-sm'
+                      : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-800'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              ))}
+            </div>
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => {
+                setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-4 py-2 rounded-xl border border-slate-200 bg-white text-slate-600 font-extrabold text-xs disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer shadow-3xs"
+            >
+              다음
+            </button>
+          </div>
+        )}
 
         {/* Bottom Back to Main Button */}
         <div className="mt-16 md:mt-24 lg:mt-32 text-center pb-8">

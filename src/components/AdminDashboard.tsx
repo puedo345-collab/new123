@@ -2053,10 +2053,10 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                     className={`px-2.5 py-1 rounded-md text-[10px] font-black transition-all cursor-pointer border ${
                                       faq.showOnMain
                                         ? "bg-amber-500/10 border-amber-300 text-amber-800"
-                                        : "bg-slate-50 border-slate-200 text-slate-400 hover:text-slate-600"
+                                        : "bg-white border-slate-300 text-slate-500 hover:bg-slate-50 hover:text-slate-850 hover:border-slate-400 hover:shadow-2xs"
                                     }`}
                                   >
-                                    {faq.showOnMain ? "★ 메인 노출 중 (최대 10개)" : "☆ 메인 미노출"}
+                                    {faq.showOnMain ? "★ 메인 노출 중 (최대 10개)" : "☆ 메인 노출 선택"}
                                   </button>
                                 </div>
                               </div>

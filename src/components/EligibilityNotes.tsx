@@ -12,10 +12,8 @@ interface EligibilityNotesProps {
 export default function EligibilityNotes({ faqs = [], onBack, isSubPage = false }: EligibilityNotesProps) {
   const [activeFaq, setActiveFaq] = useState<string | number | null>(null);
 
-  // Filter faqs to show on main page: either those selected (showOnMain === true) or fallback to first 10 items
-  const mainFaqs = faqs.some(faq => faq.showOnMain)
-    ? faqs.filter(faq => faq.showOnMain).slice(0, 10)
-    : faqs.slice(0, 10);
+  // Filter faqs to show on main page: strictly only those explicitly marked for mainpage view (showOnMain === true or 1) up to 10 max, with no fallback.
+  const mainFaqs = faqs.filter(faq => faq.showOnMain).slice(0, 10);
 
   React.useEffect(() => {
     const handleExpandFaq = (e: Event) => {
@@ -263,41 +261,51 @@ export default function EligibilityNotes({ faqs = [], onBack, isSubPage = false 
             </div>
 
             <div className="mt-10 sm:mt-12 max-w-3xl mx-auto space-y-4">
-              {mainFaqs.map((faq) => {
-                const isSelected = activeFaq === faq.id;
-                return (
-                  <div
-                    key={faq.id}
-                    id={`faq-item-${faq.id}`}
-                    className="rounded-3xl border border-slate-200 bg-white overflow-hidden transition-all duration-200 scroll-mt-24 md:scroll-mt-28"
-                  >
-                    <button
-                      onClick={() => {
-                        const nextFaq = isSelected ? null : faq.id;
-                        setActiveFaq(nextFaq);
-                        if (nextFaq) {
-                          window.history.pushState({ type: 'faq', faqId: nextFaq }, '', `/faq/${nextFaq}`);
-                        } else {
-                          window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
-                        }
-                      }}
-                      className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
+              {mainFaqs.length > 0 ? (
+                mainFaqs.map((faq) => {
+                  const isSelected = activeFaq === faq.id;
+                  return (
+                    <div
+                      key={faq.id}
+                      id={`faq-item-${faq.id}`}
+                      className="rounded-3xl border border-slate-200 bg-white overflow-hidden transition-all duration-200 scroll-mt-24 md:scroll-mt-28"
                     >
-                      <span className="flex items-start gap-2.5 w-full text-justify flex-1">
-                        <HelpCircle className="w-4.5 h-4.5 text-slate-400 shrink-0 mt-1" />
-                        <span className="block text-justify break-all w-full leading-normal">{faq.question}</span>
-                      </span>
-                      {isSelected ? <ChevronUp className="w-4.5 h-4.5 text-slate-550 shrink-0" /> : <ChevronDown className="w-4.5 h-4.5 text-slate-450 shrink-0" />}
-                    </button>
+                      <button
+                        onClick={() => {
+                          const nextFaq = isSelected ? null : faq.id;
+                          setActiveFaq(nextFaq);
+                          if (nextFaq) {
+                            window.history.pushState({ type: 'faq', faqId: nextFaq }, '', `/faq/${nextFaq}`);
+                          } else {
+                            window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+                          }
+                        }}
+                        className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
+                      >
+                        <span className="flex items-start gap-2.5 w-full text-justify flex-1">
+                          <HelpCircle className="w-4.5 h-4.5 text-slate-400 shrink-0 mt-1" />
+                          <span className="block text-justify break-all w-full leading-normal">{faq.question}</span>
+                        </span>
+                        {isSelected ? <ChevronUp className="w-4.5 h-4.5 text-slate-550 shrink-0" /> : <ChevronDown className="w-4.5 h-4.5 text-slate-450 shrink-0" />}
+                      </button>
 
-                    {isSelected && (
-                      <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-500 font-medium leading-relaxed border-t border-slate-100/50 bg-slate-50/30 text-justify break-all w-full">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      {isSelected && (
+                        <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-500 font-medium leading-relaxed border-t border-slate-100/50 bg-slate-50/30 text-justify break-all w-full">
+                          {faq.answer}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="p-8 sm:p-12 text-center bg-white border border-slate-200 rounded-3xl shadow-xs">
+                  <HelpCircle className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                  <p className="text-[17px] sm:text-[19px] font-black text-slate-800">지정된 대표 자주 묻는 질문이 없습니다.</p>
+                  <p className="text-sm font-bold text-slate-450 mt-2 max-w-md mx-auto leading-relaxed">
+                    현재 메인 페이지에 노출되도록 지정된 자주 묻는 질문이 없습니다. 관리자 화면에서 질문을 메인 노출로 등록해주세요.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
