@@ -1463,6 +1463,9 @@ async function startServer() {
           } else if (originalUrl === "/repayment-plan") {
             pageTitle = "1:1 실시간 변제금 시뮬레이션 계산기 | 법무사 여환동";
             pageDescription = "소득과 재산, 부양가족 수 등을 기입해 월 예상 변제액과 총 탕감 비율을 실시간으로 산출해 주는 고성능 계산기입니다.";
+          } else if (originalUrl === "/faq") {
+            pageTitle = "개인회생 자주 묻는 질문(FAQ) | 법무사 여환동 사무소";
+            pageDescription = "최근 대출 비율이 높은 경우, 집에 압류가 개시된 경우, 코인 및 주식 채무 탕감 여부 등 개인회생 실무에서 가장 빈번하게 묻는 핵심 질문들에 여환동 법무사가 직접 답해 드립니다.";
           } else if (originalUrl.startsWith("/faq/")) {
             const faqId = originalUrl.substring("/faq/".length);
             if (faqId && fs.existsSync(FAQS_FILE_PATH)) {

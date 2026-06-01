@@ -12,6 +12,7 @@ import LawyerIntroduction from './components/LawyerIntroduction';
 import BankruptcyNotes from './components/BankruptcyNotes';
 import AdminDashboard from './components/AdminDashboard';
 import SuccessColumnPage from './components/SuccessColumnPage';
+import FAQPage from './components/FAQPage';
 import { motion, AnimatePresence } from 'motion/react';
 import { Scale, HeartHandshake, ShieldCheck, Info, X, Sparkles, MessageCircle, Phone, Calendar, Clock, ChevronDown, Check, MessageSquare } from 'lucide-react';
 
@@ -27,6 +28,7 @@ export default function App() {
   const [currentSection, setCurrentSection] = useState<string | null>(null);
   const [bankruptcyPageActive, setBankruptcyPageActive] = useState(false);
   const [successColumnsActive, setSuccessColumnsActive] = useState(false);
+  const [faqPageActive, setFaqPageActive] = useState(false);
   const [successColumnTabMode, setSuccessColumnTabMode] = useState<'matcher' | 'columns'>('matcher');
   const [initialArticleId, setInitialArticleId] = useState<string | null>(null);
   const isInitialRouteSetup = React.useRef(false);
@@ -152,28 +154,23 @@ export default function App() {
       setAdminPageActive(false);
     } else if (path === '/faq') {
       window.history.replaceState({ type: 'hero' }, '', '/');
-      window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+      window.history.pushState({ type: 'faqPage' }, '', '/faq');
       setBrandPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
       setUserResponses(null);
+      setFaqPageActive(true);
       setCurrentSection('faq');
-      
-      setTimeout(() => {
-        const faqEl = document.getElementById('faq');
-        if (faqEl) {
-          faqEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 300);
     } else if (path.startsWith('/faq/')) {
       const faqId = path.substring('/faq/'.length);
       if (faqId) {
         window.history.replaceState({ type: 'hero' }, '', '/');
-        window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
-        window.history.pushState({ type: 'faq', faqId: faqId }, '', `/faq/${faqId}`);
+        window.history.pushState({ type: 'faqPage' }, '', '/faq');
+        window.history.pushState({ type: 'faqPage', faqId: faqId }, '', `/faq/${faqId}`);
         
         setBrandPageActive(false);
+        setFaqPageActive(true);
         setSurveyActive(false);
         setCaseMatcherActive(false);
         setPlanSimulatorActive(false);
@@ -186,16 +183,6 @@ export default function App() {
         setTimeout(() => {
           const event = new CustomEvent('expand-faq', { detail: { faqId: parsedId } });
           window.dispatchEvent(event);
-          
-          const faqItem = document.getElementById(`faq-item-${parsedId}`);
-          if (faqItem) {
-            faqItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            const faqEl = document.getElementById('faq');
-            if (faqEl) {
-              faqEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          }
         }, 300);
       }
     }
@@ -231,7 +218,7 @@ export default function App() {
     } else if (userResponses) {
       title = "나의 개인회생 자격 진단 결과 리포트 | 법무사 여환동 사무소";
       description = "입력하신 소득, 재산, 채무 조건에 의거하여 정밀 분석된 탕감 혜택 및 월 예상 납입금을 포함한 여환동 법무사의 1:1 실시간 맞춤 분석 리포트입니다.";
-    } else if (currentSection === 'faq') {
+    } else if (faqPageActive || currentSection === 'faq') {
       title = "개인회생 자주 묻는 질문(FAQ) | 법무사 여환동 사무소";
       description = "최근 대출 비율이 높은 경우, 집에 압류가 개시된 경우, 코인 및 주식 채무 탕감 여부 등 개인회생 실무에서 가장 빈번하게 묻는 핵심 질문들에 여환동 법무사가 직접 답해 드립니다.";
     }
@@ -241,7 +228,7 @@ export default function App() {
     if (metaDesc) {
       metaDesc.setAttribute("content", description);
     }
-  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, currentSection]);
+  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, currentSection, faqPageActive]);
 
   // Handle browser back button (popstate) for overlay screens and modals
   React.useEffect(() => {
@@ -338,6 +325,16 @@ export default function App() {
           document.body.scrollTop = 0;
         };
         forceScrollTop();
+      } else if (faqPageActive) {
+        setFaqPageActive(false);
+        setBrandPageActive(false);
+        setBankruptcyPageActive(false);
+        setSurveyActive(false);
+        setCaseMatcherActive(false);
+        setPlanSimulatorActive(false);
+        setUserResponses(null);
+        setCurrentSection(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (currentSection) {
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -348,7 +345,7 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, successColumnsActive, currentSection]);
+  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, successColumnsActive, currentSection, faqPageActive]);
 
   // Push history state when opening overlays/modals/pages to prevent site exit on back button
   React.useEffect(() => {
@@ -428,6 +425,13 @@ export default function App() {
     }
   }, [currentSection]);
 
+  React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
+    if (faqPageActive && window.history.state?.type !== 'faqPage') {
+      window.history.pushState({ type: 'faqPage' }, '', '/faq');
+    }
+  }, [faqPageActive]);
+
   // Fallback to home path '/' when all subpaths are inactive
   React.useEffect(() => {
     if (!isInitialRouteSetup.current) return;
@@ -439,12 +443,13 @@ export default function App() {
       surveyActive || 
       planSimulatorActive || 
       userResponses ||
-      caseMatcherActive;
+      caseMatcherActive ||
+      faqPageActive;
 
     if (!isAnyActive && window.location.pathname !== '/' && window.history.state?.type !== 'hero') {
       window.history.pushState({ type: 'hero' }, '', '/');
     }
-  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, caseMatcherActive]);
+  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, caseMatcherActive, faqPageActive]);
 
   // Reset reservation date & time to today & default when opening the card
   React.useEffect(() => {
@@ -745,16 +750,14 @@ export default function App() {
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
       setUserResponses(null);
+      setFaqPageActive(true);
       setCurrentSection('faq');
       
       // Reset FAQ state & URL
-      window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+      window.history.pushState({ type: 'faqPage' }, '', '/faq');
       window.dispatchEvent(new CustomEvent('expand-faq', { detail: { faqId: null } }));
       
-      scrollWithLayoutSafety(
-        () => document.getElementById('faq') || document.getElementById('brand'),
-        eligibilityRef
-      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'admin') {
       setAdminPageActive(true);
       setBrandPageActive(false);
@@ -784,6 +787,7 @@ export default function App() {
       setPlanSimulatorActive(false);
       setUserResponses(null);
       setAdminPageActive(false);
+      setFaqPageActive(false);
 
       const event = new CustomEvent('expand-faq', { detail: { faqId: targetFaqId } });
       window.dispatchEvent(event);
@@ -1003,6 +1007,25 @@ export default function App() {
                   onStartSurvey={() => handleStartSurvey('general')}
                 />
               </motion.div>
+            ) : faqPageActive ? (
+              <motion.div
+                key="faq-page"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="w-full"
+              >
+                <FAQPage
+                  onBack={() => {
+                    setFaqPageActive(false);
+                    setCurrentSection(null);
+                    if (window.history.state?.type === 'faqPage') {
+                      window.history.back();
+                    }
+                    window.scrollTo(0, 0);
+                  }}
+                />
+              </motion.div>
             ) : !surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses ? (
               // Case 1: Standard Homepage Intro Hero Area
               <motion.div
@@ -1100,7 +1123,7 @@ export default function App() {
         </div>
 
         {/* Permanent Premium Guidelines and Stories (Scroll Trigger Point) */}
-        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && !successColumnsActive && (
+        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && !successColumnsActive && !faqPageActive && (
           <div ref={eligibilityRef} className="scroll-mt-16 sm:scroll-mt-28" id="brand">
             <EligibilityNotes />
           </div>
