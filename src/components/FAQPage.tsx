@@ -228,8 +228,6 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
             {filteredFaqs.length > 0 ? (
               filteredFaqs.map((faq) => {
                 const isSelected = activeFaq === faq.id;
-                const category = getCategory(faq.id);
-                const categoryLabel = categories.find((c) => c.id === category)?.label || '기타';
 
                 return (
                   <motion.div
@@ -254,10 +252,7 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
                         <HelpCircle className={`w-5 h-5 shrink-0 mt-1 ${
                           isSelected ? 'text-amber-600' : 'text-slate-400'
                         }`} />
-                        <div className="flex-1 space-y-1">
-                          <span className="inline-block text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-100 mb-1.5">
-                            {categoryLabel}
-                          </span>
+                        <div className="flex-1">
                           <span className="block text-justify break-all w-full leading-normal text-slate-900 font-extrabold">{faq.question}</span>
                         </div>
                       </span>
