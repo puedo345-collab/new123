@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Scale, CheckCircle2, AlertCircle, Sparkles, ChevronDown, ChevronUp, Lock, Target, HelpCircle, Landmark, ArrowRight, Library, FileText, Check } from 'lucide-react';
+import { Scale, CheckCircle2, AlertCircle, Sparkles, ChevronDown, ChevronUp, Lock, Target, HelpCircle, Landmark, ArrowRight, Library, FileText, Check, ArrowLeft } from 'lucide-react';
 import { FAQItem } from '../types';
 
 interface EligibilityNotesProps {
   faqs?: FAQItem[];
+  onBack?: () => void;
+  isSubPage?: boolean;
 }
 
-export default function EligibilityNotes({ faqs = [] }: EligibilityNotesProps) {
+export default function EligibilityNotes({ faqs = [], onBack, isSubPage = false }: EligibilityNotesProps) {
   const [activeFaq, setActiveFaq] = useState<string | number | null>(null);
 
   // Filter faqs to show on main page: either those selected (showOnMain === true) or fallback to first 10 items
@@ -48,8 +50,19 @@ export default function EligibilityNotes({ faqs = [] }: EligibilityNotesProps) {
   }, []);
 
   return (
-    <section className="pt-3 md:pt-24 lg:pt-32 pb-16 md:pb-24 lg:pb-32 bg-transparent border-b border-[#FAF4E5] break-keep">
+    <section className={isSubPage ? "bg-[#FAF9F5] min-h-screen pt-2 pb-16 md:pt-6 lg:pt-8 md:pb-24 text-slate-800 font-sans break-keep" : "pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32 bg-transparent border-b border-[#FAF4E5] break-keep"}>
       <div className="max-w-5xl md:max-w-6xl mx-auto px-4 sm:px-8">
+        {/* Back navigation */}
+        {isSubPage && onBack && (
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2 px-4 py-2 text-slate-500 hover:text-amber-700 font-extrabold text-sm transition-colors cursor-pointer mb-4"
+            id="eligibility-page-back-btn"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            메인 화면으로 돌아가기
+          </button>
+        )}
 
         {/* Eligibility Header Area */}
         <div className="text-center mb-8 md:mb-10 lg:mb-12">
@@ -243,49 +256,65 @@ export default function EligibilityNotes({ faqs = [] }: EligibilityNotesProps) {
         </div>
 
         {/* Accordion FAQ Area ("세상의 이야기") */}
-        <div id="faq" className="scroll-mt-16 sm:scroll-mt-28 mt-12 md:mt-24 lg:mt-32 pt-12 md:pt-24 lg:pt-32 border-t border-[#FAF4E5]">
-          <div className="text-center">
-            <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.12]">자주 묻는 질문</h3>
-          </div>
+        {!isSubPage && (
+          <div id="faq" className="scroll-mt-16 sm:scroll-mt-28 mt-12 md:mt-24 lg:mt-32 pt-12 md:pt-24 lg:pt-32 border-t border-[#FAF4E5]">
+            <div className="text-center">
+              <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.12]">자주 묻는 질문</h3>
+            </div>
 
-          <div className="mt-10 sm:mt-12 max-w-3xl mx-auto space-y-4">
-            {mainFaqs.map((faq) => {
-              const isSelected = activeFaq === faq.id;
-              return (
-                <div
-                  key={faq.id}
-                  id={`faq-item-${faq.id}`}
-                  className="rounded-3xl border border-slate-200 bg-white overflow-hidden transition-all duration-200 scroll-mt-24 md:scroll-mt-28"
-                >
-                  <button
-                    onClick={() => {
-                      const nextFaq = isSelected ? null : faq.id;
-                      setActiveFaq(nextFaq);
-                      if (nextFaq) {
-                        window.history.pushState({ type: 'faq', faqId: nextFaq }, '', `/faq/${nextFaq}`);
-                      } else {
-                        window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
-                      }
-                    }}
-                    className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
+            <div className="mt-10 sm:mt-12 max-w-3xl mx-auto space-y-4">
+              {mainFaqs.map((faq) => {
+                const isSelected = activeFaq === faq.id;
+                return (
+                  <div
+                    key={faq.id}
+                    id={`faq-item-${faq.id}`}
+                    className="rounded-3xl border border-slate-200 bg-white overflow-hidden transition-all duration-200 scroll-mt-24 md:scroll-mt-28"
                   >
-                    <span className="flex items-start gap-2.5 w-full text-justify flex-1">
-                      <HelpCircle className="w-4.5 h-4.5 text-slate-400 shrink-0 mt-1" />
-                      <span className="block text-justify break-all w-full leading-normal">{faq.question}</span>
-                    </span>
-                    {isSelected ? <ChevronUp className="w-4.5 h-4.5 text-slate-550 shrink-0" /> : <ChevronDown className="w-4.5 h-4.5 text-slate-450 shrink-0" />}
-                  </button>
+                    <button
+                      onClick={() => {
+                        const nextFaq = isSelected ? null : faq.id;
+                        setActiveFaq(nextFaq);
+                        if (nextFaq) {
+                          window.history.pushState({ type: 'faq', faqId: nextFaq }, '', `/faq/${nextFaq}`);
+                        } else {
+                          window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
+                        }
+                      }}
+                      className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50 flex justify-between items-center gap-4 cursor-pointer"
+                    >
+                      <span className="flex items-start gap-2.5 w-full text-justify flex-1">
+                        <HelpCircle className="w-4.5 h-4.5 text-slate-400 shrink-0 mt-1" />
+                        <span className="block text-justify break-all w-full leading-normal">{faq.question}</span>
+                      </span>
+                      {isSelected ? <ChevronUp className="w-4.5 h-4.5 text-slate-550 shrink-0" /> : <ChevronDown className="w-4.5 h-4.5 text-slate-450 shrink-0" />}
+                    </button>
 
-                  {isSelected && (
-                    <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-500 font-medium leading-relaxed border-t border-slate-100/50 bg-slate-50/30 text-justify break-all w-full">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    {isSelected && (
+                      <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-500 font-medium leading-relaxed border-t border-slate-100/50 bg-slate-50/30 text-justify break-all w-full">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Bottom Back Button for Sub-page */}
+        {isSubPage && onBack && (
+          <div className="mt-16 md:mt-24 lg:mt-32 text-center pb-8">
+            <button
+              onClick={onBack}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-slate-900 text-white font-black text-[16px] sm:text-[17px] tracking-tight hover:bg-slate-850 active:scale-95 transition-all duration-150 cursor-pointer shadow-lg hover:shadow-xl border border-slate-800"
+              id="eligibility-page-bottom-back-btn"
+            >
+              <ArrowLeft className="w-4.5 h-4.5" />
+              메인 페이지로 이동하기
+            </button>
+          </div>
+        )}
 
       </div>
     </section>

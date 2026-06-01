@@ -29,6 +29,7 @@ export default function App() {
   const [bankruptcyPageActive, setBankruptcyPageActive] = useState(false);
   const [successColumnsActive, setSuccessColumnsActive] = useState(false);
   const [faqPageActive, setFaqPageActive] = useState(false);
+  const [rehabEligibilityPageActive, setRehabEligibilityPageActive] = useState(false);
   const [successColumnTabMode, setSuccessColumnTabMode] = useState<'matcher' | 'columns'>('matcher');
   const [initialArticleId, setInitialArticleId] = useState<string | null>(null);
   const isInitialRouteSetup = React.useRef(false);
@@ -115,20 +116,14 @@ export default function App() {
       setBrandPageActive(true);
     } else if (path === '/rehabilitation') {
       window.history.replaceState({ type: 'hero' }, '', '/');
-      window.history.pushState({ type: 'section', section: 'rehabilitation' }, '', '/rehabilitation');
+      window.history.pushState({ type: 'rehabPage' }, '', '/rehabilitation');
       setBrandPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
       setUserResponses(null);
-      setCurrentSection('rehabilitation');
-      
-      setTimeout(() => {
-        const el = document.getElementById('brand');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 300);
+      setRehabEligibilityPageActive(true);
+      setCurrentSection(null);
     } else if (path === '/bankruptcy') {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'bankruptcyPage' }, '', '/bankruptcy');
@@ -238,6 +233,9 @@ export default function App() {
     } else if (faqPageActive || currentSection === 'faq') {
       title = "개인회생 자주 묻는 질문(FAQ) | 법무사 여환동 사무소";
       description = "최근 대출 비율이 높은 경우, 집에 압류가 개시된 경우, 코인 및 주식 채무 탕감 여부 등 개인회생 실무에서 가장 빈번하게 묻는 핵심 질문들에 여환동 법무사가 직접 답해 드립니다.";
+    } else if (rehabEligibilityPageActive) {
+      title = "울산 개인회생 신청 자격 및 절차 가이드 | 법무사 여환동 사무소";
+      description = "직업 유무와 관계없이 변제계획 이행 가능 소득, 채무액 한도, 순자산 조건 등 울산 법무사 여환동의 밀착 심사 기준을 거쳐 개인회생을 통과할 수 있는 3가지 핵심 자격을 상세히 소개합니다.";
     }
 
     document.title = title;
@@ -245,7 +243,7 @@ export default function App() {
     if (metaDesc) {
       metaDesc.setAttribute("content", description);
     }
-  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, currentSection, faqPageActive]);
+  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, currentSection, faqPageActive, rehabEligibilityPageActive]);
 
   // Handle browser back button (popstate) for overlay screens and modals
   React.useEffect(() => {
@@ -306,6 +304,35 @@ export default function App() {
         setPlanSimulatorActive(false);
         setUserResponses(null);
         setCurrentSection(null);
+        setRehabEligibilityPageActive(false);
+        
+        const forceScrollTop = () => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          
+          const mainWrap = document.getElementById('main-landing-wrap');
+          if (mainWrap) {
+            mainWrap.scrollTop = 0;
+          }
+          const mainStage = document.getElementById('landing-main-stage');
+          if (mainStage) {
+            mainStage.scrollTop = 0;
+          }
+        };
+        forceScrollTop();
+        setTimeout(forceScrollTop, 30);
+        setTimeout(forceScrollTop, 100);
+        setTimeout(forceScrollTop, 250);
+      } else if (rehabEligibilityPageActive) {
+        setRehabEligibilityPageActive(false);
+        setBankruptcyPageActive(false);
+        setBrandPageActive(false);
+        setSurveyActive(false);
+        setCaseMatcherActive(false);
+        setPlanSimulatorActive(false);
+        setUserResponses(null);
+        setCurrentSection(null);
         
         const forceScrollTop = () => {
           window.scrollTo(0, 0);
@@ -334,6 +361,7 @@ export default function App() {
         setCaseMatcherActive(false);
         setPlanSimulatorActive(false);
         setUserResponses(null);
+        setRehabEligibilityPageActive(false);
         setCurrentSection(null);
         
         const forceScrollTop = () => {
@@ -350,6 +378,7 @@ export default function App() {
         setCaseMatcherActive(false);
         setPlanSimulatorActive(false);
         setUserResponses(null);
+        setRehabEligibilityPageActive(false);
         setCurrentSection(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (currentSection) {
@@ -362,7 +391,7 @@ export default function App() {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, successColumnsActive, currentSection, faqPageActive]);
+  }, [consultationOpen, privacyModalOpen, caseMatcherActive, surveyActive, planSimulatorActive, userResponses, brandPageActive, bankruptcyPageActive, successColumnsActive, currentSection, faqPageActive, rehabEligibilityPageActive]);
 
   // Push history state when opening overlays/modals/pages to prevent site exit on back button
   React.useEffect(() => {
@@ -378,6 +407,13 @@ export default function App() {
       window.history.pushState({ type: 'bankruptcyPage' }, '', '/bankruptcy');
     }
   }, [bankruptcyPageActive]);
+
+  React.useEffect(() => {
+    if (!isInitialRouteSetup.current) return;
+    if (rehabEligibilityPageActive && window.history.state?.type !== 'rehabPage') {
+      window.history.pushState({ type: 'rehabPage' }, '', '/rehabilitation');
+    }
+  }, [rehabEligibilityPageActive]);
 
   React.useEffect(() => {
     if (!isInitialRouteSetup.current) return;
@@ -461,12 +497,13 @@ export default function App() {
       planSimulatorActive || 
       userResponses ||
       caseMatcherActive ||
+      rehabEligibilityPageActive ||
       faqPageActive;
 
     if (!isAnyActive && window.location.pathname !== '/' && window.history.state?.type !== 'hero') {
       window.history.pushState({ type: 'hero' }, '', '/');
     }
-  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, caseMatcherActive, faqPageActive]);
+  }, [adminPageActive, successColumnsActive, bankruptcyPageActive, brandPageActive, surveyActive, planSimulatorActive, userResponses, caseMatcherActive, rehabEligibilityPageActive, faqPageActive]);
 
   // Reset reservation date & time to today & default when opening the card
   React.useEffect(() => {
@@ -711,13 +748,15 @@ export default function App() {
       setPlanSimulatorActive(false);
       setUserResponses(null);
       setBrandPageActive(false);
+      setRehabEligibilityPageActive(false);
       setCurrentSection(null);
-      if (window.history.state?.type === 'brand' || window.history.state?.type === 'section') {
+      if (window.history.state?.type === 'brand' || window.history.state?.type === 'section' || window.history.state?.type === 'rehabPage') {
         window.history.back();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'brand' || sectionId === 'service') {
       setBrandPageActive(true);
+      setRehabEligibilityPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
@@ -725,19 +764,18 @@ export default function App() {
       setCurrentSection(null);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'rehabilitation') {
+      setRehabEligibilityPageActive(true);
       setBrandPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
       setUserResponses(null);
-      setCurrentSection('rehabilitation');
-      scrollWithLayoutSafety(
-        () => document.getElementById('brand'),
-        eligibilityRef
-      );
+      setCurrentSection(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'bankruptcy') {
       setBankruptcyPageActive(true);
       setBrandPageActive(false);
+      setRehabEligibilityPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
@@ -747,6 +785,7 @@ export default function App() {
     } else if (sectionId === 'success_columns') {
       setSuccessColumnsActive(true);
       setBrandPageActive(false);
+      setRehabEligibilityPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
@@ -755,6 +794,7 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'our-spirit') {
       setBrandPageActive(false);
+      setRehabEligibilityPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
@@ -766,6 +806,7 @@ export default function App() {
       );
     } else if (sectionId === 'faq') {
       setBrandPageActive(false);
+      setRehabEligibilityPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
@@ -781,6 +822,7 @@ export default function App() {
     } else if (sectionId === 'admin') {
       setAdminPageActive(true);
       setBrandPageActive(false);
+      setRehabEligibilityPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
@@ -975,6 +1017,7 @@ export default function App() {
                     setCaseMatcherActive(false);
                     setPlanSimulatorActive(false);
                     setUserResponses(null);
+                    setRehabEligibilityPageActive(false);
                     setCurrentSection(null);
                     if (window.history.state?.type === 'bankruptcyPage') {
                       window.history.back();
@@ -982,6 +1025,32 @@ export default function App() {
                     window.scrollTo(0, 0);
                   }}
                   onStartSurvey={() => handleStartSurvey('general')}
+                />
+              </motion.div>
+            ) : rehabEligibilityPageActive ? (
+              <motion.div
+                key="rehab-eligibility-page"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                className="w-full"
+              >
+                <EligibilityNotes
+                  faqs={faqs}
+                  isSubPage={true}
+                  onBack={() => {
+                    setRehabEligibilityPageActive(false);
+                    setBrandPageActive(false);
+                    setSurveyActive(false);
+                    setCaseMatcherActive(false);
+                    setPlanSimulatorActive(false);
+                    setUserResponses(null);
+                    setCurrentSection(null);
+                    if (window.history.state?.type === 'rehabPage') {
+                      window.history.back();
+                    }
+                    window.scrollTo(0, 0);
+                  }}
                 />
               </motion.div>
             ) : brandPageActive ? (
@@ -1000,6 +1069,7 @@ export default function App() {
                     setCaseMatcherActive(false);
                     setPlanSimulatorActive(false);
                     setUserResponses(null);
+                    setRehabEligibilityPageActive(false);
                     setCurrentSection(null);
                     if (window.history.state?.type === 'brand') {
                       window.history.back();
@@ -1147,7 +1217,7 @@ export default function App() {
         </div>
 
         {/* Permanent Premium Guidelines and Stories (Scroll Trigger Point) */}
-        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && !successColumnsActive && !faqPageActive && (
+        {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && !successColumnsActive && !faqPageActive && !rehabEligibilityPageActive && (
           <div ref={eligibilityRef} className="scroll-mt-24 sm:scroll-mt-40 md:scroll-mt-44" id="brand">
             <EligibilityNotes faqs={faqs} />
           </div>
