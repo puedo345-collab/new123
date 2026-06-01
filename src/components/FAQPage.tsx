@@ -242,74 +242,63 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
 
         {/* Dynamic FAQ list */}
         <div className="max-w-3xl mx-auto space-y-4 min-h-[300px]">
-          <AnimatePresence mode="popLayout">
-            {paginatedFaqs.length > 0 ? (
-              paginatedFaqs.map((faq) => {
-                const isSelected = activeFaq === faq.id;
+          {paginatedFaqs.length > 0 ? (
+            paginatedFaqs.map((faq) => {
+              const isSelected = activeFaq === faq.id;
 
-                return (
-                  <motion.div
-                    key={faq.id}
-                    id={`faq-page-item-${faq.id}`}
-                    layout
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
-                    className={`rounded-3xl border transition-all duration-200 scroll-mt-24 ${
-                      isSelected 
-                        ? 'border-amber-400 bg-amber-50/15 shadow-sm'
-                        : 'border-slate-200 bg-white hover:border-slate-350 hover:shadow-xs'
-                    }`}
-                  >
-                    <button
-                      onClick={() => handleFaqClick(faq.id)}
-                      className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50/50 flex justify-between items-start gap-4 cursor-pointer"
-                    >
-                      <span className="flex items-start gap-3 w-full text-justify flex-1">
-                        <HelpCircle className={`w-5 h-5 shrink-0 mt-1 ${
-                          isSelected ? 'text-amber-600' : 'text-slate-400'
-                        }`} />
-                        <div className="flex-1">
-                          <span className="block text-justify break-all w-full leading-normal text-slate-900 font-extrabold">{faq.question}</span>
-                        </div>
-                      </span>
-                      {isSelected ? (
-                        <ChevronUp className="w-5 h-5 text-slate-550 shrink-0 mt-1.5" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5 text-slate-450 shrink-0 mt-1.5" />
-                      )}
-                    </button>
-
-                    {isSelected && (
-                      <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-655 font-bold leading-relaxed border-t border-slate-100/50 bg-slate-50/20 text-justify break-all w-full font-sans">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </motion.div>
-                );
-              })
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="py-16 text-center bg-white border border-slate-200 rounded-3xl"
-              >
-                <AlertCircle className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-                <p className="text-base font-bold text-slate-500">검색어와 일치하는 질문이 없습니다.</p>
-                <p className="text-xs font-semibold text-slate-400 mt-1">다른 검색어를 입력하거나 카테고리를 변경해 보세요.</p>
-                <button
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('all');
-                  }}
-                  className="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-black rounded-xl transition-all cursor-pointer"
+              return (
+                <div
+                  key={faq.id}
+                  id={`faq-page-item-${faq.id}`}
+                  className={`rounded-3xl border overflow-hidden transition-all duration-200 scroll-mt-24 ${
+                    isSelected 
+                      ? 'border-amber-400 bg-amber-50/15 shadow-sm'
+                      : 'border-slate-200 bg-white hover:border-slate-350 hover:shadow-xs'
+                  }`}
                 >
-                  필터 및 검색 초기화
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  <button
+                    onClick={() => handleFaqClick(faq.id)}
+                    className="w-full px-6 py-5 text-left font-bold text-[17px] sm:text-[18px] text-slate-800 hover:bg-slate-50/50 flex justify-between items-start gap-4 cursor-pointer"
+                  >
+                    <span className="flex items-start gap-3 w-full text-justify flex-1">
+                      <HelpCircle className={`w-5 h-5 shrink-0 mt-1 hidden md:block ${
+                        isSelected ? 'text-amber-600' : 'text-slate-400'
+                      }`} />
+                      <div className="flex-1">
+                        <span className="block text-justify break-all w-full leading-normal text-slate-900 font-extrabold">{faq.question}</span>
+                      </div>
+                    </span>
+                    {isSelected ? (
+                      <ChevronUp className="w-5 h-5 text-slate-550 shrink-0 mt-1.5" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-slate-450 shrink-0 mt-1.5" />
+                    )}
+                  </button>
+
+                  {isSelected && (
+                    <div className="px-6 pb-6 pt-3 text-[15px] sm:text-[16px] md:text-[18px] text-slate-655 font-bold leading-relaxed border-t border-slate-100/50 bg-slate-50/20 text-justify break-all w-full font-sans">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <div className="py-16 text-center bg-white border border-slate-200 rounded-3xl">
+              <AlertCircle className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+              <p className="text-base font-bold text-slate-500">검색어와 일치하는 질문이 없습니다.</p>
+              <p className="text-xs font-semibold text-slate-400 mt-1">다른 검색어를 입력하거나 카테고리를 변경해 보세요.</p>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                }}
+                className="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-black rounded-xl transition-all cursor-pointer"
+              >
+                필터 및 검색 초기화
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Dynamic Pagination Controls */}
