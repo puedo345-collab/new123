@@ -2914,8 +2914,8 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                             newBlocks[idx].value = e.target.value;
                                             setEditorBlocks(newBlocks);
                                           }}
-                                          placeholder="본문 내용을 한글로 크고 선명하게 타이핑하세요."
-                                          className="w-full min-h-[100px] p-3 bg-white border border-transparent rounded-xl text-base sm:text-lg lg:text-xl font-extrabold focus:outline-none focus:border-slate-300 leading-loose text-slate-950 resize-y"
+                                          placeholder="본문 내용을 한글로 타이핑하세요."
+                                          className="w-full min-h-[280px] p-4 bg-slate-50/30 border border-slate-150 focus:bg-white focus:border-slate-300 focus:ring-4 focus:ring-slate-100 rounded-xl text-xs sm:text-sm lg:text-base font-bold focus:outline-none leading-relaxed text-slate-900 resize-y transition-all"
                                         />
                                       </div>
                                     )}
