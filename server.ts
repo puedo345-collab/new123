@@ -1362,7 +1362,10 @@ async function startServer() {
   app.get("/robots.txt", (req, res) => {
     let robots = `User-agent: *\n`;
     robots += `Allow: /\n`;
-    robots += `Disallow: /admin\n`;
+    robots += `Allow: /assets/\n`;
+    robots += `Allow: /js/\n`;
+    robots += `Allow: /css/\n`;
+    robots += `Disallow: /admin-yhd3557\n`;
     robots += `Disallow: /api/\n`;
     robots += `Sitemap: https://www.law-office.co.kr/sitemap.xml\n`;
     
@@ -1396,9 +1399,18 @@ async function startServer() {
           if (originalUrl === "/brand") {
             pageTitle = "대표 법무사 여환동 소개 | 울산 개인회생·개인파산 법무사";
             pageDescription = "울산지방법원 14년 경력의 대표 법무사 여환동을 소개합니다. 사무장 대행 없이 모든 실무를 직접 소행하여 보정 권고를 최소화하고 높은 인가율을 보장합니다.";
+          } else if (originalUrl === "/rehabilitation") {
+            pageTitle = "울산 개인회생 신청자격 및 절차 가이드 | 법무사 여환동";
+            pageDescription = "울산 개인회생 신청을 위한 자격 요건, 월 예상 변제금 계산 방법, 법원 실무 기준 및 절차를 14년 경력 법무사가 명쾌하게 정리해 드립니다.";
           } else if (originalUrl === "/bankruptcy") {
             pageTitle = "울산 개인파산 신청자격 요건 가이드 | 법무사 여환동";
             pageDescription = "울산 개인파산 신청을 위해 필요한 3가지 핵심 신청 자격(최저생계비 미달, 면책불허가 사유 유무, 보유 재산 요건)을 14년 경력 법무사가 정밀 분석해 드립니다.";
+          } else if (originalUrl === "/consulting") {
+            pageTitle = "개인회생·개인파산 1:1 무료 법률 상담 신청 | 법무사 여환동";
+            pageDescription = "채무 독촉과 압류로 고통받고 계시다면 지금 바로 100% 무료 비공개 법률 상담을 신청하세요. 법무사 여환동이 직접 성심껏 검토해 드립니다.";
+          } else if (originalUrl === "/admin-yhd3557") {
+            pageTitle = "관리자 시스템 | 법무사 여환동 사무소";
+            pageDescription = "법무사 여환동 사무소 개인회생/개인파산 상담 신청 관리자 관리 대시보드 시스템입니다.";
           } else if (originalUrl === "/success") {
             pageTitle = "울산 개인회생·파산 성공사례 리포트 | 법무사 여환동";
             pageDescription = "울산지방법원에서 인가 및 면책결정을 받아낸 실제 성공 사례를 확인하세요. 직장인, 프리랜서, 자영업자의 고금리 대환 및 사행성 채무 탕감 실적을 제공합니다.";
@@ -1442,6 +1454,75 @@ async function startServer() {
             /<meta name="description" content="[^"]*" \/>/,
             `<meta name="description" content="${pageDescription}" />`
           );
+          
+          // Apply pre-rendered body content for SEO crawlers (SSR)
+          let preRenderedContent = "";
+          const srStyle = `style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"`;
+          if (originalUrl === "/" || originalUrl === "") {
+            preRenderedContent = `
+              <div class="seo-ssr-preview" ${srStyle}>
+                <h1>법무사 여환동 사무소 - 울산 개인회생·개인파산 전문 법률 대리</h1>
+                <p>울산지방법원 앞 14년 경력의 베테랑 법무사 여환동이 의뢰인의 고통스러운 채무 해결을 위해 직접 사건을 밀착 조력합니다.</p>
+                <h2>주요 법률 서비스 및 강점</h2>
+                <ul>
+                  <li>대표 법무사 1:1 직접 소명 및 실무 진행 (사무장 대행 무조건 배제)</li>
+                  <li>울산지방법원 회생위원 및 관재인의 성향 맞춤 보정 대항력 극대화</li>
+                  <li>월 최저 생계비 적극 보장을 통한 높은 원금 탕감률(최대 90% 이상 면책 선례 다수)</li>
+                  <li>철저한 영업비밀 유지 보장 및 전자소송을 통한 실시간 대리 송달 체계 구축</li>
+                </ul>
+                <p>지금 1분 자격진단 조회를 시작하여 나에게 최적화된 변제금 시뮬레이션 결과를 실시간으로 받아보세요.</p>
+              </div>
+            `;
+          } else if (originalUrl === "/rehabilitation") {
+            preRenderedContent = `
+              <div class="seo-ssr-preview" ${srStyle}>
+                <h1>울산 개인회생 신청자격 및 절차 완벽 가이드 - 법무사 여환동</h1>
+                <p>개인회생 제도는 재정적 어려움으로 파탄에 직면한 개인채무자의 채무를 조정하여 효율적 회생과 법률적 면책을 도모하는 제도입니다.</p>
+                <h2>개인회생 핵심 신청 요건 3가지</h2>
+                <ul>
+                  <li><strong>고정 소득 요건:</strong> 급여소득자 또는 영업소득자로서 매월 최저생계비 이상의 확실하고 고정적인 수입이 증빙되어야 합니다. (일용직, 아르바이트, 프리랜서 가능)</li>
+                  <li><strong>채무 액수 한도:</strong> 담보부채무 15억 원 이하, 무담보부채무 10억 원 이하인 경우 신청이 가능합니다.</li>
+                  <li><strong>재산 요건:</strong> 본인의 재산 합계액보다 총채무 액수가 반드시 더 많아야 합니다. (청산가치 보장 원칙 적용)</li>
+                </ul>
+                <h2>개인회생 진행 절차 및 효과</h2>
+                <p>울산지방법원에 신청서를 접수하면 통상 3~5일 이내에 금지명령이 채권사들에게 전달되어 전화 독촉, 자택 방문, 급여 압류 등의 일체의 강제집행이 전면 차단됩니다. 법무사 여환동 사무소는 14년 법원 실무 경력으로 보정을 최소화하여 최단 기간에 인가결정을 받아냅니다.</p>
+              </div>
+            `;
+          } else if (originalUrl === "/bankruptcy") {
+            preRenderedContent = `
+              <div class="seo-ssr-preview" ${srStyle}>
+                <h1>울산 개인파산 신청자격 기준 및 면책 안내 - 법무사 여환동</h1>
+                <p>개인파산 제도란 개인채무자가 자신의 모든 재산으로도 총채무를 변제할 수 없는 지급불능 상태에 빠진 경우, 법원이 파산 선고를 거쳐 잔여 부채를 전액 탕감해 주는 사법 구조 제도입니다.</p>
+                <h2>개인파산 면책 신청자격 3대 핵심 요건</h2>
+                <ul>
+                  <li><strong>지급불능 및 소득 기준:</strong> 건강상의 사유, 고령, 부상 등으로 소득 활동이 아예 불가능하거나, 매달 소득이 보건복지부 고시 최저생계비 미만이어야 합니다.</li>
+                  <li><strong>재산 보유 한도:</strong> 본인의 모든 재산(부동산, 예금, 자동차, 임차보증금 등)을 환가하더라도 채무를 변제할 수 없어야 합니다.</li>
+                  <li><strong>면책불허가 사유 유무:</strong> 사치, 낭비, 주식 및 코인 등으로 인한 과도한 재산 은닉 행위가 없어야 합니다.</li>
+                </ul>
+                <h2>파산면책 선고 시 효력</h2>
+                <p>법원이 파산 선고 및 면책결정을 내리면 총채무액 원금과 이자 전체가 100% 탕감되며, 신용불량 정보 해제 및 모든 압류와 추심 행위가 원천적으로 효력을 잃고 자유로운 경제 활동 복귀가 가능합니다.</p>
+              </div>
+            `;
+          } else if (originalUrl === "/consulting") {
+            preRenderedContent = `
+              <div class="seo-ssr-preview" ${srStyle}>
+                <h1>개인회생·개인파산 1:1 무료 비공개 법률 상담 신청 - 법무사 여환동</h1>
+                <p>채무로 인한 독촉 전화, 압류 통지서, 기각 염려 등으로 홀로 고민하고 계시다면 지금 바로 신속한 법률 구제 상담을 요청하세요.</p>
+                <h2>100% 무료 비공개 전화 및 비대면 상담 서비스 안내</h2>
+                <ul>
+                  <li>14년 법원 실무 경력의 대표 법무사 여환동이 직접 사건 내용을 사전 검토합니다.</li>
+                  <li>의뢰인의 신용 정보와 개인 신상은 철저한 영업 비밀로 유지되며 대외 노출되지 않습니다.</li>
+                  <li>자영업자, 일용직, 급여 압류 상태 등 개개인의 맞춤형 면책 가이드라인을 제공합니다.</li>
+                </ul>
+                <h2>상담 절차 안내</h2>
+                <p>1단계: 온라인 간편 상담 양식(성함, 연락처, 희망 상담 시간) 접수 -> 2단계: 법무사 여환동 직접 심층 분석 -> 3단계: 1:1 비밀 밀착 무료 유선 상담 제공 및 해결책 제시.</p>
+              </div>
+            `;
+          }
+
+          if (preRenderedContent) {
+            html = html.replace('<div id="root"></div>', `<div id="root">${preRenderedContent}</div>`);
+          }
           
           // Check if custom og_image.png is in dist, public, or root
           const hasCustomOg = fs.existsSync(path.join(process.cwd(), "public", "og_image.png")) || 

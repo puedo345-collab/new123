@@ -85,8 +85,8 @@ export default function App() {
     const rawPath = window.location.pathname;
     const path = rawPath.length > 1 && rawPath.endsWith('/') ? rawPath.slice(0, -1) : rawPath;
 
-    // Clear admin session on load unless we are specifically on /admin
-    if (path !== '/admin') {
+    // Clear admin session on load unless we are specifically on /admin-yhd3557
+    if (path !== '/admin-yhd3557') {
       clearAdminSession();
     }
 
@@ -94,10 +94,30 @@ export default function App() {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'brand' }, '', '/brand');
       setBrandPageActive(true);
+    } else if (path === '/rehabilitation') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'section', section: 'rehabilitation' }, '', '/rehabilitation');
+      setBrandPageActive(false);
+      setSurveyActive(false);
+      setCaseMatcherActive(false);
+      setPlanSimulatorActive(false);
+      setUserResponses(null);
+      setCurrentSection('rehabilitation');
+      
+      setTimeout(() => {
+        const el = document.getElementById('brand');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
     } else if (path === '/bankruptcy') {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'bankruptcyPage' }, '', '/bankruptcy');
       setBankruptcyPageActive(true);
+    } else if (path === '/consulting') {
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      window.history.pushState({ type: 'consultation' }, '', '/consulting');
+      setConsultationOpen(true);
     } else if (path === '/success') {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'successColumns' }, '', '/success');
@@ -122,10 +142,14 @@ export default function App() {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'planBuilder' }, '', '/repayment-plan');
       setPlanSimulatorActive(true);
-    } else if (path === '/admin') {
+    } else if (path === '/admin-yhd3557') {
       window.history.replaceState({ type: 'hero' }, '', '/');
-      window.history.pushState({ type: 'admin' }, '', '/admin');
+      window.history.pushState({ type: 'admin' }, '', '/admin-yhd3557');
       setAdminPageActive(true);
+    } else if (path === '/admin') {
+      // Redirect to home if accessing old /admin URL directly
+      window.history.replaceState({ type: 'hero' }, '', '/');
+      setAdminPageActive(false);
     } else if (path === '/faq') {
       window.history.replaceState({ type: 'hero' }, '', '/');
       window.history.pushState({ type: 'section', section: 'faq' }, '', '/faq');
@@ -344,14 +368,14 @@ export default function App() {
   React.useEffect(() => {
     if (!isInitialRouteSetup.current) return;
     if (adminPageActive && window.history.state?.type !== 'admin') {
-      window.history.pushState({ type: 'admin' }, '', '/admin');
+      window.history.pushState({ type: 'admin' }, '', '/admin-yhd3557');
     }
   }, [adminPageActive]);
 
   React.useEffect(() => {
     if (!isInitialRouteSetup.current) return;
     if (consultationOpen && window.history.state?.type !== 'consultation') {
-      window.history.pushState({ type: 'consultation' }, '');
+      window.history.pushState({ type: 'consultation' }, '', '/consulting');
     }
   }, [consultationOpen]);
 
@@ -675,13 +699,13 @@ export default function App() {
       setUserResponses(null);
       setCurrentSection(null);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (sectionId === 'stories') {
+    } else if (sectionId === 'rehabilitation') {
       setBrandPageActive(false);
       setSurveyActive(false);
       setCaseMatcherActive(false);
       setPlanSimulatorActive(false);
       setUserResponses(null);
-      setCurrentSection('stories');
+      setCurrentSection('rehabilitation');
       scrollWithLayoutSafety(
         () => document.getElementById('brand'),
         eligibilityRef
