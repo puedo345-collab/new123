@@ -66,6 +66,13 @@ interface Article {
   status?: string;
 }
 
+interface EditorBlock {
+  id: string;
+  type: "text" | "image" | "video" | "file";
+  value: string;
+  fileName?: string;
+}
+
 interface AdminDashboardProps {
   onBack: () => void;
 }
@@ -122,11 +129,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   const [editorSuccess, setEditorSuccess] = useState("");
   const [editorCreatedAt, setEditorCreatedAt] = useState("");
   const [editorStatus, setEditorStatus] = useState("draft");
-  const [editorFacts, setEditorFacts] = useState("");
-  const [attachedImages, setAttachedImages] = useState<string[]>([]);
-  const [attachedVideos, setAttachedVideos] = useState<string[]>([]);
-  const [attachedFiles, setAttachedFiles] = useState<{name: string, data: string}[]>([]);
-  const [videoUrlInput, setVideoUrlInput] = useState("");
+  const [editorBlocks, setEditorBlocks] = useState<EditorBlock[]>([]);
   const [statusFilterArticles, setStatusFilterArticles] = useState<string>("all");
 
   const [isArticleDeleteConfirmOpen, setIsArticleDeleteConfirmOpen] = useState(false);
@@ -600,47 +603,19 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     }
   };
 
-  const parseArticleHtml = (html: string) => {
-    const result = {
-      text: "",
-      images: [] as string[],
-      videos: [] as string[],
-      files: [] as {name: string, data: string}[]
-    };
-    if (!html) return result;
+  const parseArticleHtmlToBlocks = (html: string): EditorBlock[] => {
+    const blocks: EditorBlock[] = [];
+    if (!html) return [{ id: Math.random().toString(), type: "text", value: "" }];
+
     try {
-      // 1. 이미지 추출
-      const imgRegex = /<img[^>]*src="([^"]*)"/gi;
-      let imgMatch;
-      while ((imgMatch = imgRegex.exec(html)) !== null) {
-        if (imgMatch[1]) {
-          result.images.push(imgMatch[1]);
-        }
-      }
-
-      // 2. 비디오 추출
-      const videoRegex = /<iframe[^>]*src="([^"]*)"/gi;
-      let videoMatch;
-      while ((videoMatch = videoRegex.exec(html)) !== null) {
-        if (videoMatch[1]) {
-          result.videos.push(videoMatch[1]);
-        }
-      }
-
-      // 3. 파일 추출
-      const fileRegex = /<a[^>]*href="([^"]*)"[^>]*download="([^"]*)"/gi;
-      let fileMatch;
-      while ((fileMatch = fileRegex.exec(html)) !== null) {
-        if (fileMatch[1] && fileMatch[2]) {
-          result.files.push({ name: fileMatch[2], data: fileMatch[1] });
-        }
-      }
-
-      // 4. 본문 텍스트 추출 (bg-slate-50 div 안의 내용 우선, 없으면 전체)
+      // 1. 사건 보고서나 칼럼의 실제 콘텐츠 부분만 추출
+      let contentHtml = html;
       const bodyMatch = html.match(/<div[^>]*class="[^"]*bg-slate-50[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
-      let contentArea = bodyMatch ? bodyMatch[1] : html;
+      if (bodyMatch) {
+        contentHtml = bodyMatch[1];
+      }
 
-      // 만약 예전 방식의 1. 사실관계 등의 내용이 포함되어 있다면 복구
+      // 2. 만약 옛날 4단계 방식의 글이라면 단일 텍스트 블록으로 파싱하여 변환
       if (html.includes('1. 사실관계') || html.includes(' 사실관계')) {
         const factsMatch = html.match(/(?:1\.\s*사실관계|사실관계)[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
         const issuesMatch = html.match(/(?:2\.\s*핵심쟁점|핵심쟁점)[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
@@ -654,27 +629,94 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         if (decisionMatch) legacyText += `[4. 인가결정]\n${decisionMatch[1].replace(/<[^>]*>/g, '').trim()}\n\n`;
         
         if (legacyText.trim()) {
-          result.text = legacyText.trim();
-          return result;
+          return [{ id: Math.random().toString(), type: "text", value: legacyText.trim() }];
         }
       }
 
-      // 본문 정리
-      let cleanBody = contentArea
-        .replace(/<div[^>]*class="[^"]*bg-amber-500[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '') // 사건 분석 보고서 헤더 제거
-        .replace(/<div[^>]*class="[^"]*bg-slate-100[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '') // 첨부파일 다운로드 박스 제거 (bg-slate-100)
-        .replace(/<div[^>]*class="[^"]*bg-slate-50[^"]*"[^>]*>/gi, '') // bg-slate-50 div 열기 태그 자체 제거
-        .replace(/<img[^>]*>/gi, '') // 이미지 제거
-        .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '') // iframe 제거
-        .replace(/<br\s*\/?>/gi, '\n') // 줄바꿈 복원
-        .replace(/<[^>]*>/g, '') // 나머지 태그들 제거
-        .trim();
+      // 3. 순차 스캐너 구현
+      const elements: { index: number; length: number; block: EditorBlock }[] = [];
+      
+      // 이미지 매칭
+      const imgRegex = /<img[^>]*src="([^"]*)"[^>]*>/gi;
+      let imgMatch;
+      while ((imgMatch = imgRegex.exec(contentHtml)) !== null) {
+        elements.push({
+          index: imgMatch.index,
+          length: imgMatch[0].length,
+          block: { id: Math.random().toString(), type: "image", value: imgMatch[1] }
+        });
+      }
 
-      result.text = cleanBody;
-    } catch (err) {
-      console.error("Error parsing article HTML:", err);
+      // 비디오 매칭
+      const iframeRegex = /<iframe[^>]*src="([^"]*)"[^>]*>[\s\S]*?<\/iframe>/gi;
+      let iframeMatch;
+      while ((iframeMatch = iframeRegex.exec(contentHtml)) !== null) {
+        elements.push({
+          index: iframeMatch.index,
+          length: iframeMatch[0].length,
+          block: { id: Math.random().toString(), type: "video", value: iframeMatch[1] }
+        });
+      }
+
+      // 파일 매칭 (각 개별 다운로드 flex box를 매칭)
+      const fileRegex = /<div[^>]*class="[^"]*flex justify-between[^"]*"[^>]*>[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>[\s\S]*?<a[^>]*href="([^"]*)"[^>]*download="([^"]*)"[^>]*>[\s\S]*?<\/div>/gi;
+      let fileMatch;
+      while ((fileMatch = fileRegex.exec(contentHtml)) !== null) {
+        elements.push({
+          index: fileMatch.index,
+          length: fileMatch[0].length,
+          block: {
+            id: Math.random().toString(),
+            type: "file",
+            value: fileMatch[2],
+            fileName: fileMatch[3]
+          }
+        });
+      }
+
+      // 인덱스 오름차순으로 정렬
+      elements.sort((a, b) => a.index - b.index);
+
+      // 요소들 사이사이에 있는 텍스트를 파싱하여 텍스트 블록으로 삽입합니다.
+      let lastIdx = 0;
+      elements.forEach(el => {
+        const rawText = contentHtml.substring(lastIdx, el.index);
+        const cleanText = rawText
+          .replace(/<div[^>]*class="[^"]*bg-amber-500[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '') // 헤더 제거
+          .replace(/<div[^>]*class="[^"]*bg-slate-100[^"]*"[^>]*>/gi, '')
+          .replace(/<h5[^>]*>[\s\S]*?<\/h5>/gi, '')
+          .replace(/<br\s*\/?>/gi, '\n')
+          .replace(/<[^>]*>/g, '')
+          .trim();
+        
+        if (cleanText) {
+          blocks.push({ id: Math.random().toString(), type: "text", value: cleanText });
+        }
+        
+        blocks.push(el.block);
+        lastIdx = el.index + el.length;
+      });
+
+      // 마지막 남은 텍스트 추가
+      if (lastIdx < contentHtml.length) {
+        const rawText = contentHtml.substring(lastIdx);
+        const cleanText = rawText
+          .replace(/<\/div>/g, '')
+          .replace(/<br\s*\/?>/gi, '\n')
+          .replace(/<[^>]*>/g, '')
+          .trim();
+        if (cleanText) {
+          blocks.push({ id: Math.random().toString(), type: "text", value: cleanText });
+        }
+      }
+    } catch (e) {
+      console.error("Error parsing article blocks:", e);
     }
-    return result;
+
+    if (blocks.length === 0) {
+      blocks.push({ id: Math.random().toString(), type: "text", value: "" });
+    }
+    return blocks;
   };
 
   const handleOpenEditor = (article: Article | null = null) => {
@@ -694,22 +736,13 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setEditorCreatedAt(article.createdAt ? new Date(article.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]);
       setEditorStatus(article.status || "published");
 
-      // HTML 본문 분석
-      const parsed = parseArticleHtml(article.content);
-      setEditorFacts(parsed.text);
-      setAttachedImages(parsed.images);
-      setAttachedVideos(parsed.videos);
-      setAttachedFiles(parsed.files);
-      setVideoUrlInput("");
+      // HTML 본문을 순서대로 블록 리스트로 파싱하여 로드
+      const parsedBlocks = parseArticleHtmlToBlocks(article.content);
+      setEditorBlocks(parsedBlocks);
     } else {
       setEditorTitle("");
       setEditorCategory("성공사례");
       setEditorContent("");
-      setEditorFacts("");
-      setAttachedImages([]);
-      setAttachedVideos([]);
-      setAttachedFiles([]);
-      setVideoUrlInput("");
       setEditorAge("");
       setEditorJob("");
       setEditorOriginalDebt("");
@@ -718,6 +751,9 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setEditorReductionRate("");
       setEditorCreatedAt(new Date().toISOString().split("T")[0]);
       setEditorStatus("draft");
+      
+      // 새 글 작성 시 빈 텍스트 블록 하나로 시작
+      setEditorBlocks([{ id: Math.random().toString(), type: "text", value: "" }]);
     }
     setIsEditorModalOpen(true);
   };
@@ -727,64 +763,53 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     setEditorError("");
     setEditorSuccess("");
 
-    if (!editorTitle.trim() || !editorFacts.trim()) {
-      setEditorError("제목과 상세 내용은 필수 기입 요소입니다.");
+    if (!editorTitle.trim()) {
+      setEditorError("제목은 필수 기입 요소입니다.");
+      return;
+    }
+
+    // 블록 검증: 적어도 하나의 내용 블록이 채워져 있어야 합니다.
+    const hasContent = editorBlocks.some(b => b.type === "text" ? b.value.trim().length > 0 : b.value.trim().length > 0);
+    if (!hasContent) {
+      setEditorError("상세 내용을 최소한 하나는 입력해 주십시오.");
       return;
     }
 
     const isColumn = editorCategory === "칼럼";
     let finalContent = "";
 
-    // 줄바꿈 보존 포맷팅
-    const bodyHtml = editorFacts.trim().replace(/\n/g, '<br/>');
-
-    // 첨부 이미지 조립
-    let imagesHtml = "";
-    if (attachedImages.length > 0) {
-      imagesHtml = attachedImages.map(img => 
-        `<div class="my-4"><img src="${img}" alt="첨부사진" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>`
-      ).join("\n");
-    }
-
-    // 첨부 동영상 조립
-    let videosHtml = "";
-    if (attachedVideos.length > 0) {
-      videosHtml = attachedVideos.map(vid => {
-        let embedUrl = vid;
-        if (vid.includes("watch?v=")) {
-          const id = vid.split("v=")[1]?.split("&")[0];
+    // 컴파일러: blocks -> HTML
+    let bodyHtml = "";
+    editorBlocks.forEach(block => {
+      if (block.type === "text") {
+        if (block.value.trim()) {
+          bodyHtml += block.value.trim().replace(/\n/g, '<br/>') + "\n\n";
+        }
+      } else if (block.type === "image") {
+        bodyHtml += `<div class="my-4"><img src="${block.value}" alt="첨부사진" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>\n\n`;
+      } else if (block.type === "video") {
+        let embedUrl = block.value;
+        if (block.value.includes("watch?v=")) {
+          const id = block.value.split("v=")[1]?.split("&")[0];
           if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
-        } else if (vid.includes("youtu.be/")) {
-          const id = vid.split("youtu.be/")[1]?.split("?")[0];
+        } else if (block.value.includes("youtu.be/")) {
+          const id = block.value.split("youtu.be/")[1]?.split("?")[0];
           if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
         }
-        return `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:16px; margin: 16px 0; border: 1px solid #FAF4E5;"><iframe src="${embedUrl}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen></iframe></div>`;
-      }).join("\n");
-    }
-
-    // 첨부 파일 조립
-    let filesHtml = "";
-    if (attachedFiles.length > 0) {
-      filesHtml = `<div class="bg-slate-100/50 p-4 rounded-2xl border-2 border-dashed border-slate-200 my-4 space-y-2">
-        <h5 class="text-xs font-bold text-slate-700 flex items-center gap-1.5 mb-2">📎 다운로드 가능한 첨부파일</h5>
-        ${attachedFiles.map(file => 
-          `<div class="flex justify-between items-center bg-white p-2.5 rounded-xl border border-slate-200 text-xs font-semibold">
-            <span class="text-slate-700 truncate max-w-[200px] md:max-w-md">${file.name}</span>
-            <a href="${file.data}" download="${file.name}" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-[10px] font-bold transition-all shadow-xs cursor-pointer">다운로드</a>
-          </div>`
-        ).join("\n")}
-      </div>`;
-    }
+        bodyHtml += `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:16px; margin: 16px 0; border: 1px solid #FAF4E5;"><iframe src="${embedUrl}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen></iframe></div>\n\n`;
+      } else if (block.type === "file") {
+        bodyHtml += `<div class="bg-slate-100/50 p-4 rounded-2xl border-2 border-dashed border-slate-200 my-4 space-y-2">
+          <div class="flex justify-between items-center bg-white p-2.5 rounded-xl border border-slate-200 text-xs font-semibold">
+            <span class="text-slate-700 truncate max-w-[200px] md:max-w-md">${block.fileName}</span>
+            <a href="${block.value}" download="${block.fileName}" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-[10px] font-bold transition-all shadow-xs cursor-pointer">다운로드</a>
+          </div>
+        </div>\n\n`;
+      }
+    });
 
     if (isColumn) {
       finalContent = `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-        ${bodyHtml}
-        
-        ${imagesHtml}
-        
-        ${videosHtml}
-        
-        ${filesHtml}
+        ${bodyHtml.trim()}
       </div>`;
     } else {
       // 인가결정 채무 정보 박스 조립
@@ -808,13 +833,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   ${debtBoxHtml}
 
   <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/60 my-4 leading-loose whitespace-pre-line text-sm sm:text-[15.5px] text-slate-800 font-medium text-left">
-    ${bodyHtml}
-    
-    ${imagesHtml}
-    
-    ${videosHtml}
-    
-    ${filesHtml}
+    ${bodyHtml.trim()}
   </div>
 </div>`;
     }
@@ -2769,163 +2788,227 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             </div>
                           )}
 
-                          {/* Plain Text Content Editor & Media Attachment Section */}
-                          <div className="space-y-4">
-                            <div className="space-y-2 text-left">
-                              <label className="block text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 mb-1.5">
-                                ✍ 성공사례 상세 내용 (이 한 창에 처음부터 끝까지 한글로 편하게 작성하세요)
-                              </label>
-                              <textarea
-                                value={editorFacts}
-                                onChange={(e) => setEditorFacts(e.target.value)}
-                                placeholder="이곳에 사건 개요, 진행 과정, 신청전략 및 최종 성공 결과 등 전체 본문 내용을 한글로 크고 선명하게 작성해 주세요. 줄바꿈과 띄어쓰기는 그대로 본문에 보존되어 노출됩니다."
-                                className="w-full h-[500px] p-6 bg-slate-50 border border-slate-250 rounded-2xl text-base sm:text-lg lg:text-xl font-extrabold focus:ring-4 focus:ring-amber-500/20 focus:bg-white focus:border-amber-500 outline-none leading-loose text-slate-950 transition-all shadow-inner"
-                                required
-                              />
+                          {/* 블록 편집기 영역 (네이버 블로그 스타일 순차 편집) */}
+                          <div className="space-y-4 pt-4 border-t border-slate-100">
+                            <label className="block text-sm sm:text-base font-black text-slate-800 flex items-center gap-1.5">
+                              ✍ 성공사례 본문 및 미디어 구성 (네이버 블로그 스타일 순차 편집)
+                            </label>
+                            <p className="text-xs text-slate-400 font-semibold leading-normal">
+                              글을 입력하시고 아래 ➕ 버튼을 눌러 사진, 유튜브 영상, 첨부파일을 원하는 곳에 자유롭게 삽입하세요.
+                            </p>
+
+                            <div className="space-y-6 bg-slate-50/50 p-4 sm:p-6 rounded-3xl border border-slate-200/60 max-h-[600px] overflow-y-auto">
+                              {editorBlocks.map((block, idx) => {
+                                return (
+                                  <div key={block.id} className="relative bg-white p-4 rounded-2xl border border-slate-200/70 shadow-3xs flex flex-col gap-3 group">
+                                    {/* 블록 네비게이터 / 삭제 제어 툴바 */}
+                                    <div className="absolute -top-3.5 right-4 bg-slate-905 bg-slate-900 text-white rounded-lg px-2 py-1 text-[10px] font-bold flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity shadow-xs z-30">
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          if (idx === 0) return;
+                                          const newBlocks = [...editorBlocks];
+                                          const temp = newBlocks[idx];
+                                          newBlocks[idx] = newBlocks[idx - 1];
+                                          newBlocks[idx - 1] = temp;
+                                          setEditorBlocks(newBlocks);
+                                        }}
+                                        disabled={idx === 0}
+                                        className="hover:text-amber-400 transition-colors disabled:opacity-30 cursor-pointer"
+                                      >
+                                        ▲ 위로
+                                      </button>
+                                      <span className="text-slate-650">|</span>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          if (idx === editorBlocks.length - 1) return;
+                                          const newBlocks = [...editorBlocks];
+                                          const temp = newBlocks[idx];
+                                          newBlocks[idx] = newBlocks[idx + 1];
+                                          newBlocks[idx + 1] = temp;
+                                          setEditorBlocks(newBlocks);
+                                        }}
+                                        disabled={idx === editorBlocks.length - 1}
+                                        className="hover:text-amber-400 transition-colors disabled:opacity-30 cursor-pointer"
+                                      >
+                                        ▼ 아래로
+                                      </button>
+                                      <span className="text-slate-650">|</span>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setEditorBlocks(prev => prev.filter(b => b.id !== block.id));
+                                        }}
+                                        className="text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
+                                      >
+                                        🗑️ 삭제
+                                      </button>
+                                    </div>
+
+                                    {/* 블록 유형별 렌더링 */}
+                                    {block.type === "text" && (
+                                      <div className="flex flex-col gap-1.5 text-left">
+                                        <span className="text-[10px] font-black text-slate-400">📝 글쓰기 텍스트 블록</span>
+                                        <textarea
+                                          value={block.value}
+                                          onChange={(e) => {
+                                            const newBlocks = [...editorBlocks];
+                                            newBlocks[idx].value = e.target.value;
+                                            setEditorBlocks(newBlocks);
+                                          }}
+                                          placeholder="본문 내용을 한글로 크고 선명하게 타이핑하세요."
+                                          className="w-full min-h-[100px] p-3 bg-white border border-transparent rounded-xl text-base sm:text-lg lg:text-xl font-extrabold focus:outline-none focus:border-slate-300 leading-loose text-slate-950 resize-y"
+                                        />
+                                      </div>
+                                    )}
+
+                                    {block.type === "image" && (
+                                      <div className="flex flex-col gap-2 text-left items-center justify-center p-2">
+                                        <span className="text-[10px] font-black text-slate-400 self-start">🖼️ 삽입된 사진 이미지</span>
+                                        <div className="relative max-w-sm rounded-xl overflow-hidden border border-slate-200">
+                                          <img src={block.value} alt="첨부 이미지" className="max-h-48 object-contain" />
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {block.type === "video" && (
+                                      <div className="flex flex-col gap-2 text-left w-full">
+                                        <span className="text-[10px] font-black text-slate-400">📺 유튜브 동영상 링크 블록</span>
+                                        <div className="flex gap-2">
+                                          <input
+                                            type="text"
+                                            value={block.value}
+                                            onChange={(e) => {
+                                              const newBlocks = [...editorBlocks];
+                                              newBlocks[idx].value = e.target.value;
+                                              setEditorBlocks(newBlocks);
+                                            }}
+                                            placeholder="https://youtu.be/..."
+                                            className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold"
+                                          />
+                                        </div>
+                                        {block.value.trim() && (
+                                          <div className="relative w-full max-w-md mx-auto aspect-video rounded-xl overflow-hidden border border-slate-250 mt-2 bg-slate-100">
+                                            <iframe
+                                              src={(() => {
+                                                let embedUrl = block.value;
+                                                if (block.value.includes("watch?v=")) {
+                                                  const id = block.value.split("v=")[1]?.split("&")[0];
+                                                  if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
+                                                } else if (block.value.includes("youtu.be/")) {
+                                                  const id = block.value.split("youtu.be/")[1]?.split("?")[0];
+                                                  if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
+                                                }
+                                                return embedUrl;
+                                              })()}
+                                              className="w-full h-full border-none"
+                                              allowFullScreen
+                                            />
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+
+                                    {block.type === "file" && (
+                                      <div className="flex flex-col gap-2 text-left">
+                                        <span className="text-[10px] font-black text-slate-400">📎 다운로드 가능 파일 첨부 블록</span>
+                                        <div className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-indigo-105 border-indigo-200 text-xs font-bold text-indigo-700">
+                                          <span className="truncate max-w-[250px]">{block.fileName}</span>
+                                          <span className="text-[10px] text-zinc-400 font-semibold">첨부 완료</span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
                             </div>
 
-                            {/* Rich Media Attachment Area */}
-                            <div className="bg-slate-100/60 p-5 rounded-2xl border border-slate-200 text-left space-y-4">
-                              <h4 className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-200 pb-2">
-                                📎 동영상, 이미지, 파일 첨부 시스템 (미디어 추가)
-                              </h4>
-                              
-                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {/* 1. Image Attachment */}
-                                <div className="bg-white p-4 rounded-xl border border-slate-150 space-y-2 text-left">
-                                  <span className="block text-xs font-black text-slate-700">🖼️ 사진(이미지) 첨부</span>
-                                  <div className="relative">
-                                    <input
-                                      type="file"
-                                      accept="image/*"
-                                      multiple
-                                      onChange={(e) => {
-                                        const files = Array.from(e.target.files || []);
-                                        files.forEach(file => {
-                                          if (file.size > 5 * 1024 * 1024) {
-                                            alert("사진 크기는 최대 5MB까지 가능합니다.");
-                                            return;
-                                          }
-                                          const reader = new FileReader();
-                                          reader.onloadend = () => {
-                                            setAttachedImages(prev => [...prev, reader.result as string]);
-                                          };
-                                          reader.readAsDataURL(file);
-                                        });
-                                      }}
-                                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
-                                    />
-                                    <button type="button" className="w-full py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-xl text-xs font-black transition-all cursor-pointer text-center">
-                                      📷 컴퓨터에서 사진 선택
-                                    </button>
-                                  </div>
-                                  
-                                  {/* Thumbnails */}
-                                  {attachedImages.length > 0 && (
-                                    <div className="flex flex-wrap gap-1.5 pt-2 max-h-24 overflow-y-auto">
-                                      {attachedImages.map((img, idx) => (
-                                        <div key={idx} className="relative w-12 h-12 rounded-lg border border-slate-200 overflow-hidden bg-slate-50 shrink-0">
-                                          <img src={img} alt="첨부" className="w-full h-full object-cover" />
-                                          <button
-                                            type="button"
-                                            onClick={() => setAttachedImages(prev => prev.filter((_, i) => i !== idx))}
-                                            className="absolute top-0.5 right-0.5 w-4 h-4 bg-slate-900/80 text-white rounded-full flex items-center justify-center text-[8px] font-black cursor-pointer hover:bg-rose-650 transition-colors z-20"
-                                          >
-                                            ✕
-                                          </button>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
+                            {/* 블록 추가 제어판 */}
+                            <div className="bg-slate-100/80 p-4 rounded-2xl border border-slate-200 flex flex-wrap gap-2.5 items-center justify-center">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditorBlocks(prev => [...prev, { id: Math.random().toString(), type: "text", value: "" }]);
+                                }}
+                                className="px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-250 rounded-xl text-xs font-black transition-colors cursor-pointer flex items-center gap-1.5"
+                              >
+                                📝 텍스트 블록 추가
+                              </button>
 
-                                {/* 2. YouTube Video Attachment */}
-                                <div className="bg-white p-4 rounded-xl border border-slate-150 space-y-2 text-left">
-                                  <span className="block text-xs font-black text-slate-700">📺 유튜브 동영상 링크 첨부</span>
-                                  <div className="flex gap-1.5">
-                                    <input
-                                      type="text"
-                                      value={videoUrlInput}
-                                      onChange={(e) => setVideoUrlInput(e.target.value)}
-                                      placeholder="https://youtu.be/..."
-                                      className="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-amber-500 font-semibold text-slate-800"
-                                    />
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        if (!videoUrlInput.trim()) return;
-                                        setAttachedVideos(prev => [...prev, videoUrlInput.trim()]);
-                                        setVideoUrlInput("");
-                                      }}
-                                      className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg text-xs shrink-0 cursor-pointer"
-                                    >
-                                      추가
-                                    </button>
-                                  </div>
-                                  
-                                  {/* Video Links List */}
-                                  {attachedVideos.length > 0 && (
-                                    <div className="pt-2 space-y-1 max-h-24 overflow-y-auto">
-                                      {attachedVideos.map((vid, idx) => (
-                                        <div key={idx} className="flex items-center justify-between bg-slate-50 p-1.5 rounded-lg border border-slate-100 text-[10px] font-black text-slate-700">
-                                          <span className="truncate max-w-[100px]">{vid}</span>
-                                          <button
-                                            type="button"
-                                            onClick={() => setAttachedVideos(prev => prev.filter((_, i) => i !== idx))}
-                                            className="text-rose-600 hover:text-rose-700 cursor-pointer"
-                                          >
-                                            삭제
-                                          </button>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
+                              <div className="relative">
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  multiple
+                                  onChange={(e) => {
+                                    const files = Array.from(e.target.files || []);
+                                    files.forEach(file => {
+                                      if (file.size > 5 * 1024 * 1024) {
+                                        alert("사진 크기는 최대 5MB까지 가능합니다.");
+                                        return;
+                                      }
+                                      const reader = new FileReader();
+                                      reader.onloadend = () => {
+                                        setEditorBlocks(prev => [...prev, {
+                                          id: Math.random().toString(),
+                                          type: "image",
+                                          value: reader.result as string,
+                                          fileName: file.name
+                                        }]);
+                                      };
+                                      reader.readAsDataURL(file);
+                                    });
+                                  }}
+                                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
+                                />
+                                <button
+                                  type="button"
+                                  className="px-4 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-xl text-xs font-black transition-colors cursor-pointer flex items-center gap-1.5"
+                                >
+                                  🖼️ 사진(이미지) 삽입
+                                </button>
+                              </div>
 
-                                {/* 3. Document/File Attachment */}
-                                <div className="bg-white p-4 rounded-xl border border-slate-150 space-y-2 text-left">
-                                  <span className="block text-xs font-black text-slate-700">📎 다운로드용 첨부파일 등록</span>
-                                  <div className="relative">
-                                    <input
-                                      type="file"
-                                      onChange={(e) => {
-                                        const file = e.target.files?.[0];
-                                        if (!file) return;
-                                        if (file.size > 10 * 1024 * 1024) {
-                                          alert("첨부파일 크기는 최대 10MB까지 가능합니다.");
-                                          return;
-                                        }
-                                        const reader = new FileReader();
-                                        reader.onloadend = () => {
-                                          setAttachedFiles(prev => [...prev, { name: file.name, data: reader.result as string }]);
-                                        };
-                                        reader.readAsDataURL(file);
-                                      }}
-                                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
-                                    />
-                                    <button type="button" className="w-full py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-black transition-all cursor-pointer text-center">
-                                      📂 문서 파일 업로드
-                                    </button>
-                                  </div>
-                                  
-                                  {/* Files list */}
-                                  {attachedFiles.length > 0 && (
-                                    <div className="pt-2 space-y-1 max-h-24 overflow-y-auto">
-                                      {attachedFiles.map((file, idx) => (
-                                        <div key={idx} className="flex items-center justify-between bg-slate-50 p-1.5 rounded-lg border border-indigo-100 text-[10px] font-black text-indigo-700">
-                                          <span className="truncate max-w-[100px]">{file.name}</span>
-                                          <button
-                                            type="button"
-                                            onClick={() => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
-                                            className="text-rose-650 hover:text-rose-700 cursor-pointer"
-                                          >
-                                            삭제
-                                          </button>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditorBlocks(prev => [...prev, { id: Math.random().toString(), type: "video", value: "" }]);
+                                }}
+                                className="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-black transition-colors cursor-pointer flex items-center gap-1.5"
+                              >
+                                📺 유튜브 동영상 삽입
+                              </button>
+
+                              <div className="relative">
+                                <input
+                                  type="file"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    if (file.size > 10 * 1024 * 1024) {
+                                      alert("첨부파일 크기는 최대 10MB까지 가능합니다.");
+                                      return;
+                                    }
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => {
+                                      setEditorBlocks(prev => [...prev, {
+                                        id: Math.random().toString(),
+                                        type: "file",
+                                        value: reader.result as string,
+                                        fileName: file.name
+                                      }]);
+                                    };
+                                    reader.readAsDataURL(file);
+                                  }}
+                                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
+                                />
+                                <button
+                                  type="button"
+                                  className="px-4 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-black transition-colors cursor-pointer flex items-center gap-1.5"
+                                >
+                                  📎 문서파일 첨부
+                                </button>
                               </div>
                             </div>
                           </div>
