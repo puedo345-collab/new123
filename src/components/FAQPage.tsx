@@ -160,15 +160,12 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
         </button>
 
         {/* Beautiful Header Header Section */}
-        <div className="text-center mb-8 md:mb-10">
+        <div className="text-center mb-4 md:mb-6">
           <div className="space-y-3 sm:space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight px-1 leading-[1.15] font-sans">
-              개인회생 해결 가이드
+              개인회생 · 파산 FAQ
             </h1>
           </div>
-          <p className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-650 font-bold max-w-3xl mx-auto leading-relaxed px-2 text-center">
-            최근 대출 사용처 소명, 배우자 몰래 비밀 보장, 압류 독촉 대응 등 실무에서 가장 자주 주시는 고민들에 대표 법무사가 명확히 답해드립니다.
-          </p>
         </div>
 
         {/* Live Search Bar Component */}
