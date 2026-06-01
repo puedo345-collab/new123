@@ -579,6 +579,14 @@ async function startServer() {
   // Limit JSON payloads to 10MB to prevent Server Resource DoS Attacks
   app.use(express.json({ limit: "10mb" }));
 
+  // Prevent browser caching on all API endpoints to guarantee real-time synchronization
+  app.use("/api", (req, res, next) => {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    next();
+  });
+
   // Check admin password (supports dynamic file override or environment variable setup)
   const getAdminPassword = () => {
     try {

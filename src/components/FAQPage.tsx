@@ -102,10 +102,14 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
   }, []);
 
   // Categorize FAQ items
-  const getCategory = (id: number): 'eligibility' | 'harassment' | 'investment' | 'etc' => {
-    if (id === 8 || id === 9) return 'eligibility';
-    if (id === 1 || id === 3 || id === 4) return 'harassment';
-    if (id === 2 || id === 5) return 'investment';
+  const getCategory = (id: number | string): 'eligibility' | 'harassment' | 'investment' | 'etc' => {
+    const idStr = String(id);
+    const numMatch = idStr.match(/\d+/);
+    const numericId = numMatch ? parseInt(numMatch[0], 10) : NaN;
+    
+    if (numericId === 8 || numericId === 9) return 'eligibility';
+    if (numericId === 1 || numericId === 3 || numericId === 4) return 'harassment';
+    if (numericId === 2 || numericId === 5) return 'investment';
     return 'etc';
   };
 

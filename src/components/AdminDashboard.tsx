@@ -518,7 +518,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     if (!currentToken) return;
     setFaqsLoading(true);
     try {
-      const res = await fetch("/api/faqs");
+      const res = await fetch(`/api/faqs?t=${Date.now()}`);
       if (res.ok) {
         const data = await res.json();
         setFaqs(data);

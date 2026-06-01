@@ -87,7 +87,7 @@ export default function App() {
   const [faqs, setFaqs] = useState<any[]>([]);
 
   const fetchFaqs = () => {
-    fetch('/api/faqs')
+    fetch(`/api/faqs?t=${Date.now()}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -728,6 +728,7 @@ export default function App() {
   };
 
   const handleNavClick = (sectionId: string) => {
+    fetchFaqs();
     if (sectionId !== 'admin') {
       clearAdminSession();
       setAdminPageActive(false);
