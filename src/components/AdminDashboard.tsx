@@ -123,9 +123,10 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   const [editorCreatedAt, setEditorCreatedAt] = useState("");
   const [editorStatus, setEditorStatus] = useState("draft");
   const [editorFacts, setEditorFacts] = useState("");
-  const [editorIssues, setEditorIssues] = useState("");
-  const [editorStrategy, setEditorStrategy] = useState("");
-  const [editorDecision, setEditorDecision] = useState("");
+  const [attachedImages, setAttachedImages] = useState<string[]>([]);
+  const [attachedVideos, setAttachedVideos] = useState<string[]>([]);
+  const [attachedFiles, setAttachedFiles] = useState<{name: string, data: string}[]>([]);
+  const [videoUrlInput, setVideoUrlInput] = useState("");
   const [statusFilterArticles, setStatusFilterArticles] = useState<string>("all");
 
   const [isArticleDeleteConfirmOpen, setIsArticleDeleteConfirmOpen] = useState(false);
@@ -601,38 +602,77 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
 
   const parseArticleHtml = (html: string) => {
     const result = {
-      facts: "",
-      issues: "",
-      strategy: "",
-      decision: ""
+      text: "",
+      images: [] as string[],
+      videos: [] as string[],
+      files: [] as {name: string, data: string}[]
     };
     if (!html) return result;
     try {
-      // 1. 사실관계 추출 (1. 사실관계와 그 뒤의 <p> 태그 매칭)
-      const factsMatch = html.match(/1\.\s*사실관계[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
-      if (factsMatch) {
-        result.facts = factsMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      // 1. 이미지 추출
+      const imgRegex = /<img[^>]*src="([^"]*)"/gi;
+      let imgMatch;
+      while ((imgMatch = imgRegex.exec(html)) !== null) {
+        if (imgMatch[1]) {
+          result.images.push(imgMatch[1]);
+        }
       }
 
-      // 2. 핵심쟁점 추출
-      const issuesMatch = html.match(/2\.\s*핵심쟁점[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
-      if (issuesMatch) {
-        result.issues = issuesMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      // 2. 비디오 추출
+      const videoRegex = /<iframe[^>]*src="([^"]*)"/gi;
+      let videoMatch;
+      while ((videoMatch = videoRegex.exec(html)) !== null) {
+        if (videoMatch[1]) {
+          result.videos.push(videoMatch[1]);
+        }
       }
 
-      // 3. 신청전략 추출
-      const strategyMatch = html.match(/3\.\s*신청전략[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
-      if (strategyMatch) {
-        result.strategy = strategyMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      // 3. 파일 추출
+      const fileRegex = /<a[^>]*href="([^"]*)"[^>]*download="([^"]*)"/gi;
+      let fileMatch;
+      while ((fileMatch = fileRegex.exec(html)) !== null) {
+        if (fileMatch[1] && fileMatch[2]) {
+          result.files.push({ name: fileMatch[2], data: fileMatch[1] });
+        }
       }
 
-      // 4. 인가결정 추출
-      const decisionMatch = html.match(/4\.\s*인가결정[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
-      if (decisionMatch) {
-        result.decision = decisionMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      // 4. 본문 텍스트 추출 (bg-slate-50 div 안의 내용 우선, 없으면 전체)
+      const bodyMatch = html.match(/<div[^>]*class="[^"]*bg-slate-50[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+      let contentArea = bodyMatch ? bodyMatch[1] : html;
+
+      // 만약 예전 방식의 1. 사실관계 등의 내용이 포함되어 있다면 복구
+      if (html.includes('1. 사실관계') || html.includes(' 사실관계')) {
+        const factsMatch = html.match(/(?:1\.\s*사실관계|사실관계)[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+        const issuesMatch = html.match(/(?:2\.\s*핵심쟁점|핵심쟁점)[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+        const strategyMatch = html.match(/(?:3\.\s*신청전략|신청전략)[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+        const decisionMatch = html.match(/(?:4\.\s*인가결정|인가결정)[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+        
+        let legacyText = "";
+        if (factsMatch) legacyText += `[1. 사실관계]\n${factsMatch[1].replace(/<[^>]*>/g, '').trim()}\n\n`;
+        if (issuesMatch) legacyText += `[2. 핵심쟁점]\n${issuesMatch[1].replace(/<[^>]*>/g, '').trim()}\n\n`;
+        if (strategyMatch) legacyText += `[3. 신청전략]\n${strategyMatch[1].replace(/<[^>]*>/g, '').trim()}\n\n`;
+        if (decisionMatch) legacyText += `[4. 인가결정]\n${decisionMatch[1].replace(/<[^>]*>/g, '').trim()}\n\n`;
+        
+        if (legacyText.trim()) {
+          result.text = legacyText.trim();
+          return result;
+        }
       }
-    } catch (e) {
-      console.error("Error parsing success case HTML:", e);
+
+      // 본문 정리
+      let cleanBody = contentArea
+        .replace(/<div[^>]*class="[^"]*bg-amber-500[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '') // 사건 분석 보고서 헤더 제거
+        .replace(/<div[^>]*class="[^"]*bg-slate-100[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '') // 첨부파일 다운로드 박스 제거 (bg-slate-100)
+        .replace(/<div[^>]*class="[^"]*bg-slate-50[^"]*"[^>]*>/gi, '') // bg-slate-50 div 열기 태그 자체 제거
+        .replace(/<img[^>]*>/gi, '') // 이미지 제거
+        .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '') // iframe 제거
+        .replace(/<br\s*\/?>/gi, '\n') // 줄바꿈 복원
+        .replace(/<[^>]*>/g, '') // 나머지 태그들 제거
+        .trim();
+
+      result.text = cleanBody;
+    } catch (err) {
+      console.error("Error parsing article HTML:", err);
     }
     return result;
   };
@@ -654,28 +694,22 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setEditorCreatedAt(article.createdAt ? new Date(article.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]);
       setEditorStatus(article.status || "published");
 
-      // HTML 본문 분석 시도
+      // HTML 본문 분석
       const parsed = parseArticleHtml(article.content);
-      if (parsed.facts || parsed.issues || parsed.strategy || parsed.decision) {
-        setEditorFacts(parsed.facts);
-        setEditorIssues(parsed.issues);
-        setEditorStrategy(parsed.strategy);
-        setEditorDecision(parsed.decision);
-      } else {
-        // 기존 작성 글이 커스텀 형식이거나 매칭이 안 될 때 백업 처리
-        setEditorFacts(article.content.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim());
-        setEditorIssues("");
-        setEditorStrategy("");
-        setEditorDecision("");
-      }
+      setEditorFacts(parsed.text);
+      setAttachedImages(parsed.images);
+      setAttachedVideos(parsed.videos);
+      setAttachedFiles(parsed.files);
+      setVideoUrlInput("");
     } else {
       setEditorTitle("");
-      setEditorCategory("코인/투자 채무"); // 성공사례의 기본 카테고리 중 하나로 설정
+      setEditorCategory("성공사례");
       setEditorContent("");
       setEditorFacts("");
-      setEditorIssues("");
-      setEditorStrategy("");
-      setEditorDecision("");
+      setAttachedImages([]);
+      setAttachedVideos([]);
+      setAttachedFiles([]);
+      setVideoUrlInput("");
       setEditorAge("");
       setEditorJob("");
       setEditorOriginalDebt("");
@@ -693,32 +727,70 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     setEditorError("");
     setEditorSuccess("");
 
-    const isColumn = editorCategory === "칼럼";
-    if (isColumn) {
-      if (!editorTitle.trim() || !editorCategory.trim() || !editorFacts.trim()) {
-        setEditorError("제목, 카테고리, 본문 내용은 필수 기입 요소입니다.");
-        return;
-      }
-    } else {
-      if (!editorTitle.trim() || !editorCategory.trim() || !editorFacts.trim() || !editorIssues.trim() || !editorStrategy.trim() || !editorDecision.trim()) {
-        setEditorError("제목, 카테고리, 그리고 성공사례 4단계 항목(사실관계, 핵심쟁점, 신청전략, 인가결정)은 모두 필수 기입 요소입니다.");
-        return;
-      }
+    if (!editorTitle.trim() || !editorFacts.trim()) {
+      setEditorError("제목과 상세 내용은 필수 기입 요소입니다.");
+      return;
     }
 
+    const isColumn = editorCategory === "칼럼";
     let finalContent = "";
-    if (isColumn) {
-      const formattedContent = editorFacts.trim().replace(/\n/g, '<br/>');
-      finalContent = `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">${formattedContent}</div>`;
-    } else {
-      const factsHtml = editorFacts.trim().replace(/\n/g, '<br/>');
-      const issuesHtml = editorIssues.trim().replace(/\n/g, '<br/>');
-      const strategyHtml = editorStrategy.trim().replace(/\n/g, '<br/>');
-      const decisionHtml = editorDecision.trim().replace(/\n/g, '<br/>');
 
+    // 줄바꿈 보존 포맷팅
+    const bodyHtml = editorFacts.trim().replace(/\n/g, '<br/>');
+
+    // 첨부 이미지 조립
+    let imagesHtml = "";
+    if (attachedImages.length > 0) {
+      imagesHtml = attachedImages.map(img => 
+        `<div class="my-4"><img src="${img}" alt="첨부사진" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>`
+      ).join("\n");
+    }
+
+    // 첨부 동영상 조립
+    let videosHtml = "";
+    if (attachedVideos.length > 0) {
+      videosHtml = attachedVideos.map(vid => {
+        let embedUrl = vid;
+        if (vid.includes("watch?v=")) {
+          const id = vid.split("v=")[1]?.split("&")[0];
+          if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
+        } else if (vid.includes("youtu.be/")) {
+          const id = vid.split("youtu.be/")[1]?.split("?")[0];
+          if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
+        }
+        return `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:16px; margin: 16px 0; border: 1px solid #FAF4E5;"><iframe src="${embedUrl}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen></iframe></div>`;
+      }).join("\n");
+    }
+
+    // 첨부 파일 조립
+    let filesHtml = "";
+    if (attachedFiles.length > 0) {
+      filesHtml = `<div class="bg-slate-100/50 p-4 rounded-2xl border-2 border-dashed border-slate-200 my-4 space-y-2">
+        <h5 class="text-xs font-bold text-slate-700 flex items-center gap-1.5 mb-2">📎 다운로드 가능한 첨부파일</h5>
+        ${attachedFiles.map(file => 
+          `<div class="flex justify-between items-center bg-white p-2.5 rounded-xl border border-slate-200 text-xs font-semibold">
+            <span class="text-slate-700 truncate max-w-[200px] md:max-w-md">${file.name}</span>
+            <a href="${file.data}" download="${file.name}" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-[10px] font-bold transition-all shadow-xs cursor-pointer">다운로드</a>
+          </div>`
+        ).join("\n")}
+      </div>`;
+    }
+
+    if (isColumn) {
+      finalContent = `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
+        ${bodyHtml}
+        
+        ${imagesHtml}
+        
+        ${videosHtml}
+        
+        ${filesHtml}
+      </div>`;
+    } else {
+      // 인가결정 채무 정보 박스 조립
       let debtBoxHtml = "";
       if (editorOriginalDebt.trim() || editorReducedDebt.trim() || editorMonthlyPayment.trim() || editorReductionRate.trim()) {
-        debtBoxHtml = `<div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+        debtBoxHtml = `<div class="bg-amber-500/[0.03] p-4 rounded-2xl border border-amber-500/10 my-4 text-xs sm:text-[14px] text-slate-700">
           <ul class="list-none space-y-1.5 pl-1">
             ${editorOriginalDebt.trim() ? `<li><strong>총 채무액:</strong> ${editorOriginalDebt.trim()}</li>` : ""}
             ${editorReducedDebt.trim() ? `<li><strong>조정 후 총변제액:</strong> ${editorReducedDebt.trim()}</li>` : ""}
@@ -733,45 +805,16 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     <span>💡 여환동 법무사의 사건 분석 보고서</span>
   </div>
 
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="space-y-4">
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          1. 사실관계
-        </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          ${factsHtml}
-        </p>
-      </div>
+  ${debtBoxHtml}
 
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          2. 핵심쟁점
-        </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          ${issuesHtml}
-        </p>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          3. 신청전략
-        </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          ${strategyHtml}
-        </p>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          4. 인가결정
-        </h4>
-        ${debtBoxHtml}
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
-          ${decisionHtml}
-        </p>
-      </div>
-    </div>
+  <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/60 my-4 leading-loose whitespace-pre-line text-sm sm:text-[15.5px] text-slate-800 font-medium text-left">
+    ${bodyHtml}
+    
+    ${imagesHtml}
+    
+    ${videosHtml}
+    
+    ${filesHtml}
   </div>
 </div>`;
     }
@@ -2592,7 +2635,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       initial={{ opacity: 0, scale: 0.98, y: 15 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.98, y: 15 }}
-                      className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative z-10 border border-slate-100 overflow-y-auto max-h-[90vh] text-slate-900"
+                      className="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl relative z-10 border border-slate-100 overflow-y-auto max-h-[90vh] text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 bg-amber-500" />
 
@@ -2619,49 +2662,30 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                         </div>
 
                         <form onSubmit={handleSaveArticle} className="space-y-4 pt-2">
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
-                                구분 (카테고리)
-                              </label>
-                              <select
-                                value={editorCategory}
-                                onChange={(e) => setEditorCategory(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-bold text-slate-800 cursor-pointer"
-                              >
-                                <option value="코인/투자 채무">🪙 코인/투자 채무</option>
-                                <option value="생활비/다중채무">👨‍👩‍👧 생활비/다중채무</option>
-                                <option value="사업 실패 채무">💼 사업 실패 채무</option>
-                                <option value="생활비/병원비">🏥 생활비/병원비</option>
-                                <option value="사기 피해 채무">⚠️ 사기 피해 채무</option>
-                                <option value="보증 채무">🤝 보증 채무</option>
-                                <option value="성공사례">✨ 일반 성공사례</option>
-                              </select>
-                            </div>
-
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
-                                글 제목
+                          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                            <div className="sm:col-span-3">
+                              <label className="block text-[11px] font-bold text-slate-550 uppercase tracking-wide mb-1.5">
+                                글 제목 (긴 글도 한눈에 보이게 대폭 확대됨)
                               </label>
                               <input
                                 type="text"
                                 value={editorTitle}
                                 onChange={(e) => setEditorTitle(e.target.value)}
                                 placeholder="예: 코인 투자 실패로 인한 채무 급증 해결 사례"
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-semibold text-slate-900 outline-none"
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs sm:text-sm font-bold text-slate-900 outline-none"
                                 required
                               />
                             </div>
 
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5">
+                            <div className="sm:col-span-1">
+                              <label className="block text-[11px] font-bold text-slate-550 uppercase tracking-wide mb-1.5">
                                 작성일 지정 (날짜 선택)
                               </label>
                               <input
                                 type="date"
                                 value={editorCreatedAt}
                                 onChange={(e) => setEditorCreatedAt(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-semibold text-slate-900 outline-none cursor-pointer"
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs sm:text-sm font-semibold text-slate-900 outline-none cursor-pointer"
                                 required
                               />
                             </div>
@@ -2745,89 +2769,166 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             </div>
                           )}
 
-                          {/* Plain Text Content Editor (Category-Based) */}
-                          {editorCategory === "칼럼" ? (
-                            <div className="space-y-1.5 text-left">
-                              <label className="block text-xs font-black text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
-                                📝 칼럼 본문 내용 (한글 일반 텍스트 입력)
+                          {/* Plain Text Content Editor & Media Attachment Section */}
+                          <div className="space-y-4">
+                            <div className="space-y-2 text-left">
+                              <label className="block text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 mb-1.5">
+                                ✍ 성공사례 상세 내용 (이 한 창에 처음부터 끝까지 한글로 편하게 작성하세요)
                               </label>
                               <textarea
                                 value={editorFacts}
                                 onChange={(e) => setEditorFacts(e.target.value)}
-                                placeholder="이곳에 칼럼의 본문 텍스트 내용을 한글로 편하게 작성해 주세요. 줄바꿈은 화면에 그대로 반영됩니다."
-                                className="w-full h-80 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
+                                placeholder="이곳에 사건 개요, 진행 과정, 신청전략 및 최종 성공 결과 등 전체 본문 내용을 한글로 크고 선명하게 작성해 주세요. 줄바꿈과 띄어쓰기는 그대로 본문에 보존되어 노출됩니다."
+                                className="w-full h-[500px] p-6 bg-slate-50 border border-slate-250 rounded-2xl text-base sm:text-lg lg:text-xl font-extrabold focus:ring-4 focus:ring-amber-500/20 focus:bg-white focus:border-amber-500 outline-none leading-loose text-slate-950 transition-all shadow-inner"
                                 required
                               />
                             </div>
-                          ) : (
-                            <div className="space-y-4 text-left">
-                              <div className="bg-amber-500/[0.04] text-amber-800 px-4 py-3 rounded-2xl border border-amber-500/10 font-bold text-xs flex items-center gap-1.5">
-                                <span>✨ 여환동 법무사의 사건 분석 보고서 (한글 텍스트로 쉽게 작성하는 4단계 입력란)</span>
-                              </div>
 
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {/* Step 1 */}
-                                <div className="space-y-1.5 text-left">
-                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">1</span>
-                                    사실관계 (의뢰인 상황 및 채무 경위)
-                                  </label>
-                                  <textarea
-                                    value={editorFacts}
-                                    onChange={(e) => setEditorFacts(e.target.value)}
-                                    placeholder="예: 울산에 거주하는 30대 직장인 A씨는 코인 손실로 인해 채무가 급증..."
-                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
-                                    required
-                                  />
+                            {/* Rich Media Attachment Area */}
+                            <div className="bg-slate-100/60 p-5 rounded-2xl border border-slate-200 text-left space-y-4">
+                              <h4 className="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5 border-b border-slate-200 pb-2">
+                                📎 동영상, 이미지, 파일 첨부 시스템 (미디어 추가)
+                              </h4>
+                              
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {/* 1. Image Attachment */}
+                                <div className="bg-white p-4 rounded-xl border border-slate-150 space-y-2 text-left">
+                                  <span className="block text-xs font-black text-slate-700">🖼️ 사진(이미지) 첨부</span>
+                                  <div className="relative">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      multiple
+                                      onChange={(e) => {
+                                        const files = Array.from(e.target.files || []);
+                                        files.forEach(file => {
+                                          if (file.size > 5 * 1024 * 1024) {
+                                            alert("사진 크기는 최대 5MB까지 가능합니다.");
+                                            return;
+                                          }
+                                          const reader = new FileReader();
+                                          reader.onloadend = () => {
+                                            setAttachedImages(prev => [...prev, reader.result as string]);
+                                          };
+                                          reader.readAsDataURL(file);
+                                        });
+                                      }}
+                                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
+                                    />
+                                    <button type="button" className="w-full py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-xl text-xs font-black transition-all cursor-pointer text-center">
+                                      📷 컴퓨터에서 사진 선택
+                                    </button>
+                                  </div>
+                                  
+                                  {/* Thumbnails */}
+                                  {attachedImages.length > 0 && (
+                                    <div className="flex flex-wrap gap-1.5 pt-2 max-h-24 overflow-y-auto">
+                                      {attachedImages.map((img, idx) => (
+                                        <div key={idx} className="relative w-12 h-12 rounded-lg border border-slate-200 overflow-hidden bg-slate-50 shrink-0">
+                                          <img src={img} alt="첨부" className="w-full h-full object-cover" />
+                                          <button
+                                            type="button"
+                                            onClick={() => setAttachedImages(prev => prev.filter((_, i) => i !== idx))}
+                                            className="absolute top-0.5 right-0.5 w-4 h-4 bg-slate-900/80 text-white rounded-full flex items-center justify-center text-[8px] font-black cursor-pointer hover:bg-rose-650 transition-colors z-20"
+                                          >
+                                            ✕
+                                          </button>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
 
-                                {/* Step 2 */}
-                                <div className="space-y-1.5 text-left">
-                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">2</span>
-                                    핵심쟁점 (법무 대리의 걸림돌 및 법원 권고)
-                                  </label>
-                                  <textarea
-                                    value={editorIssues}
-                                    onChange={(e) => setEditorIssues(e.target.value)}
-                                    placeholder="예: 최근 채무 비중이 85%에 달해 사행성 채무를 재산으로 반영하라는 권고 위기..."
-                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
-                                    required
-                                  />
+                                {/* 2. YouTube Video Attachment */}
+                                <div className="bg-white p-4 rounded-xl border border-slate-150 space-y-2 text-left">
+                                  <span className="block text-xs font-black text-slate-700">📺 유튜브 동영상 링크 첨부</span>
+                                  <div className="flex gap-1.5">
+                                    <input
+                                      type="text"
+                                      value={videoUrlInput}
+                                      onChange={(e) => setVideoUrlInput(e.target.value)}
+                                      placeholder="https://youtu.be/..."
+                                      className="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-amber-500 font-semibold text-slate-800"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        if (!videoUrlInput.trim()) return;
+                                        setAttachedVideos(prev => [...prev, videoUrlInput.trim()]);
+                                        setVideoUrlInput("");
+                                      }}
+                                      className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg text-xs shrink-0 cursor-pointer"
+                                    >
+                                      추가
+                                    </button>
+                                  </div>
+                                  
+                                  {/* Video Links List */}
+                                  {attachedVideos.length > 0 && (
+                                    <div className="pt-2 space-y-1 max-h-24 overflow-y-auto">
+                                      {attachedVideos.map((vid, idx) => (
+                                        <div key={idx} className="flex items-center justify-between bg-slate-50 p-1.5 rounded-lg border border-slate-100 text-[10px] font-black text-slate-700">
+                                          <span className="truncate max-w-[100px]">{vid}</span>
+                                          <button
+                                            type="button"
+                                            onClick={() => setAttachedVideos(prev => prev.filter((_, i) => i !== idx))}
+                                            className="text-rose-600 hover:text-rose-700 cursor-pointer"
+                                          >
+                                            삭제
+                                          </button>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
 
-                                {/* Step 3 */}
-                                <div className="space-y-1.5 text-left">
-                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">3</span>
-                                    신청전략 (법원의 엄격한 심사 돌파구)
-                                  </label>
-                                  <textarea
-                                    value={editorStrategy}
-                                    onChange={(e) => setEditorStrategy(e.target.value)}
-                                    placeholder="예: 이혼 과정의 위자료 입증 및 추가 생계비를 세밀한 자료로 강력하게 소명..."
-                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
-                                    required
-                                  />
-                                </div>
-
-                                {/* Step 4 */}
-                                <div className="space-y-1.5 text-left">
-                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
-                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">4</span>
-                                    인가결정/의의 (성공적인 면책의 결실)
-                                  </label>
-                                  <textarea
-                                    value={editorDecision}
-                                    onChange={(e) => setEditorDecision(e.target.value)}
-                                    placeholder="예: 법무사의 집요한 보정 끝에 원금의 82% 탕감이라는 놀라운 결실을 이뤄냄..."
-                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
-                                    required
-                                  />
+                                {/* 3. Document/File Attachment */}
+                                <div className="bg-white p-4 rounded-xl border border-slate-150 space-y-2 text-left">
+                                  <span className="block text-xs font-black text-slate-700">📎 다운로드용 첨부파일 등록</span>
+                                  <div className="relative">
+                                    <input
+                                      type="file"
+                                      onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (!file) return;
+                                        if (file.size > 10 * 1024 * 1024) {
+                                          alert("첨부파일 크기는 최대 10MB까지 가능합니다.");
+                                          return;
+                                        }
+                                        const reader = new FileReader();
+                                        reader.onloadend = () => {
+                                          setAttachedFiles(prev => [...prev, { name: file.name, data: reader.result as string }]);
+                                        };
+                                        reader.readAsDataURL(file);
+                                      }}
+                                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
+                                    />
+                                    <button type="button" className="w-full py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-black transition-all cursor-pointer text-center">
+                                      📂 문서 파일 업로드
+                                    </button>
+                                  </div>
+                                  
+                                  {/* Files list */}
+                                  {attachedFiles.length > 0 && (
+                                    <div className="pt-2 space-y-1 max-h-24 overflow-y-auto">
+                                      {attachedFiles.map((file, idx) => (
+                                        <div key={idx} className="flex items-center justify-between bg-slate-50 p-1.5 rounded-lg border border-indigo-100 text-[10px] font-black text-indigo-700">
+                                          <span className="truncate max-w-[100px]">{file.name}</span>
+                                          <button
+                                            type="button"
+                                            onClick={() => setAttachedFiles(prev => prev.filter((_, i) => i !== idx))}
+                                            className="text-rose-650 hover:text-rose-700 cursor-pointer"
+                                          >
+                                            삭제
+                                          </button>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>
-                          )}
+                          </div>
 
                           {editorError && (
                             <div className="p-3 bg-rose-50 border border-rose-100 rounded-xl flex items-start gap-2 text-rose-700 text-xs font-bold leading-relaxed">
