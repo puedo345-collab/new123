@@ -769,7 +769,13 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   };
 
   const compileTextAndImagesToHtml = (text: string, images: string[], category: string, title: string) => {
-    let bodyHtml = text.trim().replace(/\n/g, '<br/>');
+    let bodyHtml = text.trim()
+      .replace(/\n/g, '<br/>')
+      .split('[정렬:왼쪽]').join('<div style="text-align: left; width: 100%; display: block;">')
+      .split('[정렬:가운데]').join('<div style="text-align: center; width: 100%; display: block;">')
+      .split('[정렬:오른쪽]').join('<div style="text-align: right; width: 100%; display: block;">')
+      .split('[정렬:양쪽]').join('<div style="text-align: justify; text-justify: inter-word; width: 100%; display: block;">')
+      .split('[/정렬]').join('</div>');
 
     images.forEach((imgSrc, idx) => {
       const placeholder = `[사진${idx + 1}]`;
@@ -779,7 +785,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       const cleanTitle = title.trim().replace(/"/g, '&quot;');
       const altText = `법무사 여환동 성공사례 - ${cleanTitle} (첨부 이미지 ${idx + 1})`;
       
-      const imgHtml = `<div class="my-4"><img src="${imgSrc}" alt="${altText}" title="${altText}" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>`;
+      const imgHtml = `<div class="my-2.5"><img src="${imgSrc}" alt="${altText}" title="${altText}" style="max-width:100%; height:auto; border-radius:16px; display:block; margin: 0 auto; border: 1px solid #E2E8F0;" /></div>`;
       bodyHtml = bodyHtml.split(placeholder).join(imgHtml);
     });
 
@@ -2854,7 +2860,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                             const text = textarea.value;
                                             const before = text.substring(0, start);
                                             const after = text.substring(end);
-                                            const placeholder = `\n\n[사진${nextIndex}]\n\n`;
+                                            const placeholder = `\n[사진${nextIndex}]\n`;
                                             
                                             setEditorTextContent(before + placeholder + after);
                                             
@@ -2864,7 +2870,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                               textarea.selectionStart = textarea.selectionEnd = start + placeholder.length;
                                             }, 55);
                                           } else {
-                                            setEditorTextContent(prevText => prevText + `\n\n[사진${nextIndex}]\n\n`);
+                                            setEditorTextContent(prevText => prevText + `\n[사진${nextIndex}]\n`);
                                           }
                                           return newImages;
                                         });
@@ -2877,26 +2883,100 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                     e.target.value = "";
                                   }}
                                 />
-                                <label
-                                  htmlFor="editor-image-file-input"
-                                  className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-black transition-colors cursor-pointer flex items-center gap-1.5 shadow-3xs"
-                                >
-                                  🖼️ 본문에 사진 삽입하기 (JPG/PNG)
-                                </label>
                               </div>
                             </div>
+
+                            {/* Alignment Helper & Dynamic Insertion Toolbar */}
+                            {(() => {
+                              // Define alignment helper locally for zero-risk scoping
+                              const handleInsertAlignTag = (alignType: 'left' | 'center' | 'right' | 'justify') => {
+                                const textarea = document.getElementById("editor-body-textarea") as HTMLTextAreaElement;
+                                if (!textarea) return;
+
+                                const start = textarea.selectionStart;
+                                const end = textarea.selectionEnd;
+                                const text = textarea.value;
+                                const before = text.substring(0, start);
+                                const after = text.substring(end);
+                                const selectedText = text.substring(start, end) || "여기에 정렬할 내용을 적으세요";
+
+                                let alignLabel = "가운데";
+                                if (alignType === 'left') alignLabel = "왼쪽";
+                                else if (alignType === 'right') alignLabel = "오른쪽";
+                                else if (alignType === 'justify') alignLabel = "양쪽";
+
+                                const placeholder = `[정렬:${alignLabel}]${selectedText}[/정렬]`;
+
+                                setEditorTextContent(before + placeholder + after);
+
+                                // Focus back and auto-select inner text for extreme convenience
+                                setTimeout(() => {
+                                  textarea.focus();
+                                  textarea.selectionStart = start + `[정렬:${alignLabel}]`.length;
+                                  textarea.selectionEnd = start + `[정렬:${alignLabel}]`.length + selectedText.length;
+                                }, 55);
+                              };
+
+                              return (
+                                <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 my-2.5">
+                                  {/* Left: Quick Align Toolbar */}
+                                  <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200/50 shadow-3xs">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleInsertAlignTag('left')}
+                                      className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
+                                      title="왼쪽 정렬"
+                                    >
+                                      ⬅️ 왼쪽정렬
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleInsertAlignTag('center')}
+                                      className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
+                                      title="가운데 정렬"
+                                    >
+                                      ↔️ 가운데정렬
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleInsertAlignTag('justify')}
+                                      className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
+                                      title="양쪽 정렬"
+                                    >
+                                      ↕️ 양쪽정렬
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleInsertAlignTag('right')}
+                                      className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
+                                      title="오른쪽 정렬"
+                                    >
+                                      ➡️ 오른쪽정렬
+                                    </button>
+                                  </div>
+
+                                  {/* Right: Actual File Insert Trigger Button */}
+                                  <label
+                                    htmlFor="editor-image-file-input"
+                                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-black transition-colors cursor-pointer flex items-center gap-1.5 shadow-3xs"
+                                  >
+                                    🖼️ 본문에 사진 삽입하기 (JPG/PNG)
+                                  </label>
+                                </div>
+                              );
+                            })()}
                             
-                            <p className="text-xs text-slate-400 font-semibold leading-normal">
-                              본문을 자유롭게 작성하시고, 원하는 위치에서 **[본문에 사진 삽입하기]** 버튼을 누르시면 커서 위치에 `[사진1]`과 같은 이미지 표시기가 삽입됩니다. 이 표시기는 글 중간에 자유롭게 이동시키거나 복사해서 배치하실 수 있습니다.
+                            <p className="text-xs text-slate-400 font-semibold leading-normal mb-2">
+                              본문을 자유롭게 작성하시고, 정렬할 구간을 정해 상단 툴바의 **[정렬]** 버튼을 누르시거나 사진이 필요할 때 **[사진 삽입]** 버튼을 클릭해 보세요.
                             </p>
 
                             <textarea
                               id="editor-body-textarea"
                               value={editorTextContent}
                               onChange={(e) => setEditorTextContent(e.target.value)}
-                              placeholder="본문 내용을 이곳에 적으세요. 사진을 넣고 싶으실 때 언제든 상단 우측의 사진 삽입 버튼을 클릭해 주세요."
-                              className="w-full min-h-[420px] p-4 bg-slate-50/50 border border-slate-200 focus:bg-white focus:border-slate-350 focus:ring-4 focus:ring-slate-100 rounded-2xl text-[12px] sm:text-xs font-semibold focus:outline-none leading-relaxed text-slate-900 resize-y transition-all text-justify"
-                              style={{ textAlign: 'justify', textJustify: 'inter-character', wordBreak: 'break-all' }}
+                              placeholder="본문 내용을 이곳에 적으세요. 사진을 넣고 싶으실 때 언제든 상단 툴바의 사진 삽입 버튼을 클릭해 주세요."
+                              className="w-full min-h-[420px] p-4 bg-slate-50/50 border border-slate-200 focus:bg-white focus:border-slate-350 focus:ring-4 focus:ring-slate-100 rounded-2xl text-[12px] sm:text-xs font-semibold focus:outline-none leading-relaxed text-slate-900 resize-y transition-all"
+                              style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}
                               required
                             />
 
