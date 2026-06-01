@@ -110,7 +110,7 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
   ];
 
   return (
-    <section className="relative overflow-hidden bg-transparent pt-4 sm:pt-6 md:pt-8 pb-[72px] md:pb-[100px] lg:pb-[130px]">
+    <section className="relative overflow-hidden bg-transparent pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-[72px] md:pb-[100px] lg:pb-[130px]">
       {/* Sophisticated Background Design: Absolute transparency to let root design shine */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#d4af2503_1px,transparent_1px),linear-gradient(to_bottom,#d4af2503_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
 
