@@ -169,15 +169,15 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
         </div>
 
         {/* Live Search Bar Component */}
-        <div className="max-w-3xl mx-auto mb-8 sm:mb-10">
-          <div className="relative bg-white border border-slate-200 shadow-sm focus-within:border-amber-500 focus-within:ring-2 focus-within:ring-amber-500/10 rounded-2xl transition-all duration-300">
+        <div className="max-w-md md:max-w-lg mx-auto mb-6 px-4">
+          <div className="relative bg-white border border-slate-200 shadow-sm focus-within:border-amber-500 focus-within:ring-4 focus-within:ring-amber-500/5 rounded-full transition-all duration-300">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="무엇이든 검색해 보세요 (예: 압류, 최근대출, 배우자, 기각)"
-              className="w-full pl-12 pr-10 py-3.5 sm:py-4 bg-transparent outline-none border-none text-base font-bold text-slate-800 placeholder-slate-400"
+              placeholder="무엇이든 검색해 보세요..."
+              className="w-full pl-12 pr-10 py-3 sm:py-3.5 bg-transparent outline-none border-none text-base font-bold text-slate-800 placeholder-slate-400"
             />
             {searchQuery && (
               <button
@@ -192,23 +192,34 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
         </div>
 
         {/* Filter Categories Horizontal Tab Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 max-w-4xl mx-auto px-2">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setSelectedCategory(cat.id);
-                setActiveFaq(null); // Close active FAQ on category change
-              }}
-              className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer border ${
-                selectedCategory === cat.id
-                  ? 'bg-slate-900 border-slate-900 text-white shadow-md'
-                  : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+        <div className="faq-tabs-container mb-8 max-w-4xl mx-auto px-4 overflow-x-auto">
+          <style>{`
+            .faq-tabs-container::-webkit-scrollbar {
+              display: none;
+            }
+            .faq-tabs-container {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
+          <div className="flex sm:flex-wrap items-center sm:justify-center gap-2 pb-2 min-w-max sm:min-w-0 mx-auto justify-start">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setSelectedCategory(cat.id);
+                  setActiveFaq(null); // Close active FAQ on category change
+                }}
+                className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer border shrink-0 ${
+                  selectedCategory === cat.id
+                    ? 'bg-slate-900 border-slate-900 text-white shadow-md'
+                    : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Dynamic FAQ list */}
