@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Menu, X, Scale } from 'lucide-react';
+import { ShieldCheck, Menu, X, Scale, User, FileText, HelpCircle, Sparkles, ChevronRight } from 'lucide-react';
 
 const processLogoImage = (base64Str: string): Promise<string> => {
   return new Promise((resolve) => {
@@ -248,28 +248,52 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
       {isOpen && (
         <nav className="md:hidden border-t border-[#FAF4E5] bg-[#FAF9F5] shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="px-4 pt-4 pb-6 space-y-3">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.id === 'success_columns' ? '/success' : `/${item.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsOpen(false);
-                  if (window.history.state?.type === 'mobileMenu') {
-                    (window as any).isProgrammaticBack = true;
-                    window.history.back();
-                    setTimeout(() => {
+            {navItems.map((item) => {
+              const isActive = 
+                (item.id === 'success_columns' && window.location.pathname.startsWith('/success')) ||
+                (item.id === 'rehabilitation' && window.location.pathname.startsWith('/rehabilitation')) ||
+                (item.id === 'bankruptcy' && window.location.pathname.startsWith('/bankruptcy')) ||
+                (item.id === 'faq' && window.location.pathname.startsWith('/faq')) ||
+                (item.id === 'brand' && window.location.pathname.startsWith('/brand'));
+
+              return (
+                <a
+                  key={item.id}
+                  href={item.id === 'success_columns' ? '/success' : `/${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    if (window.history.state?.type === 'mobileMenu') {
+                      (window as any).isProgrammaticBack = true;
+                      window.history.back();
+                      setTimeout(() => {
+                        onNavClick(item.id);
+                      }, 100);
+                    } else {
                       onNavClick(item.id);
-                    }, 100);
-                  } else {
-                    onNavClick(item.id);
-                  }
-                }}
-                className="block w-full text-left px-4 py-3 rounded-xl text-base font-bold text-slate-700 hover:bg-amber-500/10 hover:text-amber-700 transition-all cursor-pointer"
-              >
-                {item.label}
-              </a>
-            ))}
+                    }
+                  }}
+                  className={`w-full px-5 py-4 rounded-2xl border text-base font-extrabold flex items-center justify-between transition-all active:scale-[0.98] cursor-pointer shadow-3xs ${
+                    isActive 
+                      ? 'bg-amber-500/10 border-amber-400/50 text-amber-950 font-black' 
+                      : 'bg-white border-slate-200/60 text-slate-700 hover:bg-slate-50/70 hover:border-slate-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-3">
+                    {/* Left Icon */}
+                    {item.id === 'brand' && <User className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
+                    {item.id === 'rehabilitation' && <Scale className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
+                    {item.id === 'bankruptcy' && <FileText className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
+                    {item.id === 'faq' && <HelpCircle className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
+                    {item.id === 'success_columns' && <Sparkles className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
+                    <span>{item.label}</span>
+                  </span>
+                  
+                  {/* Right Navigation Indicator Arrow */}
+                  <ChevronRight className={`w-5 h-5 transition-transform shrink-0 ${isActive ? 'text-amber-700 translate-x-0.5' : 'text-slate-350'}`} />
+                </a>
+              );
+            })}
             <div className="border-t border-slate-100 pt-4 mt-2">
               <a
                 href="/check"
