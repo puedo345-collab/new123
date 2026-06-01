@@ -122,8 +122,8 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
           transition={{ delay: 0.1 }}
           className="flex flex-col items-center"
         >
-          <h2 className="text-amber-800 font-extrabold text-[16px] sm:text-[18px] md:text-[22px] tracking-wider uppercase mb-4 sm:mb-5">
-            울산에 사시는데 다른 지역에 맡기시려고요?
+          <h2 className="text-amber-800 font-extrabold text-[14.5px] sm:text-[18px] md:text-[22px] tracking-wider uppercase mb-4 sm:mb-5">
+            울산에 사시는데 <br className="sm:hidden" />다른 지역에 맡기시려고요?
           </h2>
           <h1 className="text-[38px] sm:text-[52px] md:text-[62px] lg:text-[74px] font-black tracking-wide text-slate-900 leading-[1.12] whitespace-pre-line gold-text-gradient mb-2 sm:mb-2.5">
             개인회생·개인파산
