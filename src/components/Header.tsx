@@ -156,6 +156,21 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
     }
   }, [isOpen]);
 
+  // Lock background body scroll when mobile hamburger menu is open to prevent screen dragging artifacts
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const navItems = [
     { id: 'brand', label: '법무사 소개' },
     { id: 'rehabilitation', label: '개인회생 신청자격' },
@@ -242,10 +257,14 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                 if (isOpen) {
                   setIsOpen(false);
                   if (window.history.state?.type === 'mobileMenu') {
+                    (window as any).pendingNavigation = () => onStartSurvey();
                     window.history.back();
+                  } else {
+                    onStartSurvey();
                   }
+                } else {
+                  onStartSurvey();
                 }
-                onStartSurvey();
               }}
               className="px-2 py-1.5 min-[360px]:px-3 min-[360px]:py-2 text-[10.5px] min-[360px]:text-xs font-black text-white bg-amber-600 hover:bg-amber-700 active:scale-95 rounded-lg sm:rounded-xl transition-all cursor-pointer shadow-xs duration-100 whitespace-nowrap shrink-0 flex items-center justify-center"
               id="mobile-header-accent-btn"
@@ -298,11 +317,8 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                     e.preventDefault();
                     setIsOpen(false);
                     if (window.history.state?.type === 'mobileMenu') {
-                      (window as any).isProgrammaticBack = true;
+                      (window as any).pendingNavigation = () => onNavClick(item.id);
                       window.history.back();
-                      setTimeout(() => {
-                        onNavClick(item.id);
-                      }, 100);
                     } else {
                       onNavClick(item.id);
                     }
@@ -329,11 +345,8 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                   e.preventDefault();
                   setIsOpen(false);
                   if (window.history.state?.type === 'mobileMenu') {
-                    (window as any).isProgrammaticBack = true;
+                    (window as any).pendingNavigation = () => onStartSurvey();
                     window.history.back();
-                    setTimeout(() => {
-                      onStartSurvey();
-                    }, 100);
                   } else {
                     onStartSurvey();
                   }

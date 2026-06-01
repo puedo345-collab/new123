@@ -249,6 +249,12 @@ export default function App() {
   // Handle browser back button (popstate) for overlay screens and modals
   React.useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
+      if ((window as any).pendingNavigation) {
+        const navFn = (window as any).pendingNavigation;
+        (window as any).pendingNavigation = null;
+        navFn();
+        return;
+      }
       if ((window as any).isProgrammaticBack) {
         (window as any).isProgrammaticBack = false;
         return;
