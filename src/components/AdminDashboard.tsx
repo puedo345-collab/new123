@@ -2852,25 +2852,20 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                           const newImages = [...prev, serverImageUrl];
                                           const nextIndex = newImages.length;
                                           
-                                          // Insert placeholder at current cursor position in textarea
-                                          const textarea = document.getElementById("editor-body-textarea") as HTMLTextAreaElement;
-                                          if (textarea) {
-                                            const start = textarea.selectionStart;
-                                            const end = textarea.selectionEnd;
-                                            const text = textarea.value;
-                                            const before = text.substring(0, start);
-                                            const after = text.substring(end);
-                                            const placeholder = `\n[사진${nextIndex}]\n`;
+                                          // Directly insert genuine inline Image Tag into the ContentEditable editor visual flow!
+                                          const editor = document.getElementById("editor-body-div");
+                                          if (editor) {
+                                            editor.focus();
+                                            const altText = `YHD LAW OFFICE 성공사례 이미지 ${nextIndex}`;
+                                            const imgHtml = `<div class="my-4" style="text-align: center; display: block;"><img src="${serverImageUrl}" alt="${altText}" title="${altText}" style="max-width: 100%; height: auto; border-radius: 16px; display: inline-block; border: 1px solid #E2E8F0;" /></div><br/>`;
                                             
-                                            setEditorTextContent(before + placeholder + after);
-                                            
-                                            // Focus back and set cursor position after placeholder
-                                            setTimeout(() => {
-                                              textarea.focus();
-                                              textarea.selectionStart = textarea.selectionEnd = start + placeholder.length;
-                                            }, 55);
+                                            document.execCommand('insertHTML', false, imgHtml);
+                                            setEditorTextContent(editor.innerHTML);
                                           } else {
-                                            setEditorTextContent(prevText => prevText + `\n[사진${nextIndex}]\n`);
+                                            // Fallback sync
+                                            const altText = `YHD LAW OFFICE 성공사례 이미지 ${nextIndex}`;
+                                            const imgHtml = `<div class="my-4" style="text-align: center; display: block;"><img src="${serverImageUrl}" alt="${altText}" title="${altText}" style="max-width: 100%; height: auto; border-radius: 16px; display: inline-block; border: 1px solid #E2E8F0;" /></div><br/>`;
+                                            setEditorTextContent(prevText => prevText + imgHtml);
                                           }
                                           return newImages;
                                         });
@@ -2886,44 +2881,46 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                               </div>
                             </div>
 
-                            {/* Alignment Helper & Dynamic Insertion Toolbar */}
+                            {/* Alignment Helper & True WYSIWYG Interactive Actions */}
                             {(() => {
-                              // Define alignment helper locally for zero-risk scoping
-                              const handleInsertAlignTag = (alignType: 'left' | 'center' | 'right' | 'justify') => {
-                                const textarea = document.getElementById("editor-body-textarea") as HTMLTextAreaElement;
-                                if (!textarea) return;
+                              // Sync state when editor mount or title changes dynamically
+                              React.useEffect(() => {
+                                const editor = document.getElementById("editor-body-div");
+                                if (editor && editor.innerHTML !== editorTextContent) {
+                                  // Preserve cursor or just hydrate safely on opening
+                                  if (editor.innerHTML === "" || editorTextContent === "") {
+                                    editor.innerHTML = editorTextContent;
+                                  }
+                                }
+                              }, [editorTextContent]);
 
-                                const start = textarea.selectionStart;
-                                const end = textarea.selectionEnd;
-                                const text = textarea.value;
-                                const before = text.substring(0, start);
-                                const after = text.substring(end);
-                                const selectedText = text.substring(start, end) || "여기에 정렬할 내용을 적으세요";
-
-                                let alignLabel = "가운데";
-                                if (alignType === 'left') alignLabel = "왼쪽";
-                                else if (alignType === 'right') alignLabel = "오른쪽";
-                                else if (alignType === 'justify') alignLabel = "양쪽";
-
-                                const placeholder = `[정렬:${alignLabel}]${selectedText}[/정렬]`;
-
-                                setEditorTextContent(before + placeholder + after);
-
-                                // Focus back and auto-select inner text for extreme convenience
-                                setTimeout(() => {
-                                  textarea.focus();
-                                  textarea.selectionStart = start + `[정렬:${alignLabel}]`.length;
-                                  textarea.selectionEnd = start + `[정렬:${alignLabel}]`.length + selectedText.length;
-                                }, 55);
+                              // Genuine Visual Word-processor Alignment Command (WYSIWYG HWP Style)
+                              const handleApplyAlignment = (alignType: 'left' | 'center' | 'right' | 'justify') => {
+                                const editor = document.getElementById("editor-body-div");
+                                if (editor) {
+                                  editor.focus();
+                                }
+                                
+                                let command = 'justifyLeft';
+                                if (alignType === 'center') command = 'justifyCenter';
+                                else if (alignType === 'right') command = 'justifyRight';
+                                else if (alignType === 'justify') command = 'justifyFull';
+                                
+                                document.execCommand(command, false);
+                                
+                                // Immediately capture visual HTML structure to React state
+                                if (editor) {
+                                  setEditorTextContent(editor.innerHTML);
+                                }
                               };
 
                               return (
                                 <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 my-2.5">
                                   {/* Left: Quick Align Toolbar */}
-                                  <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200/50 shadow-3xs">
+                                  <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200/50 shadow-3xs select-none">
                                     <button
                                       type="button"
-                                      onClick={() => handleInsertAlignTag('left')}
+                                      onClick={() => handleApplyAlignment('left')}
                                       className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
                                       title="왼쪽 정렬"
                                     >
@@ -2931,7 +2928,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                     </button>
                                     <button
                                       type="button"
-                                      onClick={() => handleInsertAlignTag('center')}
+                                      onClick={() => handleApplyAlignment('center')}
                                       className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
                                       title="가운데 정렬"
                                     >
@@ -2939,7 +2936,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                     </button>
                                     <button
                                       type="button"
-                                      onClick={() => handleInsertAlignTag('justify')}
+                                      onClick={() => handleApplyAlignment('justify')}
                                       className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
                                       title="양쪽 정렬"
                                     >
@@ -2947,7 +2944,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                     </button>
                                     <button
                                       type="button"
-                                      onClick={() => handleInsertAlignTag('right')}
+                                      onClick={() => handleApplyAlignment('right')}
                                       className="px-3 py-1.5 hover:bg-slate-50 text-slate-700 hover:text-amber-700 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
                                       title="오른쪽 정렬"
                                     >
@@ -2966,18 +2963,18 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                               );
                             })()}
                             
-                            <p className="text-xs text-slate-400 font-semibold leading-normal mb-2">
-                              본문을 자유롭게 작성하시고, 정렬할 구간을 정해 상단 툴바의 **[정렬]** 버튼을 누르시거나 사진이 필요할 때 **[사진 삽입]** 버튼을 클릭해 보세요.
+                            <p className="text-xs text-slate-400 font-semibold leading-normal mb-2.5">
+                              마우스 드래그 또는 원하는 단락에 마우스를 대고 **[정렬]** 버튼을 누르시면 한글 HWP처럼 글자가 눈앞에서 직접 움직입니다! 지분거리는 컴퓨터 글씨 기호는 전혀 뜨지 않습니다.
                             </p>
 
-                            <textarea
-                              id="editor-body-textarea"
-                              value={editorTextContent}
-                              onChange={(e) => setEditorTextContent(e.target.value)}
-                              placeholder="본문 내용을 이곳에 적으세요. 사진을 넣고 싶으실 때 언제든 상단 툴바의 사진 삽입 버튼을 클릭해 주세요."
-                              className="w-full min-h-[420px] p-4 bg-slate-50/50 border border-slate-200 focus:bg-white focus:border-slate-350 focus:ring-4 focus:ring-slate-100 rounded-2xl text-[12px] sm:text-xs font-semibold focus:outline-none leading-relaxed text-slate-900 resize-y transition-all"
-                              style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}
-                              required
+                            {/* Ultra visual contenteditable HWP-grade document editor */}
+                            <div
+                              id="editor-body-div"
+                              contentEditable="true"
+                              onInput={(e) => setEditorTextContent(e.currentTarget.innerHTML)}
+                              onBlur={(e) => setEditorTextContent(e.currentTarget.innerHTML)}
+                              className="w-full min-h-[460px] max-h-[750px] p-6 bg-slate-50/50 border border-slate-200 focus:bg-white focus:border-slate-350 focus:ring-4 focus:ring-slate-100 rounded-2xl text-[14.5px] font-semibold focus:outline-none leading-loose text-slate-800 break-all font-sans overflow-y-auto whitespace-normal text-left"
+                              style={{ outline: 'none' }}
                             />
 
                             {/* 업로드된 사진 목록 관리 */}
