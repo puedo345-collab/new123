@@ -110,21 +110,11 @@ export default function MainHero({ onStartSurvey, onWorryChipClick }: MainHeroPr
   ];
 
   return (
-    <section className="relative overflow-hidden bg-transparent pt-8 sm:pt-11 md:pt-14 lg:pt-16 pb-[72px] md:pb-[100px] lg:pb-[130px]">
+    <section className="relative overflow-hidden bg-transparent pt-4 sm:pt-6 md:pt-8 pb-[72px] md:pb-[100px] lg:pb-[130px]">
       {/* Sophisticated Background Design: Absolute transparency to let root design shine */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#d4af2503_1px,transparent_1px),linear-gradient(to_bottom,#d4af2503_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
 
       <div className="max-w-5xl md:max-w-6xl mx-auto px-4 sm:px-8 relative z-10 text-center">
-        {/* Badges */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50/90 border border-amber-200/60 text-xs md:text-sm font-bold text-amber-900 mb-8 shadow-2xs"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
-          <span>신청자격 자가진단 시스템</span>
-        </motion.div>
-
         {/* Master Titles */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}

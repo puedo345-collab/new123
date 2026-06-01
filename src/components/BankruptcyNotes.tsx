@@ -52,14 +52,14 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.25 }}
-      className="bg-[#FAF9F5] min-h-screen pt-4 pb-16 md:pt-16 lg:pt-20 md:pb-24 text-slate-800 font-sans break-keep"
+      className="bg-[#FAF9F5] min-h-screen pt-2 pb-16 md:pt-6 lg:pt-8 md:pb-24 text-slate-800 font-sans break-keep"
       id="bankruptcy-notes-page"
     >
       <div className="max-w-5xl md:max-w-6xl mx-auto px-4 sm:px-8">
         {/* Back navigation */}
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-2 px-4 py-2 text-slate-500 hover:text-amber-700 font-extrabold text-sm transition-colors cursor-pointer mb-6"
+          className="inline-flex items-center gap-2 px-4 py-2 text-slate-500 hover:text-amber-700 font-extrabold text-sm transition-colors cursor-pointer mb-4"
           id="bankruptcy-notes-back-btn"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -67,12 +67,8 @@ export default function BankruptcyNotes({ onBack, onStartSurvey }: BankruptcyNot
         </button>
 
         {/* Bankruptcy Header Area */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="space-y-4 sm:space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-emerald-500/10 backdrop-blur-xs border border-emerald-550/20 rounded-full text-[15px] sm:text-[17px] font-bold text-emerald-800 tracking-wider uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-slow-spin-pulse" />
-              개인파산 가이드
-            </span>
+        <div className="text-center mb-8 md:mb-10">
+          <div className="space-y-3 sm:space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight px-1 text-center leading-[1.15] font-sans">
               울산 개인파산 신청자격<br />3가지 요건
             </h1>

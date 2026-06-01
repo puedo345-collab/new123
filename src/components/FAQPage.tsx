@@ -143,7 +143,7 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.25 }}
-      className="bg-[#FAF9F5] min-h-screen pt-4 pb-16 md:pt-16 lg:pt-20 md:pb-24 text-slate-800 font-sans break-keep"
+      className="bg-[#FAF9F5] min-h-screen pt-2 pb-16 md:pt-6 lg:pt-8 md:pb-24 text-slate-800 font-sans break-keep"
       id="faq-page-wrap"
       ref={containerRef}
     >
@@ -152,7 +152,7 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
         {/* Navigation Breadcrumb Back Button */}
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-2 px-4 py-2 text-slate-500 hover:text-amber-700 font-extrabold text-sm transition-colors cursor-pointer mb-6"
+          className="inline-flex items-center gap-2 px-4 py-2 text-slate-500 hover:text-amber-700 font-extrabold text-sm transition-colors cursor-pointer mb-4"
           id="faq-page-back-btn"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -160,12 +160,8 @@ export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
         </button>
 
         {/* Beautiful Header Header Section */}
-        <div className="text-center mb-10 md:mb-12">
-          <div className="space-y-4 sm:space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-amber-500/10 backdrop-blur-xs border border-amber-550/20 rounded-full text-[15px] sm:text-[17px] font-bold text-amber-800 tracking-wider uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-slow-spin-pulse" />
-              자주 묻는 질문 (FAQ)
-            </span>
+        <div className="text-center mb-8 md:mb-10">
+          <div className="space-y-3 sm:space-y-4">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight px-1 leading-[1.15] font-sans">
               개인회생 해결 가이드
             </h1>
