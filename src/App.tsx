@@ -30,6 +30,7 @@ export default function App() {
   const [successColumnsActive, setSuccessColumnsActive] = useState(false);
   const [faqPageActive, setFaqPageActive] = useState(false);
   const [rehabEligibilityPageActive, setRehabEligibilityPageActive] = useState(false);
+  const [prevActivePage, setPrevActivePage] = useState<string | null>(null);
   const [successColumnTabMode, setSuccessColumnTabMode] = useState<'matcher' | 'columns'>('matcher');
   const [initialArticleId, setInitialArticleId] = useState<string | null>(null);
   const isInitialRouteSetup = React.useRef(false);
@@ -871,6 +872,16 @@ export default function App() {
   const handleStartSurvey = (mode?: string) => {
     clearAdminSession();
     setUserResponses(null); // Reset past scores
+    
+    // Remember the active sub-page to restore on cancel/back
+    let activePage: string | null = null;
+    if (brandPageActive) activePage = 'brand';
+    else if (bankruptcyPageActive) activePage = 'bankruptcy';
+    else if (faqPageActive) activePage = 'faq';
+    else if (rehabEligibilityPageActive) activePage = 'rehabilitation';
+    else if (successColumnsActive) activePage = 'success_columns';
+    setPrevActivePage(activePage);
+
     setBrandPageActive(false);
     setAdminPageActive(false);
     setBankruptcyPageActive(false);
@@ -924,9 +935,49 @@ export default function App() {
     setCaseMatcherActive(false);
     setPlanSimulatorActive(false);
     setUserResponses(null);
-    setBrandPageActive(false);
     setAdminPageActive(false);
-    setBankruptcyPageActive(false);
+
+    // Restore previous active sub-page if any
+    if (prevActivePage === 'brand') {
+      setBrandPageActive(true);
+      setBankruptcyPageActive(false);
+      setFaqPageActive(false);
+      setRehabEligibilityPageActive(false);
+      setSuccessColumnsActive(false);
+    } else if (prevActivePage === 'bankruptcy') {
+      setBankruptcyPageActive(true);
+      setBrandPageActive(false);
+      setFaqPageActive(false);
+      setRehabEligibilityPageActive(false);
+      setSuccessColumnsActive(false);
+    } else if (prevActivePage === 'faq') {
+      setFaqPageActive(true);
+      setBrandPageActive(false);
+      setBankruptcyPageActive(false);
+      setRehabEligibilityPageActive(false);
+      setSuccessColumnsActive(false);
+    } else if (prevActivePage === 'rehabilitation') {
+      setRehabEligibilityPageActive(true);
+      setBrandPageActive(false);
+      setBankruptcyPageActive(false);
+      setFaqPageActive(false);
+      setSuccessColumnsActive(false);
+    } else if (prevActivePage === 'success_columns') {
+      setSuccessColumnsActive(true);
+      setBrandPageActive(false);
+      setBankruptcyPageActive(false);
+      setFaqPageActive(false);
+      setRehabEligibilityPageActive(false);
+    } else {
+      // Default to homepage reset
+      setBrandPageActive(false);
+      setBankruptcyPageActive(false);
+      setFaqPageActive(false);
+      setRehabEligibilityPageActive(false);
+      setSuccessColumnsActive(false);
+    }
+
+    setPrevActivePage(null); // Clear after restore
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const currentType = window.history.state?.type;
