@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SUCCESS_STORIES } from '../data';
-import { Users, Filter, ArrowRight, CheckCircle2, Award, ChevronLeft, ShieldCheck, PhoneCall } from 'lucide-react';
+import { Users, Filter, ArrowRight, CheckCircle2, Award, ChevronLeft, ShieldCheck, PhoneCall, Loader2 } from 'lucide-react';
 
 interface SuccessCaseMatcherProps {
   onBack: () => void;
   onSelectPlan: (answers: { occupation: string; debtAmount: string }) => void;
 }
 
+// SuccessStory 호환 인터페이스 정의 (서버 데이터와 정적 데이터 통합용)
+interface MatchedStoryItem {
+  id: string | number;
+  category: string;
+  title: string;
+  age: string;
+  job: string;
+  originalDebt: string;
+  reducedDebt: string;
+  monthlyPayment: string;
+  reductionRate: number;
+  description: string;
+}
+
 export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCaseMatcherProps) {
   const [selectedJob, setSelectedJob] = useState<string>('all');
   const [selectedDebt, setSelectedDebt] = useState<string>('all');
-  const [matchingStep, setMatchingStep] = useState<'filter' | 'result'>('filter');
+  const [stories, setStories] = useState<MatchedStoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const jobs = [
     { value: 'all', label: '전체 보기' },
@@ -26,24 +41,86 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
     { value: 'over_50m', label: '5천만 원 이상' }
   ];
 
+  // Fetch articles dynamically from server API with robust fallback safety
+  useEffect(() => {
+    setLoading(true);
+    fetch('/api/articles')
+      .then((res) => {
+        if (!res.ok) throw new Error('Network response not ok');
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          // Filter columns out, mapped to standard story schema
+          const mapped: MatchedStoryItem[] = data
+            .filter((art: any) => art.category !== '칼럼' && art.status !== 'draft')
+            .map((art: any) => {
+              const cleanDesc = art.content
+                ? art.content.replace(/<[^>]*>/g, '').trim().substring(0, 160) + '...'
+                : '';
+              return {
+                id: art.id,
+                category: art.category || '성공사례',
+                title: art.title || '',
+                age: art.age || '연령 미지정',
+                job: art.job || '직업 미지정',
+                originalDebt: art.originalDebt || '0원',
+                reducedDebt: art.reducedDebt || '0원',
+                monthlyPayment: art.monthlyPayment || '',
+                reductionRate: art.reductionRate ? Number(art.reductionRate) : 0,
+                description: cleanDesc
+              };
+            });
+          
+          if (mapped.length > 0) {
+            setStories(mapped);
+          } else {
+            useFallback();
+          }
+        } else {
+          useFallback();
+        }
+      })
+      .catch((err) => {
+        console.warn('API fetch failed, utilizing hardcoded SUCCESS_STORIES fallback:', err);
+        useFallback();
+      })
+      .finally(() => setLoading(false));
+
+    function useFallback() {
+      const fallback = SUCCESS_STORIES.map((s) => ({
+        id: s.id,
+        category: s.category,
+        title: s.title,
+        age: s.age,
+        job: s.job,
+        originalDebt: s.originalDebt,
+        reducedDebt: s.reducedDebt,
+        monthlyPayment: s.monthlyPayment,
+        reductionRate: s.reductionRate,
+        description: s.description
+      }));
+      setStories(fallback);
+    }
+  }, []);
+
   const getFilteredStories = () => {
-    return SUCCESS_STORIES.filter((story) => {
+    return stories.filter((story) => {
       // Filter by job category
       let matchJob = true;
       if (selectedJob !== 'all') {
         if (selectedJob === 'employee') {
-          matchJob = story.job.includes('직장인');
+          matchJob = story.job.includes('직장인') || story.job.includes('사원') || story.job.includes('회사원');
         } else if (selectedJob === 'freelancer') {
-          matchJob = story.job.includes('프리랜서');
+          matchJob = story.job.includes('프리랜서') || story.job.includes('강사') || story.job.includes('일용직');
         } else if (selectedJob === 'business') {
-          matchJob = story.job.includes('사업자');
+          matchJob = story.job.includes('사업자') || story.job.includes('자영업') || story.job.includes('매장') || story.job.includes('업주');
         }
       }
 
       // Filter by debt amount
       let matchDebt = true;
-      if (selectedDebt !== 'all') {
-        // Parse originalDebt string e.g., '6,400만 원', '1억 2,000만 원'
+      if (selectedDebt !== 'all' && story.originalDebt) {
         const isEok = story.originalDebt.includes('억');
         const numPart = parseFloat(story.originalDebt.replace(/[^0-9.]/g, ''));
         const debtVal = isEok ? numPart * 10000 : numPart; // in man-won
@@ -61,14 +138,16 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
 
   const filteredStories = getFilteredStories();
 
-  const handleApplyMatch = (story: typeof SUCCESS_STORIES[0]) => {
-    // Map story parameters to equivalent survey options to pre-set survey
+  const handleApplyMatch = (story: MatchedStoryItem) => {
     let occOpt = 'regular_employee';
-    if (story.job.includes('프리랜서')) occOpt = 'freelancer_parttime';
-    if (story.job.includes('사업자')) occOpt = 'business_owner';
+    if (story.job.includes('프리랜서') || story.job.includes('일용직') || story.job.includes('강사')) {
+      occOpt = 'freelancer_parttime';
+    } else if (story.job.includes('사업자') || story.job.includes('자영업') || story.job.includes('매장') || story.job.includes('업주')) {
+      occOpt = 'business_owner';
+    }
 
     let debtOpt = '30m_50m';
-    if (story.originalDebt.includes('1억') || story.originalDebt.includes('2억')) {
+    if (story.originalDebt.includes('1억') || story.originalDebt.includes('2억') || story.originalDebt.includes('억')) {
       debtOpt = 'over_100m';
     } else {
       const num = parseInt(story.originalDebt.replace(/[^0-9]/g, ''));
@@ -163,7 +242,12 @@ export default function SuccessCaseMatcher({ onBack, onSelectPlan }: SuccessCase
             </h3>
 
             <AnimatePresence mode="wait">
-              {filteredStories.length > 0 ? (
+              {loading ? (
+                <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
+                  <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
+                  <p className="text-xs text-slate-400 font-bold">성공사례 데이터베이스 동기화 중...</p>
+                </div>
+              ) : filteredStories.length > 0 ? (
                 <div className="space-y-3.5">
                   {filteredStories.map((story) => (
                     <motion.div

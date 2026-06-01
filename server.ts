@@ -569,8 +569,7 @@ function sanitizeInput(str: string): string {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;")
-    .replace(/\//g, "&#x2F;");
+    .replace(/'/g, "&#x27;");
 }
 
 async function startServer() {
@@ -603,7 +602,7 @@ async function startServer() {
     }
 
     const token = authHeader.replace("Bearer ", "");
-    
+
     // Lazy session expiration lookup (sessions expire after 2 hours)
     const session = secureSessions.get(token);
     if (session && session.expiresAt > Date.now()) {
@@ -637,7 +636,7 @@ async function startServer() {
 
       const senderPhone = receiverPhone.replace(/[^0-9]/g, "");
       const cleanPhone = toPhone ? toPhone.replace(/[^0-9]/g, "") : senderPhone;
-      
+
       if (!cleanPhone || !senderPhone) {
         console.log("[Solapi] Recipient or sender phone empty after sanitization.");
         return false;
@@ -917,10 +916,10 @@ async function startServer() {
       const hash = hashPassword(newPassword.trim(), salt);
       configObj.adminPassword = `sha256:${salt}:${hash}`;
       fs.writeFileSync(ADMIN_CONFIG_PATH, JSON.stringify(configObj, null, 2), "utf-8");
-      
+
       // Invalidate current sessions to force relogin
       secureSessions.clear();
-      
+
       res.json({ success: true, message: "비밀번호가 안전하게 변경되었습니다. 다시 로그인 하십시오." });
     } catch (err) {
       console.error("[ChangePassword] Error storing new password configuration:", err);
@@ -975,7 +974,7 @@ async function startServer() {
       if (isSimple) {
         const typeLabel = (body.difficulties && body.difficulties[0]) ? body.difficulties[0] : "실시간간편예약";
         const notes = body.counselorNotes || "";
-        
+
         let formattedSchedule = "즉시상담";
         if (notes.includes("즉시 상담 희망") || notes.includes("ASAP") || !notes.includes("-")) {
           formattedSchedule = "즉시상담";
@@ -1181,7 +1180,9 @@ async function startServer() {
     try {
       if (!fs.existsSync(ARTICLES_FILE_PATH)) return [];
       const data = fs.readFileSync(ARTICLES_FILE_PATH, "utf-8");
-      return JSON.parse(data);
+      const list = JSON.parse(data) as Article[];
+      list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      return list;
     } catch (error) {
       console.error("Error reading articles database:", error);
       return [];
@@ -1190,6 +1191,7 @@ async function startServer() {
 
   const writeArticles = (data: Article[]) => {
     try {
+      data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       fs.writeFileSync(ARTICLES_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
     } catch (error) {
       console.error("Error writing to articles database:", error);
@@ -1208,6 +1210,31 @@ async function startServer() {
   app.get("/api/admin/articles", verifyAdmin, (req, res) => {
     const list = readArticles();
     res.json(list);
+  });
+
+  // API: Publish All Draft Articles (Protected)
+  app.post("/api/admin/articles/publish-all-drafts", verifyAdmin, (req, res) => {
+    const list = readArticles();
+    let count = 0;
+    const updatedList = list.map(art => {
+      if (art.status === "draft") {
+        count++;
+        return {
+          ...art,
+          status: "published",
+          updatedAt: new Date().toISOString()
+        };
+      }
+      return art;
+    });
+
+    if (count === 0) {
+      res.status(400).json({ error: "현재 임시저장(대기) 상태인 성공사례 글이 없습니다." });
+      return;
+    }
+
+    writeArticles(updatedList);
+    res.json({ success: true, count, message: `총 ${count}개의 대기 성공사례 글 전체가 즉시 '등록완료' 상태로 일괄 게시되었습니다.` });
   });
 
   // API: Get Single Article (Public - and increments views)
@@ -1311,7 +1338,7 @@ async function startServer() {
       const baseUrl = "https://www.law-office.co.kr";
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
       xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-      
+
       // Core pages
       const corePages = ["", "/brand", "/bankruptcy", "/success", "/check", "/repayment-plan", "/faq"];
       corePages.forEach(p => {
@@ -1321,7 +1348,7 @@ async function startServer() {
         xml += `    <priority>${p === "" ? "1.0" : "0.8"}</priority>\n`;
         xml += `  </url>\n`;
       });
-      
+
       // Add all success story individual articles dynamically from DB!
       if (fs.existsSync(ARTICLES_FILE_PATH)) {
         const articles: Article[] = JSON.parse(fs.readFileSync(ARTICLES_FILE_PATH, "utf-8"));
@@ -1335,7 +1362,7 @@ async function startServer() {
           }
         });
       }
-      
+
       // Add all FAQs dynamically!
       if (fs.existsSync(FAQS_FILE_PATH)) {
         const faqs: FAQItem[] = JSON.parse(fs.readFileSync(FAQS_FILE_PATH, "utf-8"));
@@ -1347,9 +1374,9 @@ async function startServer() {
           xml += `  </url>\n`;
         });
       }
-      
+
       xml += `</urlset>\n`;
-      
+
       res.setHeader("Content-Type", "application/xml; charset=utf-8");
       res.send(xml);
     } catch (e) {
@@ -1368,7 +1395,7 @@ async function startServer() {
     robots += `Disallow: /admin-yhd3557\n`;
     robots += `Disallow: /api/\n`;
     robots += `Sitemap: https://www.law-office.co.kr/sitemap.xml\n`;
-    
+
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.send(robots);
   });
@@ -1391,10 +1418,10 @@ async function startServer() {
           const proto = req.headers["x-forwarded-proto"] || "https";
           const host = req.headers.host || "localhost";
           const originalUrl = req.originalUrl || "/";
-          
+
           let pageTitle = "울산 개인회생 법무사 여환동 | 울산개인파산 | 울산채무탕감 신청자격 조회| 울산신용회복위원회| 새도약기금 새출발기금 채무조정";
           let pageDescription = "울산 전담 개인회생 13년 경력, 1,000건 이상 성공의 법무사 여환동 사무소입니다. 투자 실패, 보이스피싱 사기, 일용직/프리랜서 채무도 높은 탕감률로 밀착 조력합니다. 실시간으로 월 변제금과 탕감률을 직접 조회해 보세요.";
-          
+
           // Detect specific routes and customize metadata
           if (originalUrl === "/brand") {
             pageTitle = "대표 법무사 여환동 소개 | 울산 개인회생·개인파산 법무사";
@@ -1454,7 +1481,7 @@ async function startServer() {
             /<meta name="description" content="[^"]*" \/>/,
             `<meta name="description" content="${pageDescription}" />`
           );
-          
+
           // Apply pre-rendered body content for SEO crawlers (SSR)
           let preRenderedContent = "";
           const srStyle = `style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"`;
@@ -1523,12 +1550,12 @@ async function startServer() {
           if (preRenderedContent) {
             html = html.replace('<div id="root"></div>', `<div id="root">${preRenderedContent}</div>`);
           }
-          
+
           // Check if custom og_image.png is in dist, public, or root
-          const hasCustomOg = fs.existsSync(path.join(process.cwd(), "public", "og_image.png")) || 
-                              fs.existsSync(path.join(distPath, "og_image.png")) ||
-                              fs.existsSync(path.join(process.cwd(), "og_image.png"));
-          
+          const hasCustomOg = fs.existsSync(path.join(process.cwd(), "public", "og_image.png")) ||
+            fs.existsSync(path.join(distPath, "og_image.png")) ||
+            fs.existsSync(path.join(process.cwd(), "og_image.png"));
+
           let ogImageUrl = "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&h=630&q=80";
           if (hasCustomOg) {
             ogImageUrl = `${proto}://${host}/og_image.png`;

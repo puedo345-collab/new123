@@ -14,6 +14,32 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
   const [loading, setLoading] = useState(true);
   const [stepMsg, setStepMsg] = useState('가입 심사 데이터 확인 중...');
   const [repaymentMethodTab, setRepaymentMethodTab] = useState<'shorter' | 'equal'>('shorter');
+  const [stories, setStories] = useState<any[]>([]);
+
+  // Fetch articles dynamically from server API with robust fallback safety
+  useEffect(() => {
+    fetch('/api/articles')
+      .then((res) => {
+        if (!res.ok) throw new Error('Network response not ok');
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const filtered = data.filter((art: any) => art.category !== '칼럼' && art.status !== 'draft');
+          if (filtered.length > 0) {
+            setStories(filtered);
+          } else {
+            setStories(SUCCESS_STORIES);
+          }
+        } else {
+          setStories(SUCCESS_STORIES);
+        }
+      })
+      .catch((err) => {
+        console.warn('ResultDashboard: Failed to fetch active articles. Falling back to SUCCESS_STORIES:', err);
+        setStories(SUCCESS_STORIES);
+      });
+  }, []);
 
   useEffect(() => {
     // Elegant Multi-stage analytic loaders
@@ -88,7 +114,6 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
     if (responses.monthlyIncome) {
       const numericVal = parseInt(responses.monthlyIncome, 10);
       if (!isNaN(numericVal)) {
-        // User entered custom numeric value in 'man-won' units (e.g., 250 -> 2,500,000)
         estimatedIncome = numericVal * 10000;
       } else {
         switch (responses.monthlyIncome) {
@@ -152,7 +177,7 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
       }
     } else {
       if (responses.ageGroup === '40대') {
-        estimatedDependents = 2; // Default for middle aged
+        estimatedDependents = 2;
       }
     }
 
@@ -175,11 +200,11 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
     // 3. Estimate net asset value (liquidation value) based on assets question & total debt
     let estimatedNetAsset = 10000000;
     if (responses.hasMoreDebtThanAssets === 'yes') {
-      estimatedNetAsset = Math.round(mockTotalDebt * 0.1); // Small assets, 10% of debt
+      estimatedNetAsset = Math.round(mockTotalDebt * 0.1);
     } else if (responses.hasMoreDebtThanAssets === 'similar') {
-      estimatedNetAsset = Math.round(mockTotalDebt * 0.75); // Assets are 75% of debt
+      estimatedNetAsset = Math.round(mockTotalDebt * 0.75);
     } else if (responses.hasMoreDebtThanAssets === 'no') {
-      estimatedNetAsset = Math.round(mockTotalDebt * 1.15); // Assets are 115% of debt (exceeds debt)
+      estimatedNetAsset = Math.round(mockTotalDebt * 1.15);
     }
 
     // 4. Calculate available monthly repayment & total repayment
@@ -196,16 +221,13 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
     const totalRepaymentRaw = availableRepayment * 36;
     const totalRepayment = Math.min(mockTotalDebt, totalRepaymentRaw);
 
-    // Compute basic reduction rate starting point from law simulation
     const totalSavings = Math.max(0, mockTotalDebt - totalRepayment);
     let reductionRate = mockTotalDebt > 0 ? Math.round((totalSavings / mockTotalDebt) * 100) : 0;
 
-    // Apply baseline adjustments based on difficulty or professional support triggers
     if (responses.difficulties.includes('high_interest') || responses.difficulties.includes('overwhelming_harassment')) {
-      reductionRate = Math.min(90, reductionRate + 5); // legal maximum up to 90
+      reductionRate = Math.min(90, reductionRate + 5);
     }
 
-    // Asset checks (Hard law constraints)
     let warningMsg = '';
     let eligibilityGrade = '우수 (A등급)';
     let progressColor = 'bg-amber-500';
@@ -220,21 +242,20 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
       textColor = 'text-slate-800';
       ringColor = 'ring-slate-200';
     } else if (responses.hasMoreDebtThanAssets === 'no') {
-      reductionRate = 0; // Asset greater than debt is legally blocked
+      reductionRate = 0;
       warningMsg = '신청 불가 우려: 보유하신 순 재산의 합산액이 총 채무액보다 많을 경우, 채무초과를 인정받지 못해 신청 자체가 불가합니다. 다만, 전문가가 아닌 일반인이 재산을 산정할 때 범하기 쉬운 계산 착오(부동산에서 담보 채무를 공제하지 않는 착오, 임차보증금에서 소액보증금을 공제하지 않는 착오 등)을 면밀히 검토하면 순재산 가액이 낮아져 회생 신청이 가능해지는 사례가 매우 빈번하게 있으므로, 재산가액을 정확히 산정할 수 없는 분은 혼자 고민하지 마시고 법무사와 개별 상담을 받아보시길 강력 추천합니다.';
       eligibilityGrade = '기각 확률 높음 (재산 분석 요망)';
       progressColor = 'bg-amber-500';
       textColor = 'text-amber-700';
       ringColor = 'ring-amber-100';
     } else if (responses.hasMoreDebtThanAssets === 'similar') {
-      reductionRate = Math.max(10, Math.min(50, reductionRate - 15)); // asset-heavy cases gets capped/reduced
+      reductionRate = Math.max(10, Math.min(50, reductionRate - 15));
       warningMsg = '※ 안내: 재산과 빚이 비슷한 수준이면, 청산가치 보장 원칙에 따라 변제비율이 올라가므로 탕감율이 낮아지는 것이 기본 원칙입니다. 재산 가치를 떨어뜨릴 수 있는 법리를 전개해야 탕감율을 올릴 수 있습니다.';
       eligibilityGrade = '검토 가능 (B등급)';
       progressColor = 'bg-blue-500';
       textColor = 'text-blue-700';
       ringColor = 'ring-blue-100';
     } else {
-      // Best case
       if (mockTotalDebt >= 50000000) {
         eligibilityGrade = '최우수 (S등급)';
         progressColor = 'bg-amber-600';
@@ -244,7 +265,6 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
       }
     }
 
-    // Debt range hard block check
     if (responses.debtAmount === 'under_10m' || mockTotalDebt < 10000000) {
       reductionRate = 0;
       warningMsg = '※ 주의: 총 채무금액이 1,000만 원 미만인 경우, 전형적인 개인회생 자격 미달에 속해 비용 대비 실익이 낮을 수 있습니다. 신용회복위원회의 프리워크아웃이나 개인워크아웃 절차가 보다 효율적일 수 있으니, 무리한 진행 전 자매 프로그램 연동 무상 컨설팅을 꼭 점검받으십시오.';
@@ -254,7 +274,6 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
       ringColor = 'ring-rose-100';
     }
 
-    // Enforce bound limit
     if (reductionRate > 0) {
       reductionRate = Math.max(10, Math.min(90, reductionRate));
     }
@@ -314,15 +333,31 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
 
   const est = getEstimationDetails();
 
-  // Pick suitable story
+  // Pick suitable story dynamically from database or fallback to static
   const getMatchedStory = () => {
+    const activeList = stories.length > 0 ? stories : SUCCESS_STORIES;
+    let matched = null;
+    
     if (responses.difficulties.includes('investment_losses') || responses.occupation === 'freelancer_parttime') {
-      return SUCCESS_STORIES[0]; // Crypto / Freelancer
+      matched = activeList.find((s: any) => 
+        (s.category && s.category.includes('코인')) || 
+        (s.job && (s.job.includes('프리랜서') || s.job.includes('강사') || s.job.includes('일용직')))
+      );
+    } else if (responses.occupation === 'business_owner') {
+      matched = activeList.find((s: any) => 
+        (s.category && s.category.includes('사업')) || 
+        (s.job && (s.job.includes('사업자') || s.job.includes('자영업') || s.job.includes('매장')))
+      );
     }
-    if (responses.occupation === 'business_owner') {
-      return SUCCESS_STORIES[2]; // Business fail
+    
+    if (!matched) {
+      matched = activeList.find((s: any) => 
+        (s.category && s.category.includes('생활비')) || 
+        (s.job && s.job.includes('직장인'))
+      );
     }
-    return SUCCESS_STORIES[1]; // Employee household debt
+    
+    return matched || activeList[0];
   };
 
   const matchedStory = getMatchedStory();
@@ -596,8 +631,6 @@ export default function ResultDashboard({ responses, onRestart, onGoToMain }: Re
           </motion.div>
         )}
       </div>
-
-
 
       {/* Action Buttons Block */}
       <div className="flex flex-col sm:flex-row gap-3.5 justify-center items-center pt-4">

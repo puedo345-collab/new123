@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Database, 
-  Lock, 
+import {
+  Database,
+  Lock,
   Key,
-  Search, 
-  Filter, 
-  Trash2, 
-  FileDown, 
-  LogOut, 
-  User, 
-  Phone, 
-  Clock, 
-  Wallet, 
-  ShieldCheck, 
-  ChevronRight, 
-  CheckCircle, 
-  TrendingUp, 
-  Calendar, 
-  AlertCircle, 
-  StickyNote, 
-  Eye, 
-  EyeOff, 
-  MapPin, 
+  Search,
+  Filter,
+  Trash2,
+  FileDown,
+  LogOut,
+  User,
+  Phone,
+  Clock,
+  Wallet,
+  ShieldCheck,
+  ChevronRight,
+  CheckCircle,
+  TrendingUp,
+  Calendar,
+  AlertCircle,
+  StickyNote,
+  Eye,
+  EyeOff,
+  MapPin,
   RefreshCw,
   X,
   MessageCircle,
@@ -122,6 +122,10 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
   const [editorSuccess, setEditorSuccess] = useState("");
   const [editorCreatedAt, setEditorCreatedAt] = useState("");
   const [editorStatus, setEditorStatus] = useState("draft");
+  const [editorFacts, setEditorFacts] = useState("");
+  const [editorIssues, setEditorIssues] = useState("");
+  const [editorStrategy, setEditorStrategy] = useState("");
+  const [editorDecision, setEditorDecision] = useState("");
   const [statusFilterArticles, setStatusFilterArticles] = useState<string>("all");
 
   const [isArticleDeleteConfirmOpen, setIsArticleDeleteConfirmOpen] = useState(false);
@@ -295,7 +299,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       } else {
         setLogoBase64("");
       }
-      
+
       // Get profile image
       const resProfile = await fetch("/api/profile-image");
       const dataProfile = await resProfile.json();
@@ -363,7 +367,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       }
 
       setImagesSuccess("로고 및 프로필 사진이 성공적으로 저장되었습니다!");
-      
+
       // Dispatch custom events for live dynamic updates in Header and LawyerIntroduction components
       window.dispatchEvent(new CustomEvent("logo-updated"));
       window.dispatchEvent(new CustomEvent("profile-updated"));
@@ -396,9 +400,9 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     try {
       const res = await fetch("/api/admin/change-password", {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` 
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({ newPassword: newPasswordVal })
       });
@@ -534,7 +538,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         body: JSON.stringify({ status: newStatus })
       });
       if (res.ok) {
-        setSubmissions(prev => 
+        setSubmissions(prev =>
           prev.map(sub => sub.id === id ? { ...sub, status: newStatus as any, updatedAt: new Date().toISOString() } : sub)
         );
       }
@@ -555,7 +559,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
         body: JSON.stringify({ counselorNotes: notes })
       });
       if (res.ok) {
-        setSubmissions(prev => 
+        setSubmissions(prev =>
           prev.map(sub => sub.id === id ? { ...sub, counselorNotes: notes, updatedAt: new Date().toISOString() } : sub)
         );
       }
@@ -595,6 +599,44 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     }
   };
 
+  const parseArticleHtml = (html: string) => {
+    const result = {
+      facts: "",
+      issues: "",
+      strategy: "",
+      decision: ""
+    };
+    if (!html) return result;
+    try {
+      // 1. 사실관계 추출 (1. 사실관계와 그 뒤의 <p> 태그 매칭)
+      const factsMatch = html.match(/1\.\s*사실관계[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+      if (factsMatch) {
+        result.facts = factsMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      }
+
+      // 2. 핵심쟁점 추출
+      const issuesMatch = html.match(/2\.\s*핵심쟁점[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+      if (issuesMatch) {
+        result.issues = issuesMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      }
+
+      // 3. 신청전략 추출
+      const strategyMatch = html.match(/3\.\s*신청전략[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+      if (strategyMatch) {
+        result.strategy = strategyMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      }
+
+      // 4. 인가결정 추출
+      const decisionMatch = html.match(/4\.\s*인가결정[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
+      if (decisionMatch) {
+        result.decision = decisionMatch[1].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim();
+      }
+    } catch (e) {
+      console.error("Error parsing success case HTML:", e);
+    }
+    return result;
+  };
+
   const handleOpenEditor = (article: Article | null = null) => {
     setSelectedArticle(article);
     setEditorError("");
@@ -611,62 +653,29 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setEditorReductionRate(article.reductionRate ? String(article.reductionRate) : "");
       setEditorCreatedAt(article.createdAt ? new Date(article.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]);
       setEditorStatus(article.status || "published");
+
+      // HTML 본문 분석 시도
+      const parsed = parseArticleHtml(article.content);
+      if (parsed.facts || parsed.issues || parsed.strategy || parsed.decision) {
+        setEditorFacts(parsed.facts);
+        setEditorIssues(parsed.issues);
+        setEditorStrategy(parsed.strategy);
+        setEditorDecision(parsed.decision);
+      } else {
+        // 기존 작성 글이 커스텀 형식이거나 매칭이 안 될 때 백업 처리
+        setEditorFacts(article.content.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '').trim());
+        setEditorIssues("");
+        setEditorStrategy("");
+        setEditorDecision("");
+      }
     } else {
       setEditorTitle("");
-      setEditorCategory("성공사례");
-      setEditorContent(`<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
-  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
-    <span>💡 여환동 법무사의 사건 분석 보고서</span>
-  </div>
-
-  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
-    <div class="space-y-4">
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          1. 사실관계
-        </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          [이곳에 의뢰인의 구체적인 나이대, 직종, 채무 급증 경위 등 사실관계를 작성해 주세요]
-        </p>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          2. 핵심쟁점
-        </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          [이곳에 법원의 엄격한 보정 권고 및 소명 난이도 등의 핵심쟁점을 작성해 주세요]
-        </p>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          3. 신청전략
-        </h4>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
-          저희 사무소는 14년 법원 실무 경력의 노하우를 바탕으로, 단순 실패가 아닌 배우자와의 이혼 과정에서 발생한 위자료 및 자녀 양육비 지출 내역을 세부 통장 내역 거래를 통해 1원 단위까지 분리 입증했습니다. 코인 손실금 중 실제 소비로 사라진 부분과 투자 실패로 소멸한 실질 자산을 소명 도표로 정리하여 법원이 요구하는 '최근 채무 소명 자료'를 완벽히 메웠습니다. 또한, 1인 생계비 외에 한부모 가정으로서의 '추가 생계비(자녀 치료비 및 교육비)' 필요성을 강력하게 소명하여 월 소득 대비 가용소득을 최소화하는 데 성공했습니다.
-        </p>
-      </div>
-
-      <div>
-        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
-          4. 인가결정
-        </h4>
-        <div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
-          <ul class="list-none space-y-1.5 pl-1">
-            <li><strong>총 채무액:</strong> 1억 2,000만 원</li>
-            <li><strong>조정 후 총변제액:</strong> 2,160만 원 (원금의 18%만 변제)</li>
-            <li><strong>탕감율:</strong> 82% 면책 결정</li>
-            <li><strong>월 변제금:</strong> 60만 원 (36개월 납입)</li>
-          </ul>
-        </div>
-        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
-          [이곳에 인가결정의 의의 또는 채무자의 갱생 소회를 작성해 주세요]
-        </p>
-      </div>
-    </div>
-  </div>
-</div>`);
+      setEditorCategory("코인/투자 채무"); // 성공사례의 기본 카테고리 중 하나로 설정
+      setEditorContent("");
+      setEditorFacts("");
+      setEditorIssues("");
+      setEditorStrategy("");
+      setEditorDecision("");
       setEditorAge("");
       setEditorJob("");
       setEditorOriginalDebt("");
@@ -684,21 +693,99 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     setEditorError("");
     setEditorSuccess("");
 
-    if (!editorTitle.trim() || !editorCategory.trim() || !editorContent.trim()) {
-      setEditorError("제목, 카테고리, 본문 내용은 필수 기입 요소입니다.");
-      return;
+    const isColumn = editorCategory === "칼럼";
+    if (isColumn) {
+      if (!editorTitle.trim() || !editorCategory.trim() || !editorFacts.trim()) {
+        setEditorError("제목, 카테고리, 본문 내용은 필수 기입 요소입니다.");
+        return;
+      }
+    } else {
+      if (!editorTitle.trim() || !editorCategory.trim() || !editorFacts.trim() || !editorIssues.trim() || !editorStrategy.trim() || !editorDecision.trim()) {
+        setEditorError("제목, 카테고리, 그리고 성공사례 4단계 항목(사실관계, 핵심쟁점, 신청전략, 인가결정)은 모두 필수 기입 요소입니다.");
+        return;
+      }
+    }
+
+    let finalContent = "";
+    if (isColumn) {
+      const formattedContent = editorFacts.trim().replace(/\n/g, '<br/>');
+      finalContent = `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">${formattedContent}</div>`;
+    } else {
+      const factsHtml = editorFacts.trim().replace(/\n/g, '<br/>');
+      const issuesHtml = editorIssues.trim().replace(/\n/g, '<br/>');
+      const strategyHtml = editorStrategy.trim().replace(/\n/g, '<br/>');
+      const decisionHtml = editorDecision.trim().replace(/\n/g, '<br/>');
+
+      let debtBoxHtml = "";
+      if (editorOriginalDebt.trim() || editorReducedDebt.trim() || editorMonthlyPayment.trim() || editorReductionRate.trim()) {
+        debtBoxHtml = `<div class="bg-amber-500/[0.03] p-3 rounded-lg border border-amber-500/10 my-2 text-xs sm:text-[13.5px] text-slate-700">
+          <ul class="list-none space-y-1.5 pl-1">
+            ${editorOriginalDebt.trim() ? `<li><strong>총 채무액:</strong> ${editorOriginalDebt.trim()}</li>` : ""}
+            ${editorReducedDebt.trim() ? `<li><strong>조정 후 총변제액:</strong> ${editorReducedDebt.trim()}</li>` : ""}
+            ${editorReductionRate.trim() ? `<li><strong>탕감율:</strong> ${editorReductionRate.trim()}% 면책 결정</li>` : ""}
+            ${editorMonthlyPayment.trim() ? `<li><strong>월 변제금:</strong> ${editorMonthlyPayment.trim()}</li>` : ""}
+          </ul>
+        </div>`;
+      }
+
+      finalContent = `<div class="space-y-6 text-slate-700 font-semibold leading-loose text-xs sm:text-[14.5px] text-left">
+  <div class="bg-amber-500/[0.06] text-amber-900 px-4 py-3 rounded-2xl border border-amber-500/20 font-black flex items-center gap-2 mb-4">
+    <span>💡 여환동 법무사의 사건 분석 보고서</span>
+  </div>
+
+  <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60 my-4">
+    <div class="space-y-4">
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          1. 사실관계
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+          ${factsHtml}
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          2. 핵심쟁점
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+          ${issuesHtml}
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          3. 신청전략
+        </h4>
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 mt-1 leading-relaxed">
+          ${strategyHtml}
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-black text-slate-900 flex items-center gap-1.5">
+          4. 인가결정
+        </h4>
+        ${debtBoxHtml}
+        <p class="text-xs sm:text-[13.5px] text-slate-650 pl-3 leading-relaxed">
+          ${decisionHtml}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>`;
     }
 
     const payload = {
       title: editorTitle.trim(),
       category: editorCategory.trim(),
-      content: editorContent.trim(),
+      content: finalContent,
       age: editorAge.trim() || undefined,
       job: editorJob.trim() || undefined,
       originalDebt: editorOriginalDebt.trim() || undefined,
       reducedDebt: editorReducedDebt.trim() || undefined,
       monthlyPayment: editorMonthlyPayment.trim() || undefined,
-      reductionRate: editorReductionRate.trim() ? Number(editorReductionRate) : undefined,
+      reductionRate: editorReductionRate.trim() ? Number(editorReductionRate.trim()) : undefined,
       status: statusVal,
       createdAt: editorCreatedAt ? new Date(editorCreatedAt).toISOString() : new Date().toISOString()
     };
@@ -756,6 +843,62 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
       setIsArticleDeleteConfirmOpen(false);
       setDeleteArticleId("");
       setDeleteArticleTitle("");
+    }
+  };
+
+  const handleQuickPublish = async (id: string, title: string) => {
+    if (!window.confirm(`'${title}'\n\n위 성공사례 글을 즉시 등록완료(배포) 상태로 전환하시겠습니까?\n등록 즉시 홈페이지에 실시간 공개됩니다.`)) return;
+    try {
+      const res = await fetch(`/api/articles/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: "published" })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showCustomAlert("성공", "성공사례 글이 실시간 등록/배포되었습니다!", "success");
+        fetchArticles();
+      } else {
+        showCustomAlert("오류", data.error || "상태 변경 중 에러가 발생했습니다.", "error");
+      }
+    } catch (err) {
+      console.error("Error during quick publish:", err);
+      showCustomAlert("오류", "서버 통신 실패가 발생했습니다.", "error");
+    }
+  };
+
+  const handlePublishAllDrafts = async () => {
+    const draftCount = articles.filter(art => art.status === "draft").length;
+    if (draftCount === 0) {
+      showCustomAlert("정보", "현재 임시저장(대기) 상태인 성공사례 글이 없습니다.", "info");
+      return;
+    }
+
+    if (!window.confirm(`[대기 성공사례 전체 일괄 등록]\n\n현재 임시저장(대기) 상태인 성공사례 ${draftCount}개 전체를 즉시 '등록완료' 상태로 일괄 게시하시겠습니까?\n\n등록 즉시 홈페이지에 실시간 반영되어 페이지네이션이 대폭 확장됩니다.`)) return;
+
+    setArticlesLoading(true);
+    try {
+      const res = await fetch("/api/admin/articles/publish-all-drafts", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showCustomAlert("성공", `성공적으로 총 ${data.count || draftCount}개의 대기 글이 일괄 등록/배포되었습니다!`, "success");
+        fetchArticles();
+      } else {
+        showCustomAlert("오류", data.error || "일괄 등록 처리 중 에러가 발생했습니다.", "error");
+      }
+    } catch (err) {
+      console.error("Error publishing all drafts:", err);
+      showCustomAlert("오류", "서버 통신 실패가 발생했습니다.", "error");
+    } finally {
+      setArticlesLoading(false);
     }
   };
 
@@ -991,12 +1134,12 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     const isSimple = !!sub.isSimpleConsultation || !sub.occupation;
     if (!isSimple) return false;
 
-    const matchesSearch = 
+    const matchesSearch =
       sub.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       sub.phone.includes(searchQuery);
-    
+
     const matchesStatus = statusFilter === "all" || sub.status === statusFilter;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -1080,7 +1223,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
             >
               <div className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-600 to-violet-600" />
-                
+
                 <div className="flex flex-col items-center text-center space-y-4 mb-8 pt-4">
                   <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-white shadow-lg shadow-emerald-50">
                     <Lock className="w-6 h-6 text-emerald-400 stroke-[2]" />
@@ -1121,7 +1264,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                     로그인 하기
                   </button>
                 </form>
-                
+
                 <div className="mt-6 pt-6 border-t border-slate-100 text-center">
                   <button
                     onClick={() => { handleLogout(); onBack(); }}
@@ -1144,14 +1287,14 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
               {/* Header Navbar banner */}
               <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-                
+
                 <div className="space-y-2 relative z-10">
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full text-[10px] font-black tracking-wider uppercase">
                       <Database className="w-3 h-3 text-emerald-400 animate-pulse" />
                       실시간 동기화 완료
                     </span>
-                    
+
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
                     상담 신청 고객
@@ -1183,7 +1326,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                     <User className="w-4 h-4 text-pink-400" />
                     디자인/사진 변경
                   </button>
-                   <button
+                  <button
                     onClick={handleOpenKakaoUrlModal}
                     className="p-3 bg-white/5 hover:bg-white/10 active:scale-95 text-amber-300 hover:text-amber-200 font-bold rounded-xl text-xs transition-colors cursor-pointer flex items-center gap-1.5 border border-white/5"
                     title="카카오톡 1:1 상담 비즈니스 채널 주소 설정"
@@ -1220,21 +1363,19 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
               <div className="flex gap-2 border-b border-slate-200 pb-4 mb-6">
                 <button
                   onClick={() => setActiveTab("list")}
-                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
-                    activeTab === "list"
-                      ? "bg-slate-900 text-white shadow-md"
-                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
-                  }`}
+                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${activeTab === "list"
+                    ? "bg-slate-900 text-white shadow-md"
+                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                    }`}
                 >
                   📋 상담 신청 고객 리스트
                 </button>
                 <button
                   onClick={() => setActiveTab("articles")}
-                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
-                    activeTab === "articles"
-                      ? "bg-slate-900 text-white shadow-md"
-                      : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
-                  }`}
+                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${activeTab === "articles"
+                    ? "bg-slate-900 text-white shadow-md"
+                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                    }`}
                 >
                   ✍ 성공사례 관리
                 </button>
@@ -1244,350 +1385,348 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                 <>
                   {/* Statistics Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-                <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
-                  <span className="block text-[11px] text-slate-400 font-bold uppercase tracking-wider">누적 총 신청건수</span>
-                  <div className="flex items-baseline gap-1 mt-2">
-                    <span className="text-2xl sm:text-3xl font-black text-slate-950">{totalInquiries}</span>
-                    <span className="text-xs text-slate-400 font-bold">건</span>
-                  </div>
-                </div>
+                    <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
+                      <span className="block text-[11px] text-slate-400 font-bold uppercase tracking-wider">누적 총 신청건수</span>
+                      <div className="flex items-baseline gap-1 mt-2">
+                        <span className="text-2xl sm:text-3xl font-black text-slate-950">{totalInquiries}</span>
+                        <span className="text-xs text-slate-400 font-bold">건</span>
+                      </div>
+                    </div>
 
-                <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
-                  <span className="block text-[11px] text-amber-500 font-black uppercase tracking-wider">신규 신청 확인</span>
-                  <div className="flex items-baseline gap-1 mt-2">
-                    <span className="text-2xl sm:text-3xl font-black text-amber-600">{newRequests}</span>
-                    <span className="text-xs text-slate-400 font-bold">건</span>
-                  </div>
-                </div>
+                    <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
+                      <span className="block text-[11px] text-amber-500 font-black uppercase tracking-wider">신규 신청 확인</span>
+                      <div className="flex items-baseline gap-1 mt-2">
+                        <span className="text-2xl sm:text-3xl font-black text-amber-600">{newRequests}</span>
+                        <span className="text-xs text-slate-400 font-bold">건</span>
+                      </div>
+                    </div>
 
-                <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
-                  <span className="block text-[11px] text-emerald-600 font-black uppercase tracking-wider">상담 진행지표</span>
-                  <div className="flex items-baseline gap-1 mt-2">
-                    <span className="text-2xl sm:text-3xl font-black text-emerald-600">{inConsultation}</span>
-                    <span className="text-xs text-slate-400 font-bold">건</span>
-                  </div>
-                </div>
+                    <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
+                      <span className="block text-[11px] text-emerald-600 font-black uppercase tracking-wider">상담 진행지표</span>
+                      <div className="flex items-baseline gap-1 mt-2">
+                        <span className="text-2xl sm:text-3xl font-black text-emerald-600">{inConsultation}</span>
+                        <span className="text-xs text-slate-400 font-bold">건</span>
+                      </div>
+                    </div>
 
-                <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
-                  <span className="block text-[11px] text-indigo-600 font-black uppercase tracking-wider">최종 인가예정건</span>
-                  <div className="flex items-baseline gap-1 mt-2">
-                    <span className="text-2xl sm:text-3xl font-black text-indigo-600">{completeFiling}</span>
-                    <span className="text-xs text-slate-400 font-bold">건</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Filtering Controls */}
-              <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs flex flex-col md:flex-row gap-4 items-center justify-between">
-                {/* Search */}
-                <div className="relative w-full md:max-w-xs">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
-                  <input
-                    type="text"
-                    placeholder="성함 혹은 연락처 검색"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  />
-                </div>
-
-                {/* Status Tabs filters */}
-                <div className="flex flex-wrap gap-1.5 w-full md:w-auto justify-start md:justify-end">
-                  {["all", "신청완료", "상담중", "서류요청", "접수완료", "완료", "기각"].map((filter) => (
-                    <button
-                      key={filter}
-                      onClick={() => setStatusFilter(filter)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        statusFilter === filter
-                          ? "bg-slate-900 border-slate-900 text-white shadow-3xs"
-                          : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/50"
-                      }`}
-                    >
-                      {filter === "all" ? "전체 보기" : filter}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selective / Bulk Delete Bar */}
-              {submissions.length > 0 && !loading && (
-                <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-3s flex flex-wrap items-center justify-between gap-3 text-slate-800">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="select-all-checkbox"
-                      checked={filteredSubmissions.length > 0 && filteredSubmissions.every(sub => selectedIds.includes(sub.id))}
-                      onChange={(e) => handleSelectAllVisible(e.target.checked)}
-                      className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 transition-all cursor-pointer"
-                    />
-                    <label htmlFor="select-all-checkbox" className="text-xs text-slate-700 font-extrabold cursor-pointer select-none">
-                      현재 목록 전체 선택 ({filteredSubmissions.length}건 중 {filteredSubmissions.filter(s => selectedIds.includes(s.id)).length}건 선택됨)
-                    </label>
+                    <div className="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-3xs">
+                      <span className="block text-[11px] text-indigo-600 font-black uppercase tracking-wider">최종 인가예정건</span>
+                      <div className="flex items-baseline gap-1 mt-2">
+                        <span className="text-2xl sm:text-3xl font-black text-indigo-600">{completeFiling}</span>
+                        <span className="text-xs text-slate-400 font-bold">건</span>
+                      </div>
+                    </div>
                   </div>
 
-                  {selectedIds.length > 0 && (
-                    <div className="flex items-center gap-2.5 animate-fade-in">
-                      <span className="text-xs text-rose-600 font-black">
-                        총 {selectedIds.length}개 선택됨
-                      </span>
-                      <button
-                        onClick={handleDeleteSelectedClick}
-                        className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 hover:text-rose-700 font-bold rounded-xl text-xs flex items-center gap-1.5 border border-rose-200 transition-all cursor-pointer"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                        선택 삭제 (영구 제거)
-                      </button>
+                  {/* Filtering Controls */}
+                  <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs flex flex-col md:flex-row gap-4 items-center justify-between">
+                    {/* Search */}
+                    <div className="relative w-full md:max-w-xs">
+                      <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                      <input
+                        type="text"
+                        placeholder="성함 혹은 연락처 검색"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      />
+                    </div>
+
+                    {/* Status Tabs filters */}
+                    <div className="flex flex-wrap gap-1.5 w-full md:w-auto justify-start md:justify-end">
+                      {["all", "신청완료", "상담중", "서류요청", "접수완료", "완료", "기각"].map((filter) => (
+                        <button
+                          key={filter}
+                          onClick={() => setStatusFilter(filter)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${statusFilter === filter
+                            ? "bg-slate-900 border-slate-900 text-white shadow-3xs"
+                            : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/50"
+                            }`}
+                        >
+                          {filter === "all" ? "전체 보기" : filter}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Selective / Bulk Delete Bar */}
+                  {submissions.length > 0 && !loading && (
+                    <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-3s flex flex-wrap items-center justify-between gap-3 text-slate-800">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="select-all-checkbox"
+                          checked={filteredSubmissions.length > 0 && filteredSubmissions.every(sub => selectedIds.includes(sub.id))}
+                          onChange={(e) => handleSelectAllVisible(e.target.checked)}
+                          className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 transition-all cursor-pointer"
+                        />
+                        <label htmlFor="select-all-checkbox" className="text-xs text-slate-700 font-extrabold cursor-pointer select-none">
+                          현재 목록 전체 선택 ({filteredSubmissions.length}건 중 {filteredSubmissions.filter(s => selectedIds.includes(s.id)).length}건 선택됨)
+                        </label>
+                      </div>
+
+                      {selectedIds.length > 0 && (
+                        <div className="flex items-center gap-2.5 animate-fade-in">
+                          <span className="text-xs text-rose-600 font-black">
+                            총 {selectedIds.length}개 선택됨
+                          </span>
+                          <button
+                            onClick={handleDeleteSelectedClick}
+                            className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 hover:text-rose-700 font-bold rounded-xl text-xs flex items-center gap-1.5 border border-rose-200 transition-all cursor-pointer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            선택 삭제 (영구 제거)
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
-                </div>
-              )}
 
-              {/* Submissions List Container */}
-              <div className="space-y-4">
-                {loading ? (
-                  <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
-                    <RefreshCw className="w-10 h-10 text-emerald-500 animate-spin" />
-                    <p className="text-sm text-slate-400 font-bold">대표 행정서약 서버로부터 DB를 유도하는 중입니다...</p>
-                  </div>
-                ) : filteredSubmissions.length === 0 ? (
-                  <div className="py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 md:text-sm font-semibold">
-                    조건에 해당하는 진단자 인입 데이터가 발견되지 않았습니다.
-                  </div>
-                ) : (
-                  filteredSubmissions.map((sub, idx) => {
-                    const isRevealed = !!revealedPhones[sub.id];
-                    return (
-                      <motion.div
-                        key={sub.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.04 }}
-                        className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-3xs hover:shadow-xs transition-all relative overflow-hidden"
-                      >
-                        {/* Upper flex bar */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5 mb-5">
-                          <div className="flex flex-wrap items-center gap-3">
-                            <input
-                              type="checkbox"
-                              checked={selectedIds.includes(sub.id)}
-                              onChange={() => toggleSelectSubmission(sub.id)}
-                              className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-200 transition-all cursor-pointer mr-0.5"
-                            />
-                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 font-extrabold text-sm border border-slate-200/50">
-                              <User className="w-5 h-5 text-slate-500" />
-                            </div>
-                            <div>
-                               <div className="flex items-center gap-2">
-                                 <h3 className="text-base font-black text-slate-900 leading-tight flex items-center gap-1.5">
-                                   {sub.name} 
-                                   <span className="text-[11px] font-bold text-slate-400">
-                                     {sub.isSimpleConsultation || !sub.occupation ? "(간편 상담)" : `(${sub.ageGroup || "나이 미지정"})`}
-                                   </span>
-                                 </h3>
-                                 {/* Region Tag */}
-                                 {!(sub.isSimpleConsultation || !sub.occupation) && (
-                                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-black border border-slate-200/60">
-                                     <MapPin className="w-3 h-3" />
-                                     {formatRegion(sub.region)}
-                                   </span>
-                                 )}
-                               </div>
-                              <p className="text-slate-400 text-[10px] font-medium leading-none mt-1">
-                                접수번호: <span className="font-mono text-slate-900 font-bold">{sub.id}</span> | 등록일시: {new Date(sub.createdAt).toLocaleString("ko-KR")}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Status Select action and Delete */}
-                          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                            <span className="text-[11px] font-black text-slate-400 mr-1.5 hidden sm:inline">상태 관리:</span>
-                            <select
-                              value={sub.status}
-                              onChange={(e) => handleUpdateStatus(sub.id, e.target.value)}
-                              className={`px-3 py-1.5 font-bold rounded-xl text-xs border cursor-pointer outline-none transition-colors ${getStatusColor(sub.status)}`}
-                            >
-                              <option value="신청완료">신청완료</option>
-                              <option value="상담중">상담중</option>
-                              <option value="서류요청">서류요청</option>
-                              <option value="접수완료">접수완료</option>
-                              <option value="완료">완료</option>
-                              <option value="기각">기각</option>
-                            </select>
-                            
-                            <button
-                              onClick={() => handleDeleteSubmissionClick(sub.id, sub.name)}
-                              className="p-2.5 bg-rose-50/50 hover:bg-rose-50 text-rose-500 hover:text-rose-600 rounded-xl transition-all border border-rose-100/30 cursor-pointer"
-                              title="삭제"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Customer specifications grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                          {/* Left Column: Essential details */}
-                          <div className="space-y-3.5 bg-slate-50/70 rounded-2xl p-4 sm:p-5 border border-slate-100">
-                            {(() => {
-                              const isSimple = !!sub.isSimpleConsultation || !sub.occupation;
-                              return (
-                                <>
-                                  <h4 className="text-[11px] font-black text-slate-400 tracking-wide uppercase border-b border-slate-200/60 pb-1.5 flex items-center justify-between">
-                                    <span>{isSimple ? "간편 상담 예약 사양" : "자가진단 분석 지표"}</span>
-                                    {isSimple && (
-                                      <span className="text-[9px] bg-indigo-50 text-indigo-600 font-extrabold px-1.5 py-0.5 rounded border border-indigo-100 uppercase tracking-wider">간편 상담</span>
+                  {/* Submissions List Container */}
+                  <div className="space-y-4">
+                    {loading ? (
+                      <div className="py-20 text-center flex flex-col items-center justify-center gap-3">
+                        <RefreshCw className="w-10 h-10 text-emerald-500 animate-spin" />
+                        <p className="text-sm text-slate-400 font-bold">대표 행정서약 서버로부터 DB를 유도하는 중입니다...</p>
+                      </div>
+                    ) : filteredSubmissions.length === 0 ? (
+                      <div className="py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200 text-slate-400 md:text-sm font-semibold">
+                        조건에 해당하는 진단자 인입 데이터가 발견되지 않았습니다.
+                      </div>
+                    ) : (
+                      filteredSubmissions.map((sub, idx) => {
+                        const isRevealed = !!revealedPhones[sub.id];
+                        return (
+                          <motion.div
+                            key={sub.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.04 }}
+                            className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-3xs hover:shadow-xs transition-all relative overflow-hidden"
+                          >
+                            {/* Upper flex bar */}
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5 mb-5">
+                              <div className="flex flex-wrap items-center gap-3">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedIds.includes(sub.id)}
+                                  onChange={() => toggleSelectSubmission(sub.id)}
+                                  className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-200 transition-all cursor-pointer mr-0.5"
+                                />
+                                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 font-extrabold text-sm border border-slate-200/50">
+                                  <User className="w-5 h-5 text-slate-500" />
+                                </div>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <h3 className="text-base font-black text-slate-900 leading-tight flex items-center gap-1.5">
+                                      {sub.name}
+                                      <span className="text-[11px] font-bold text-slate-400">
+                                        {sub.isSimpleConsultation || !sub.occupation ? "(간편 상담)" : `(${sub.ageGroup || "나이 미지정"})`}
+                                      </span>
+                                    </h3>
+                                    {/* Region Tag */}
+                                    {!(sub.isSimpleConsultation || !sub.occupation) && (
+                                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-black border border-slate-200/60">
+                                        <MapPin className="w-3 h-3" />
+                                        {formatRegion(sub.region)}
+                                      </span>
                                     )}
-                                  </h4>
-                                  
-                                  <div className="space-y-2.5 text-xs">
-                                    {/* Phone */}
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-slate-400 font-bold flex items-center gap-1">
-                                        <Phone className="w-3.5 h-3.5" /> 연락처
-                                      </span>
-                                      <span className="flex items-center gap-1.5 font-mono font-black text-slate-800">
-                                        {getMaskedPhone(sub.phone, isRevealed)}
-                                        <button
-                                          onClick={() => togglePhoneReveal(sub.id)}
-                                          className="p-1 rounded-sm hover:bg-slate-200 text-slate-400 hover:text-slate-700 cursor-pointer"
-                                          title={isRevealed ? "가리기" : "번호 보기"}
-                                        >
-                                          {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-                                        </button>
-                                      </span>
-                                    </div>
+                                  </div>
+                                  <p className="text-slate-400 text-[10px] font-medium leading-none mt-1">
+                                    접수번호: <span className="font-mono text-slate-900 font-bold">{sub.id}</span> | 등록일시: {new Date(sub.createdAt).toLocaleString("ko-KR")}
+                                  </p>
+                                </div>
+                              </div>
 
-                                    {/* Occupation */}
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-slate-400 font-bold">직종 형태</span>
-                                      <span className={`font-extrabold ${isSimple ? "text-slate-400 font-medium font-sans" : "text-slate-800"}`}>
-                                        {isSimple ? "-(간편예약 미입력)" : formatOccupation(sub.occupation)}
-                                      </span>
-                                    </div>
+                              {/* Status Select action and Delete */}
+                              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                                <span className="text-[11px] font-black text-slate-400 mr-1.5 hidden sm:inline">상태 관리:</span>
+                                <select
+                                  value={sub.status}
+                                  onChange={(e) => handleUpdateStatus(sub.id, e.target.value)}
+                                  className={`px-3 py-1.5 font-bold rounded-xl text-xs border cursor-pointer outline-none transition-colors ${getStatusColor(sub.status)}`}
+                                >
+                                  <option value="신청완료">신청완료</option>
+                                  <option value="상담중">상담중</option>
+                                  <option value="서류요청">서류요청</option>
+                                  <option value="접수완료">접수완료</option>
+                                  <option value="완료">완료</option>
+                                  <option value="기각">기각</option>
+                                </select>
 
-                                    {/* Monthly Income */}
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-slate-400 font-bold">희망 환산 소득</span>
+                                <button
+                                  onClick={() => handleDeleteSubmissionClick(sub.id, sub.name)}
+                                  className="p-2.5 bg-rose-50/50 hover:bg-rose-50 text-rose-500 hover:text-rose-600 rounded-xl transition-all border border-rose-100/30 cursor-pointer"
+                                  title="삭제"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Customer specifications grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                              {/* Left Column: Essential details */}
+                              <div className="space-y-3.5 bg-slate-50/70 rounded-2xl p-4 sm:p-5 border border-slate-100">
+                                {(() => {
+                                  const isSimple = !!sub.isSimpleConsultation || !sub.occupation;
+                                  return (
+                                    <>
+                                      <h4 className="text-[11px] font-black text-slate-400 tracking-wide uppercase border-b border-slate-200/60 pb-1.5 flex items-center justify-between">
+                                        <span>{isSimple ? "간편 상담 예약 사양" : "자가진단 분석 지표"}</span>
+                                        {isSimple && (
+                                          <span className="text-[9px] bg-indigo-50 text-indigo-600 font-extrabold px-1.5 py-0.5 rounded border border-indigo-100 uppercase tracking-wider">간편 상담</span>
+                                        )}
+                                      </h4>
+
+                                      <div className="space-y-2.5 text-xs">
+                                        {/* Phone */}
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-slate-400 font-bold flex items-center gap-1">
+                                            <Phone className="w-3.5 h-3.5" /> 연락처
+                                          </span>
+                                          <span className="flex items-center gap-1.5 font-mono font-black text-slate-800">
+                                            {getMaskedPhone(sub.phone, isRevealed)}
+                                            <button
+                                              onClick={() => togglePhoneReveal(sub.id)}
+                                              className="p-1 rounded-sm hover:bg-slate-200 text-slate-400 hover:text-slate-700 cursor-pointer"
+                                              title={isRevealed ? "가리기" : "번호 보기"}
+                                            >
+                                              {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                                            </button>
+                                          </span>
+                                        </div>
+
+                                        {/* Occupation */}
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-slate-400 font-bold">직종 형태</span>
+                                          <span className={`font-extrabold ${isSimple ? "text-slate-400 font-medium font-sans" : "text-slate-800"}`}>
+                                            {isSimple ? "-(간편예약 미입력)" : formatOccupation(sub.occupation)}
+                                          </span>
+                                        </div>
+
+                                        {/* Monthly Income */}
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-slate-400 font-bold">희망 환산 소득</span>
+                                          {isSimple ? (
+                                            <span className="text-slate-400 font-medium font-sans">-(간편예약 미입력)</span>
+                                          ) : (
+                                            <span className="font-extrabold text-slate-900 bg-teal-50 border border-teal-200 text-teal-800 px-1.5 py-0.5 rounded text-[10px]">
+                                              {formatIncomeRange(sub.monthlyIncome)}
+                                            </span>
+                                          )}
+                                        </div>
+
+                                        {/* Dependents */}
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-slate-400 font-bold">총 부양가족</span>
+                                          <span className={`font-extrabold ${isSimple ? "text-slate-400 font-medium font-sans" : "text-slate-800"}`}>
+                                            {isSimple ? "-(간편예약 미입력)" : (sub.dependentsCount ? `본인 포함 ${sub.dependentsCount}명` : "기본 1명 (본인)")}
+                                          </span>
+                                        </div>
+
+                                        {/* Core asset status */}
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-slate-400 font-bold">부채 &gt; 자산 여부</span>
+                                          {isSimple ? (
+                                            <span className="text-slate-400 font-medium font-sans">-(간편예약 미입력)</span>
+                                          ) : (
+                                            <span className="font-black text-slate-900 flex items-center gap-0.5">
+                                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                                              부채가 더 많음 (적격)
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })()}
+                              </div>
+
+                              {/* Middle Column: Debt levels & reasons */}
+                              {(() => {
+                                const isSimple = !!sub.isSimpleConsultation || !sub.occupation;
+                                return (
+                                  <div className="space-y-4">
+                                    <div>
+                                      <span className="block text-[11px] font-black text-slate-400 uppercase tracking-wide">
+                                        입력된 무담보 채무 범위액
+                                      </span>
                                       {isSimple ? (
-                                        <span className="text-slate-400 font-medium font-sans">-(간편예약 미입력)</span>
+                                        <div className="flex items-center gap-1.5 mt-1.5 text-xs text-slate-400 font-semibold font-sans">
+                                          <Wallet className="w-4 h-4 text-slate-350" />
+                                          -(간편 예약 경로 미입력)
+                                        </div>
                                       ) : (
-                                        <span className="font-extrabold text-slate-900 bg-teal-50 border border-teal-200 text-teal-800 px-1.5 py-0.5 rounded text-[10px]">
-                                          {formatIncomeRange(sub.monthlyIncome)}
-                                        </span>
+                                        <div className="flex items-center gap-1.5 mt-1.5 text-base sm:text-lg font-black text-rose-600">
+                                          <Wallet className="w-5 h-5 text-rose-500" />
+                                          {formatDebtAmount(sub.debtAmount)}
+                                        </div>
                                       )}
                                     </div>
 
-                                    {/* Dependents */}
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-slate-400 font-bold">총 부양가족</span>
-                                      <span className={`font-extrabold ${isSimple ? "text-slate-400 font-medium font-sans" : "text-slate-800"}`}>
-                                        {isSimple ? "-(간편예약 미입력)" : (sub.dependentsCount ? `본인 포함 ${sub.dependentsCount}명` : "기본 1명 (본인)")}
+                                    <div>
+                                      <span className="block text-[11px] font-black text-slate-400 uppercase tracking-wide mb-1.5">
+                                        연체 및 채무가 가해온 압력 사유
                                       </span>
-                                    </div>
+                                      <div className="flex flex-wrap gap-1">
+                                        {sub.difficulties && sub.difficulties.length > 0 ? (
+                                          sub.difficulties.map((diff, index) => {
+                                            let label = diff;
+                                            if (diff === "high_interest") label = "고금리 대출/일수";
+                                            else if (diff === "living_cost") label = "생활비 부족";
+                                            else if (diff === "business_hardship") label = "사업 운영 악화";
+                                            else if (diff === "scam_guarantee") label = "보증 피해";
+                                            else if (diff === "investment_loss") label = "투자/주식/코인";
+                                            else if (diff === "medical_cost") label = "의료/병원비";
 
-                                    {/* Core asset status */}
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-slate-400 font-bold">부채 &gt; 자산 여부</span>
-                                      {isSimple ? (
-                                        <span className="text-slate-400 font-medium font-sans">-(간편예약 미입력)</span>
-                                      ) : (
-                                        <span className="font-black text-slate-900 flex items-center gap-0.5">
-                                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                                          부채가 더 많음 (적격)
-                                        </span>
-                                      )}
+                                            const isSpecialIcon = diff === "전화상담" || diff === "카카오톡상담";
+                                            return (
+                                              <span
+                                                key={index}
+                                                className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-lg border ${isSpecialIcon
+                                                  ? "bg-indigo-50 border-indigo-100 text-indigo-700"
+                                                  : "bg-rose-50 border-rose-100 text-rose-700"
+                                                  }`}
+                                              >
+                                                #{label}
+                                              </span>
+                                            );
+                                          })
+                                        ) : (
+                                          <span className="text-slate-400 text-xs font-semibold">선택 사유 없음</span>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
-                                </>
-                              );
-                            })()}
-                          </div>
+                                );
+                              })()}
 
-                           {/* Middle Column: Debt levels & reasons */}
-                           {(() => {
-                             const isSimple = !!sub.isSimpleConsultation || !sub.occupation;
-                             return (
-                               <div className="space-y-4">
-                                 <div>
-                                   <span className="block text-[11px] font-black text-slate-400 uppercase tracking-wide">
-                                     입력된 무담보 채무 범위액
-                                   </span>
-                                   {isSimple ? (
-                                     <div className="flex items-center gap-1.5 mt-1.5 text-xs text-slate-400 font-semibold font-sans">
-                                       <Wallet className="w-4 h-4 text-slate-350" />
-                                       -(간편 예약 경로 미입력)
-                                     </div>
-                                   ) : (
-                                     <div className="flex items-center gap-1.5 mt-1.5 text-base sm:text-lg font-black text-rose-600">
-                                       <Wallet className="w-5 h-5 text-rose-500" />
-                                       {formatDebtAmount(sub.debtAmount)}
-                                     </div>
-                                   )}
-                                 </div>
-
-                                 <div>
-                                   <span className="block text-[11px] font-black text-slate-400 uppercase tracking-wide mb-1.5">
-                                     연체 및 채무가 가해온 압력 사유
-                                   </span>
-                                   <div className="flex flex-wrap gap-1">
-                                     {sub.difficulties && sub.difficulties.length > 0 ? (
-                                       sub.difficulties.map((diff, index) => {
-                                         let label = diff;
-                                         if (diff === "high_interest") label = "고금리 대출/일수";
-                                         else if (diff === "living_cost") label = "생활비 부족";
-                                         else if (diff === "business_hardship") label = "사업 운영 악화";
-                                         else if (diff === "scam_guarantee") label = "보증 피해";
-                                         else if (diff === "investment_loss") label = "투자/주식/코인";
-                                         else if (diff === "medical_cost") label = "의료/병원비";
-                                         
-                                         const isSpecialIcon = diff === "전화상담" || diff === "카카오톡상담";
-                                         return (
-                                           <span
-                                             key={index}
-                                             className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-lg border ${
-                                               isSpecialIcon
-                                                 ? "bg-indigo-50 border-indigo-100 text-indigo-700"
-                                                 : "bg-rose-50 border-rose-100 text-rose-700"
-                                             }`}
-                                           >
-                                             #{label}
-                                           </span>
-                                         );
-                                       })
-                                     ) : (
-                                       <span className="text-slate-400 text-xs font-semibold">선택 사유 없음</span>
-                                     )}
-                                   </div>
-                                 </div>
-                               </div>
-                             );
-                           })()}
-
-                          {/* Right Column: Counselor Notes Workspace */}
-                          <div className="space-y-2 flex flex-col justify-between">
-                            <div className="space-y-1">
-                              <span className="flex items-center gap-1 text-[11px] font-black text-slate-400 uppercase tracking-wide">
-                                <StickyNote className="w-3.5 h-3.5 text-sky-500" />
-                                법률상담 직무 노트 (실시간 기록)
-                              </span>
-                              <textarea
-                                defaultValue={sub.counselorNotes || ""}
-                                onBlur={(e) => handleUpdateNotes(sub.id, e.target.value)}
-                                placeholder="고객 통화 내용 또는 특이 보정 사항을 기입하고 바깥을 클릭(포커스아웃)하면 자동 실시간 저장됩니다."
-                                className="w-full h-24 p-3 bg-indigo-50/20 hover:bg-indigo-50/40 border border-indigo-100 rounded-2xl text-xs font-semibold text-slate-800 outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500/80 transition-all placeholder:text-slate-400 placeholder:font-normal leading-relaxed"
-                              />
+                              {/* Right Column: Counselor Notes Workspace */}
+                              <div className="space-y-2 flex flex-col justify-between">
+                                <div className="space-y-1">
+                                  <span className="flex items-center gap-1 text-[11px] font-black text-slate-400 uppercase tracking-wide">
+                                    <StickyNote className="w-3.5 h-3.5 text-sky-500" />
+                                    법률상담 직무 노트 (실시간 기록)
+                                  </span>
+                                  <textarea
+                                    defaultValue={sub.counselorNotes || ""}
+                                    onBlur={(e) => handleUpdateNotes(sub.id, e.target.value)}
+                                    placeholder="고객 통화 내용 또는 특이 보정 사항을 기입하고 바깥을 클릭(포커스아웃)하면 자동 실시간 저장됩니다."
+                                    className="w-full h-24 p-3 bg-indigo-50/20 hover:bg-indigo-50/40 border border-indigo-100 rounded-2xl text-xs font-semibold text-slate-800 outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500/80 transition-all placeholder:text-slate-400 placeholder:font-normal leading-relaxed"
+                                  />
+                                </div>
+                                <p className="text-[10px] text-right text-emerald-600 font-bold block leading-none">
+                                  ※ 입력상자를 벗어나면 서버 DB에 즉각 안전 보존됩니다.
+                                </p>
+                              </div>
                             </div>
-                            <p className="text-[10px] text-right text-emerald-600 font-bold block leading-none">
-                              ※ 입력상자를 벗어나면 서버 DB에 즉각 안전 보존됩니다.
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })
-                )}
-              </div>
-              </>
+                          </motion.div>
+                        );
+                      })
+                    )}
+                  </div>
+                </>
               )}
 
               {/* Articles Management View */}
@@ -1606,7 +1745,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                           className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         />
                       </div>
-                      
+
                       {/* Draft Status Filters */}
                       <div className="flex gap-1 bg-slate-50 p-1 rounded-xl border border-slate-200/60">
                         {[
@@ -1617,24 +1756,34 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                           <button
                             key={btn.key}
                             onClick={() => setStatusFilterArticles(btn.key)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                              statusFilterArticles === btn.key
-                                ? "bg-slate-900 text-white shadow-3xs"
-                                : "text-slate-650 hover:bg-slate-200/50"
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${statusFilterArticles === btn.key
+                              ? "bg-slate-900 text-white shadow-3xs"
+                              : "text-slate-650 hover:bg-slate-200/50"
+                              }`}
                           >
                             {btn.label}
                           </button>
                         ))}
                       </div>
                     </div>
-                    
-                    <button
-                      onClick={() => handleOpenEditor(null)}
-                      className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
-                    >
-                      ✍ 새 성공사례 작성하기
-                    </button>
+
+                    <div className="flex flex-wrap gap-2 w-full md:w-auto justify-end">
+                      {articles.filter(art => art.status === "draft").length > 0 && (
+                        <button
+                          onClick={handlePublishAllDrafts}
+                          className="w-full md:w-auto px-5 py-3 bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-700 hover:to-yellow-600 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                        >
+                          ⚡ 대기 성공사례 {articles.filter(art => art.status === "draft").length}개 전체 등록
+                        </button>
+                      )}
+
+                      <button
+                        onClick={() => handleOpenEditor(null)}
+                        className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                      >
+                        ✍ 새 성공사례 작성하기
+                      </button>
+                    </div>
                   </div>
 
                   {/* Articles Grid */}
@@ -1652,9 +1801,9 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       articles
                         .filter(art => {
                           const matchesSearch = art.title.toLowerCase().includes(searchQuery.toLowerCase());
-                          const matchesStatus = statusFilterArticles === "all" || 
-                                                (statusFilterArticles === "published" && art.status !== "draft") ||
-                                                (statusFilterArticles === "draft" && art.status === "draft");
+                          const matchesStatus = statusFilterArticles === "all" ||
+                            (statusFilterArticles === "published" && art.status !== "draft") ||
+                            (statusFilterArticles === "draft" && art.status === "draft");
                           return matchesSearch && matchesStatus;
                         })
                         .map((art) => {
@@ -1665,17 +1814,15 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                               <div className="space-y-4">
                                 <div className="flex justify-between items-start">
                                   <div className="flex gap-1.5 items-center">
-                                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-black tracking-wide border ${
-                                      isCase ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-blue-50 border-blue-200 text-blue-700"
-                                    }`}>
+                                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-black tracking-wide border ${isCase ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-blue-50 border-blue-200 text-blue-700"
+                                      }`}>
                                       {art.category}
                                     </span>
                                     {/* Status Badge */}
-                                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold border ${
-                                      isDraft 
-                                        ? "bg-slate-50 border-slate-200 text-slate-450 text-slate-500" 
-                                        : "bg-emerald-50 border-emerald-200 text-emerald-700"
-                                    }`}>
+                                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold border ${isDraft
+                                      ? "bg-slate-50 border-slate-200 text-slate-450 text-slate-500"
+                                      : "bg-emerald-50 border-emerald-200 text-emerald-700"
+                                      }`}>
                                       {isDraft ? "임시저장" : "등록완료"}
                                     </span>
                                   </div>
@@ -1686,7 +1833,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                 <h3 className="text-base font-black text-slate-900 leading-snug line-clamp-1">
                                   {art.title}
                                 </h3>
-                                
+
                                 {isCase && (
                                   <div className="grid grid-cols-3 gap-1.5 text-center text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-100 font-extrabold text-slate-600">
                                     <div>
@@ -1703,14 +1850,22 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                     </div>
                                   </div>
                                 )}
-                                
-                                <div 
+
+                                <div
                                   className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2"
                                   dangerouslySetInnerHTML={{ __html: art.content.replace(/<[^>]*>/g, '') }}
                                 />
                               </div>
-                              
+
                               <div className="flex gap-2 pt-5 border-t border-slate-100 mt-5">
+                                {isDraft && (
+                                  <button
+                                    onClick={() => handleQuickPublish(art.id, art.title)}
+                                    className="flex-1 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-250 font-black rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-center gap-1"
+                                  >
+                                    ⚡ 즉시 게시
+                                  </button>
+                                )}
                                 <button
                                   onClick={() => handleOpenEditor(art)}
                                   className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-lg text-xs transition-colors cursor-pointer"
@@ -1747,7 +1902,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                         className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                       />
                     </div>
-                    
+
                     <button
                       onClick={() => handleOpenFaqEditor(null)}
                       className="w-full md:w-auto px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
@@ -1770,8 +1925,8 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                     ) : (
                       faqs
                         .filter(faq => {
-                          const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                                faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+                          const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
                           return matchesSearch;
                         })
                         .map((faq, idx) => (
@@ -1786,13 +1941,13 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                   순번: {idx + 1}
                                 </span>
                               </div>
-                              
+
                               <div className="pl-6 pt-3 border-t border-slate-100 flex gap-2 text-xs font-semibold text-slate-600 leading-relaxed text-justify break-all w-full">
                                 <span className="text-amber-600 font-black shrink-0">A.</span>
                                 <div className="w-full text-justify break-all" style={{ textAlign: 'justify', textJustify: 'inter-character', wordBreak: 'break-all' }}>{faq.answer}</div>
                               </div>
                             </div>
-                            
+
                             <div className="flex gap-2 pt-5 border-t border-slate-100 mt-5">
                               <button
                                 onClick={() => handleOpenFaqEditor(faq)}
@@ -1848,7 +2003,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-600 to-teal-600" />
-                      
+
                       <button
                         onClick={() => {
                           setIsChangePasswordOpen(false);
@@ -1968,7 +2123,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-505 to-yellow-500 bg-[#FEE500]" />
-                      
+
                       <button
                         onClick={() => {
                           setIsKakaoUrlOpen(false);
@@ -2077,7 +2232,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-sky-500 to-sky-600 bg-sky-500" />
-                      
+
                       <button
                         onClick={() => {
                           setIsSolapiOpen(false);
@@ -2188,7 +2343,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                   </div>
                 )}
               </AnimatePresence>
-              
+
               {/* Brand Logo & Lawyer Profile Photo Setting Modal */}
               <AnimatePresence>
                 {isImagesOpen && (
@@ -2213,7 +2368,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-pink-500 to-rose-600 bg-pink-500" />
-                      
+
                       <button
                         onClick={() => {
                           setIsImagesOpen(false);
@@ -2241,7 +2396,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                         </div>
 
                         <form onSubmit={handleUpdateImages} className="space-y-5 pt-2 text-left">
-                          
+
                           {/* Part 1: Official Logo Upload */}
                           <div className="space-y-2">
                             <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide">
@@ -2368,7 +2523,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-rose-650 bg-rose-600" />
-                      
+
                       <button
                         onClick={() => setDeleteConfirmOpen(false)}
                         className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
@@ -2388,7 +2543,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             {deleteConfirmType === "single" ? "의뢰인 정보 영구 삭제" : "선택한 의뢰인 정보 일괄 영구 삭제"}
                           </h3>
                           <p className="text-xs text-slate-500 font-bold leading-relaxed text-center sm:text-left whitespace-pre-line">
-                            {deleteConfirmType === "single" 
+                            {deleteConfirmType === "single"
                               ? `[경고] "${singleDeleteName || "의뢰인"}" 님의 자격 진단 데이터를 실시간 데이터베이스에서 완전히 영구 삭제하시겠습니까?\n이 작업은 복구가 불가능합니다.`
                               : `[경고] 선택된 의뢰인 총 ${selectedIds.length}명의 모든 데이터를 실시간 데이터베이스에서 영구 삭제하시겠습니까?\n이 작업은 복구가 불가능합니다.`}
                           </p>
@@ -2440,7 +2595,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative z-10 border border-slate-100 overflow-y-auto max-h-[90vh] text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 bg-amber-500" />
-                      
+
                       <button
                         onClick={() => {
                           setIsEditorModalOpen(false);
@@ -2590,116 +2745,89 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             </div>
                           )}
 
-                          {/* HTML WYSIWYG Content Area */}
-                          <div className="space-y-1.5">
-                            <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-                              본문 내용 및 디자인 편집기 (HTML WYSIWYG Editor)
-                            </label>
-                            
-                            {/* Editor Toolbar */}
-                            <div className="flex flex-wrap gap-1 bg-slate-100 p-1.5 rounded-xl border border-slate-250">
-                              <button
-                                type="button"
-                                onClick={() => setEditorContent(prev => prev + "<b>굵은 텍스트</b>")}
-                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
-                                title="굵게"
-                              >
-                                굵게 (Bold)
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setEditorContent(prev => prev + "<u>밑줄</u>")}
-                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
-                                title="밑줄"
-                              >
-                                밑줄 (Under)
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setEditorContent(prev => prev + '<h2 style="font-size: 20px; font-weight: 800; color: #0F172A; margin-top: 20px; margin-bottom: 8px;">소제목2</h2>')}
-                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
-                                title="소제목 H2"
-                              >
-                                H2
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setEditorContent(prev => prev + '<h3 style="font-size: 17px; font-weight: 800; color: #AA8010; margin-top: 16px; margin-bottom: 6px;">소제목3</h3>')}
-                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
-                                title="소제목 H3"
-                              >
-                                H3
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setEditorContent(prev => prev + "<p style='margin: 10px 0;'>줄바꿈 단락</p>")}
-                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded cursor-pointer"
-                                title="단락 추가"
-                              >
-                                단락 (P)
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const url = prompt("유튜브 동영상 재생 주소나 일반 공유 링크를 붙여넣으세요:\n(예: https://youtu.be/xxxx 혹은 https://www.youtube.com/watch?v=xxxx)");
-                                  if (url) {
-                                    let videoId = "";
-                                    const match1 = url.match(/v=([^&#]+)/);
-                                    const match2 = url.match(/youtu\.be\/([^&#\?]+)/);
-                                    if (match1) videoId = match1[1];
-                                    else if (match2) videoId = match2[1];
-                                    
-                                    if (videoId) {
-                                      const embedHtml = `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:16px; margin: 16px 0; border: 1px solid #FAF4E5;"><iframe src="https://www.youtube.com/embed/${videoId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen></iframe></div>`;
-                                      setEditorContent(prev => prev + embedHtml);
-                                    } else {
-                                      alert("유효한 유튜브 비디오 ID를 인식할 수 없습니다.");
-                                    }
-                                  }
-                                }}
-                                className="px-2.5 py-1 text-xs font-black bg-white border border-slate-250 hover:bg-slate-50 rounded text-red-650 cursor-pointer"
-                                title="유튜브 비디오 프레임 임베딩"
-                              >
-                                📺 유튜브 삽입
-                              </button>
-                              
-                              {/* File Portrait Image Upload in toolbar */}
-                              <div className="relative inline-block">
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={handleEditorImageUpload}
-                                  className="absolute inset-0 opacity-0 cursor-pointer w-[65px]"
-                                />
-                                <button
-                                  type="button"
-                                  className="px-2.5 py-1 text-xs font-black bg-pink-50 border border-pink-250 hover:bg-pink-100 rounded text-pink-700 pointer-events-none"
-                                >
-                                  📷 사진 첨부
-                                </button>
+                          {/* Plain Text Content Editor (Category-Based) */}
+                          {editorCategory === "칼럼" ? (
+                            <div className="space-y-1.5 text-left">
+                              <label className="block text-xs font-black text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
+                                📝 칼럼 본문 내용 (한글 일반 텍스트 입력)
+                              </label>
+                              <textarea
+                                value={editorFacts}
+                                onChange={(e) => setEditorFacts(e.target.value)}
+                                placeholder="이곳에 칼럼의 본문 텍스트 내용을 한글로 편하게 작성해 주세요. 줄바꿈은 화면에 그대로 반영됩니다."
+                                className="w-full h-80 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
+                                required
+                              />
+                            </div>
+                          ) : (
+                            <div className="space-y-4 text-left">
+                              <div className="bg-amber-500/[0.04] text-amber-800 px-4 py-3 rounded-2xl border border-amber-500/10 font-bold text-xs flex items-center gap-1.5">
+                                <span>✨ 여환동 법무사의 사건 분석 보고서 (한글 텍스트로 쉽게 작성하는 4단계 입력란)</span>
+                              </div>
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Step 1 */}
+                                <div className="space-y-1.5 text-left">
+                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
+                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">1</span>
+                                    사실관계 (의뢰인 상황 및 채무 경위)
+                                  </label>
+                                  <textarea
+                                    value={editorFacts}
+                                    onChange={(e) => setEditorFacts(e.target.value)}
+                                    placeholder="예: 울산에 거주하는 30대 직장인 A씨는 코인 손실로 인해 채무가 급증..."
+                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
+                                    required
+                                  />
+                                </div>
+
+                                {/* Step 2 */}
+                                <div className="space-y-1.5 text-left">
+                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
+                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">2</span>
+                                    핵심쟁점 (법무 대리의 걸림돌 및 법원 권고)
+                                  </label>
+                                  <textarea
+                                    value={editorIssues}
+                                    onChange={(e) => setEditorIssues(e.target.value)}
+                                    placeholder="예: 최근 채무 비중이 85%에 달해 사행성 채무를 재산으로 반영하라는 권고 위기..."
+                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
+                                    required
+                                  />
+                                </div>
+
+                                {/* Step 3 */}
+                                <div className="space-y-1.5 text-left">
+                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
+                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">3</span>
+                                    신청전략 (법원의 엄격한 심사 돌파구)
+                                  </label>
+                                  <textarea
+                                    value={editorStrategy}
+                                    onChange={(e) => setEditorStrategy(e.target.value)}
+                                    placeholder="예: 이혼 과정의 위자료 입증 및 추가 생계비를 세밀한 자료로 강력하게 소명..."
+                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
+                                    required
+                                  />
+                                </div>
+
+                                {/* Step 4 */}
+                                <div className="space-y-1.5 text-left">
+                                  <label className="block text-xs font-extrabold text-slate-800 flex items-center gap-1">
+                                    <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px] font-black">4</span>
+                                    인가결정/의의 (성공적인 면책의 결실)
+                                  </label>
+                                  <textarea
+                                    value={editorDecision}
+                                    onChange={(e) => setEditorDecision(e.target.value)}
+                                    placeholder="예: 법무사의 집요한 보정 끝에 원금의 82% 탕감이라는 놀라운 결실을 이뤄냄..."
+                                    className="w-full h-36 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed text-slate-900"
+                                    required
+                                  />
+                                </div>
                               </div>
                             </div>
-
-                            {/* Main editing area */}
-                            <textarea
-                              value={editorContent}
-                              onChange={(e) => setEditorContent(e.target.value)}
-                              placeholder="위 툴바 버튼을 사용해 서식을 넣거나, HTML 태그를 직접 적어 세련되게 꾸밀 수 있습니다. 이미지나 유튜브 동영상 삽입도 지원합니다."
-                              className="w-full h-64 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none leading-relaxed"
-                              required
-                            />
-                            
-                            {/* Live html preview */}
-                            {editorContent.trim() && (
-                              <div className="space-y-1 mt-4">
-                                <span className="block text-[10px] font-black text-slate-400 uppercase tracking-wide">🔍 실시간 디자인 미리보기 (Live Design Preview)</span>
-                                <div 
-                                  className="p-5 border border-amber-100 rounded-2xl bg-amber-50/10 max-h-48 overflow-y-auto text-xs prose"
-                                  dangerouslySetInnerHTML={{ __html: editorContent }}
-                                />
-                              </div>
-                            )}
-                          </div>
+                          )}
 
                           {editorError && (
                             <div className="p-3 bg-rose-50 border border-rose-100 rounded-xl flex items-start gap-2 text-rose-700 text-xs font-bold leading-relaxed">
@@ -2769,7 +2897,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-rose-600" />
-                      
+
                       <button
                         onClick={() => setIsArticleDeleteConfirmOpen(false)}
                         className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
@@ -2840,7 +2968,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative z-10 border border-slate-100 overflow-y-auto max-h-[90vh] text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 bg-emerald-500" />
-                      
+
                       <button
                         onClick={() => {
                           setIsFaqEditorModalOpen(false);
@@ -2952,7 +3080,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900"
                     >
                       <div className="absolute top-0 inset-x-0 h-1.5 bg-rose-600" />
-                      
+
                       <button
                         onClick={() => setIsFaqDeleteConfirmOpen(false)}
                         className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 cursor-pointer"
@@ -3019,16 +3147,14 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                       exit={{ opacity: 0, scale: 0.95, y: 15 }}
                       className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative z-10 border border-slate-100 overflow-hidden text-slate-900 text-center"
                     >
-                      <div className={`absolute top-0 inset-x-0 h-1.5 ${
-                        customAlertStatus === "success" ? "bg-emerald-500" :
+                      <div className={`absolute top-0 inset-x-0 h-1.5 ${customAlertStatus === "success" ? "bg-emerald-500" :
                         customAlertStatus === "error" ? "bg-rose-500" : "bg-amber-500"
-                      }`} />
+                        }`} />
 
                       <div className="space-y-4 pt-1">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto ${
-                          customAlertStatus === "success" ? "bg-emerald-50 text-emerald-600" :
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto ${customAlertStatus === "success" ? "bg-emerald-50 text-emerald-600" :
                           customAlertStatus === "error" ? "bg-rose-50 text-rose-600" : "bg-amber-50 text-amber-600"
-                        }`}>
+                          }`}>
                           {customAlertStatus === "success" ? <CheckCircle className="w-6 h-6" /> : <AlertCircle className="w-6 h-6" />}
                         </div>
 
