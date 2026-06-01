@@ -875,6 +875,8 @@ export default function App() {
     setAdminPageActive(false);
     setBankruptcyPageActive(false);
     setSuccessColumnsActive(false);
+    setFaqPageActive(false);
+    setRehabEligibilityPageActive(false);
     if (mode === 'case') {
       handleNavClick('success_columns');
     } else {
