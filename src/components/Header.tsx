@@ -291,9 +291,7 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                 신청자격 무료 알아보기 (약 1분)
               </a>
             </div>
-            <p className="text-center text-[11px] text-slate-400 font-medium">
-              ※ 법무사 여환동 직접 검토 및 철저한 개인정보 보호 보장
-            </p>
+
           </div>
         </nav>
       )}
