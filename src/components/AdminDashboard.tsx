@@ -1941,7 +1941,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                   {art.title}
                                 </h3>
 
-                                {isCase && (
+                                {isCase && (art.age || art.job || art.originalDebt || art.reducedDebt) && (
                                   <div className="grid grid-cols-3 gap-1.5 text-center text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-100 font-extrabold text-slate-600">
                                     <div>
                                       <span className="block text-[9px] text-slate-400 leading-none mb-1">나이/직업</span>
@@ -2767,83 +2767,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                             </div>
                           </div>
 
-                          {/* Extra fields if category is NOT column */}
-                          {editorCategory !== "칼럼" && (
-                            <div className="bg-amber-50/20 p-4 rounded-2xl border border-[#FAF4E5] grid grid-cols-2 sm:grid-cols-3 gap-3 text-left">
-                              <div className="col-span-2 sm:col-span-1">
-                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                                  연령대 (예: 20대 후반, 40대 중반)
-                                </label>
-                                <input
-                                  type="text"
-                                  value={editorAge}
-                                  onChange={(e) => setEditorAge(e.target.value)}
-                                  placeholder="20대 후반"
-                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                                  직업 (예: IT 프리랜서, 자영업자)
-                                </label>
-                                <input
-                                  type="text"
-                                  value={editorJob}
-                                  onChange={(e) => setEditorJob(e.target.value)}
-                                  placeholder="IT 프리랜서"
-                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                                  원래 빚 총액 (예: 6,400만 원)
-                                </label>
-                                <input
-                                  type="text"
-                                  value={editorOriginalDebt}
-                                  onChange={(e) => setEditorOriginalDebt(e.target.value)}
-                                  placeholder="6,400만 원"
-                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                                  조정 후 빚 총액 (예: 1,800만 원)
-                                </label>
-                                <input
-                                  type="text"
-                                  value={editorReducedDebt}
-                                  onChange={(e) => setEditorReducedDebt(e.target.value)}
-                                  placeholder="1,800만 원"
-                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                                  월 변제금 (예: 50만 원 (36개월))
-                                </label>
-                                <input
-                                  type="text"
-                                  value={editorMonthlyPayment}
-                                  onChange={(e) => setEditorMonthlyPayment(e.target.value)}
-                                  placeholder="50만 원 (36개월)"
-                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                                  실제 탕감률 % (예: 72)
-                                </label>
-                                <input
-                                  type="number"
-                                  value={editorReductionRate}
-                                  onChange={(e) => setEditorReductionRate(e.target.value)}
-                                  placeholder="72"
-                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                                />
-                              </div>
-                            </div>
-                          )}
+                          {/* e-form metadata inputs removed for simple design */}
 
                           {/* 블록 편집기 영역 (네이버 블로그 스타일 순차 편집) */}
                           <div className="space-y-4 pt-4 border-t border-slate-100">
@@ -2915,7 +2839,7 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                             setEditorBlocks(newBlocks);
                                           }}
                                           placeholder="본문 내용을 한글로 타이핑하세요."
-                                          className="w-full min-h-[280px] p-4 bg-slate-50/30 border border-slate-150 focus:bg-white focus:border-slate-300 focus:ring-4 focus:ring-slate-100 rounded-xl text-xs sm:text-sm lg:text-base font-bold focus:outline-none leading-relaxed text-slate-900 resize-y transition-all"
+                                          className="w-full min-h-[180px] p-3 bg-slate-50/30 border border-slate-150 focus:bg-white focus:border-slate-300 focus:ring-4 focus:ring-slate-100 rounded-xl text-[11px] sm:text-xs font-semibold focus:outline-none leading-relaxed text-slate-900 resize-y transition-all"
                                         />
                                       </div>
                                     )}
