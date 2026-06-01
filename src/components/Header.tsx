@@ -64,6 +64,29 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
   const [logoImg, setLogoImg] = useState<string | null>(null);
   const [logoLoading, setLogoLoading] = useState(true);
   const headerRef = React.useRef<HTMLElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const onTouchEnd = () => {
+    if (touchStart === null || touchEnd === null) return;
+    const distance = touchStart - touchEnd;
+    const isUpSwipe = distance > 50;
+    if (isUpSwipe) {
+      setIsOpen(false);
+      if (window.history.state?.type === 'mobileMenu') {
+        window.history.back();
+      }
+    }
+  };
 
   React.useEffect(() => {
     const loadLogo = () => {
@@ -216,6 +239,12 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
               href="/check"
               onClick={(e) => {
                 e.preventDefault();
+                if (isOpen) {
+                  setIsOpen(false);
+                  if (window.history.state?.type === 'mobileMenu') {
+                    window.history.back();
+                  }
+                }
                 onStartSurvey();
               }}
               className="px-2 py-1.5 min-[360px]:px-3 min-[360px]:py-2 text-[10.5px] min-[360px]:text-xs font-black text-white bg-amber-600 hover:bg-amber-700 active:scale-95 rounded-lg sm:rounded-xl transition-all cursor-pointer shadow-xs duration-100 whitespace-nowrap shrink-0 flex items-center justify-center"
@@ -246,7 +275,12 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
 
       {/* Mobile Menu Panel */}
       {isOpen && (
-        <nav className="md:hidden border-t border-[#FAF4E5] bg-[#FAF9F5] shadow-xl animate-in fade-in slide-in-from-top-4 duration-200">
+        <nav 
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          className="md:hidden border-t border-[#FAF4E5] bg-[#FAF9F5] shadow-xl animate-in fade-in slide-in-from-top-4 duration-200 select-none"
+        >
           <div className="px-4 pt-4 pb-6 space-y-3">
             {navItems.map((item) => {
               const isActive = 
@@ -280,12 +314,6 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
                   }`}
                 >
                   <span className="flex items-center gap-3">
-                    {/* Left Icon */}
-                    {item.id === 'brand' && <User className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
-                    {item.id === 'rehabilitation' && <Scale className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
-                    {item.id === 'bankruptcy' && <FileText className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
-                    {item.id === 'faq' && <HelpCircle className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
-                    {item.id === 'success_columns' && <Sparkles className={`w-5 h-5 shrink-0 ${isActive ? 'text-amber-700' : 'text-slate-400'}`} />}
                     <span>{item.label}</span>
                   </span>
                   
@@ -314,6 +342,16 @@ export default function Header({ onNavClick, onStartSurvey }: HeaderProps) {
               >
                 신청자격 무료 알아보기 (약 1분)
               </a>
+            </div>
+
+            {/* Visual Swiping Close Handle Indicator Area */}
+            <div className="flex flex-col items-center justify-center pt-4 pb-1 border-t border-slate-100/50 select-none">
+              {/* Drag Handle Bar Pill */}
+              <div className="w-12 h-1.5 bg-slate-300 rounded-full mb-1.5 animate-pulse" />
+              {/* Arrow Indicator Text */}
+              <span className="text-[10px] font-black text-slate-400 tracking-wider flex items-center gap-1 select-none">
+                ▲ 위로 밀어올려서 메뉴 닫기
+              </span>
             </div>
 
           </div>
