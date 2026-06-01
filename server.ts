@@ -462,6 +462,7 @@ interface FAQItem {
   id: string;
   question: string;
   answer: string;
+  showOnMain?: boolean;
 }
 
 function initFaqsDatabase() {
@@ -1118,7 +1119,7 @@ async function startServer() {
 
   // API: Create FAQ (Protected)
   app.post("/api/faqs", verifyAdmin, (req, res) => {
-    const { question, answer } = req.body;
+    const { question, answer, showOnMain } = req.body;
     if (!question || !answer) {
       res.status(400).json({ error: "질문과 답변 내용은 필수 항목입니다." });
       return;
@@ -1129,7 +1130,8 @@ async function startServer() {
     const newFaq: FAQItem = {
       id: newId,
       question: sanitizeInput(question),
-      answer: sanitizeInput(answer)
+      answer: sanitizeInput(answer),
+      showOnMain: showOnMain !== undefined ? !!showOnMain : false
     };
 
     list.push(newFaq);
@@ -1140,7 +1142,7 @@ async function startServer() {
   // API: Update FAQ (Protected)
   app.patch("/api/faqs/:id", verifyAdmin, (req, res) => {
     const { id } = req.params;
-    const { question, answer } = req.body;
+    const { question, answer, showOnMain } = req.body;
 
     const list = readFaqs();
     const index = list.findIndex(faq => String(faq.id) === String(id));
@@ -1152,7 +1154,8 @@ async function startServer() {
     const updated: FAQItem = {
       ...list[index],
       ...(question !== undefined && { question: sanitizeInput(question) }),
-      ...(answer !== undefined && { answer: sanitizeInput(answer) })
+      ...(answer !== undefined && { answer: sanitizeInput(answer) }),
+      ...(showOnMain !== undefined && { showOnMain: !!showOnMain })
     };
 
     list[index] = updated;

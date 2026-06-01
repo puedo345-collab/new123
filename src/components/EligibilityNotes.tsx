@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FAQ_ITEMS } from '../data';
 import { Scale, CheckCircle2, AlertCircle, Sparkles, ChevronDown, ChevronUp, Lock, Target, HelpCircle, Landmark, ArrowRight, Library, FileText, Check } from 'lucide-react';
+import { FAQItem } from '../types';
 
-// Removed custom inline highlighter to avoid nested layout spans that block text justification.
+interface EligibilityNotesProps {
+  faqs?: FAQItem[];
+}
 
-export default function EligibilityNotes() {
+export default function EligibilityNotes({ faqs = [] }: EligibilityNotesProps) {
   const [activeFaq, setActiveFaq] = useState<string | number | null>(null);
+
+  // Filter faqs to show on main page: either those selected (showOnMain === true) or fallback to first 10 items
+  const mainFaqs = faqs.some(faq => faq.showOnMain)
+    ? faqs.filter(faq => faq.showOnMain).slice(0, 10)
+    : faqs.slice(0, 10);
 
   React.useEffect(() => {
     const handleExpandFaq = (e: Event) => {
@@ -242,7 +249,7 @@ export default function EligibilityNotes() {
           </div>
 
           <div className="mt-10 sm:mt-12 max-w-3xl mx-auto space-y-4">
-            {FAQ_ITEMS.map((faq) => {
+            {mainFaqs.map((faq) => {
               const isSelected = activeFaq === faq.id;
               return (
                 <div

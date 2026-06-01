@@ -82,6 +82,23 @@ export default function App() {
       .catch(err => console.error("Error loading config:", err));
   }, []);
 
+  const [faqs, setFaqs] = useState<any[]>([]);
+
+  const fetchFaqs = () => {
+    fetch('/api/faqs')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setFaqs(data);
+        }
+      })
+      .catch(err => console.error("Error loading faqs:", err));
+  };
+
+  React.useEffect(() => {
+    fetchFaqs();
+  }, []);
+
   // URL path routing parser on initial mount
   React.useEffect(() => {
     const rawPath = window.location.pathname;
@@ -684,6 +701,9 @@ export default function App() {
       setSuccessColumnsActive(false);
       setInitialArticleId(null);
     }
+    if (sectionId !== 'faq') {
+      setFaqPageActive(false);
+    }
 
     if (sectionId === 'hero') {
       setSurveyActive(false);
@@ -904,7 +924,10 @@ export default function App() {
                 className="w-full"
               >
                 <AdminDashboard
-                  onBack={() => setAdminPageActive(false)}
+                  onBack={() => {
+                    setAdminPageActive(false);
+                    fetchFaqs();
+                  }}
                 />
               </motion.div>
             ) : successColumnsActive ? (
@@ -1016,6 +1039,7 @@ export default function App() {
                 className="w-full"
               >
                 <FAQPage
+                  faqs={faqs}
                   onBack={() => {
                     setFaqPageActive(false);
                     setCurrentSection(null);
@@ -1125,7 +1149,7 @@ export default function App() {
         {/* Permanent Premium Guidelines and Stories (Scroll Trigger Point) */}
         {!surveyActive && !caseMatcherActive && !planSimulatorActive && !userResponses && !adminPageActive && !brandPageActive && !bankruptcyPageActive && !successColumnsActive && !faqPageActive && (
           <div ref={eligibilityRef} className="scroll-mt-16 sm:scroll-mt-28" id="brand">
-            <EligibilityNotes />
+            <EligibilityNotes faqs={faqs} />
           </div>
         )}
 

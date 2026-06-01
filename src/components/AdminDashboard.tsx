@@ -1049,6 +1049,42 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
     }
   };
 
+  const handleToggleShowOnMain = async (faq: FAQItem) => {
+    if (!token) return;
+    
+    const currentlySelectedCount = faqs.filter(f => f.showOnMain).length;
+    const isActivating = !faq.showOnMain;
+    
+    if (isActivating && currentlySelectedCount >= 10) {
+      showCustomAlert("오류", "메인페이지 노출 자주 묻는 질문은 최대 10개까지만 지정할 수 있습니다.", "error");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/faqs/${faq.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ showOnMain: isActivating })
+      });
+      if (res.ok) {
+        setFaqs(prev =>
+          prev.map(f =>
+            String(f.id) === String(faq.id) ? { ...f, showOnMain: isActivating } : f
+          )
+        );
+        showCustomAlert("성공", isActivating ? "메인페이지 노출 자주 묻는 질문으로 지정되었습니다." : "메인페이지 노출 해제되었습니다.", "success");
+      } else {
+        showCustomAlert("오류", "설정 상태 변경 중 오류가 발생했습니다.", "error");
+      }
+    } catch (err) {
+      console.error("Error toggling showOnMain:", err);
+      showCustomAlert("오류", "서버 통신에 실패했습니다.", "error");
+    }
+  };
+
   const handleEditorImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -1440,6 +1476,15 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                     }`}
                 >
                   ✍ 성공사례 관리
+                </button>
+                <button
+                  onClick={() => setActiveTab("faqs")}
+                  className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${activeTab === "faqs"
+                    ? "bg-slate-900 text-white shadow-md"
+                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                    }`}
+                >
+                  ❓ 자주 묻는 질문 관리
                 </button>
               </div>
 
@@ -1999,9 +2044,21 @@ export default function AdminDashboard({ onBack }: AdminDashboardProps) {
                                   <span className="text-emerald-600 font-black shrink-0">Q.</span>
                                   <span className="break-all">{faq.question}</span>
                                 </h3>
-                                <span className="text-[10px] text-slate-400 font-semibold shrink-0">
-                                  순번: {idx + 1}
-                                </span>
+                                <div className="flex flex-col items-end gap-1.5 shrink-0">
+                                  <span className="text-[10px] text-slate-400 font-semibold">
+                                    순번: {idx + 1}
+                                  </span>
+                                  <button
+                                    onClick={() => handleToggleShowOnMain(faq)}
+                                    className={`px-2.5 py-1 rounded-md text-[10px] font-black transition-all cursor-pointer border ${
+                                      faq.showOnMain
+                                        ? "bg-amber-500/10 border-amber-300 text-amber-800"
+                                        : "bg-slate-50 border-slate-200 text-slate-400 hover:text-slate-600"
+                                    }`}
+                                  >
+                                    {faq.showOnMain ? "★ 메인 노출 중 (최대 10개)" : "☆ 메인 미노출"}
+                                  </button>
+                                </div>
                               </div>
 
                               <div className="pl-6 pt-3 border-t border-slate-100 flex gap-2 text-xs font-semibold text-slate-600 leading-relaxed text-justify break-all w-full">

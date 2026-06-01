@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FAQ_ITEMS } from '../data';
 import { ArrowLeft, Search, HelpCircle, ChevronDown, ChevronUp, Sparkles, X, AlertCircle } from 'lucide-react';
+import { FAQItem } from '../types';
 
 interface FAQPageProps {
   onBack: () => void;
+  faqs?: FAQItem[];
 }
 
-export default function FAQPage({ onBack }: FAQPageProps) {
+export default function FAQPage({ onBack, faqs = [] }: FAQPageProps) {
+  const currentFaqs = faqs.length > 0 ? faqs : FAQ_ITEMS;
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'eligibility' | 'harassment' | 'investment' | 'etc'>('all');
   const [activeFaq, setActiveFaq] = useState<string | number | null>(null);
@@ -109,7 +112,7 @@ export default function FAQPage({ onBack }: FAQPageProps) {
   ] as const;
 
   // Filter items based on category and search query
-  const filteredFaqs = FAQ_ITEMS.filter((item) => {
+  const filteredFaqs = currentFaqs.filter((item) => {
     const category = getCategory(item.id);
     const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
     

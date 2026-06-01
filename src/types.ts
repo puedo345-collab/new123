@@ -25,7 +25,8 @@ export interface SuccessStory {
 }
 
 export interface FAQItem {
-  id: number;
+  id: number | string;
   question: string;
   answer: string;
+  showOnMain?: boolean;
 }
